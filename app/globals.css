@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050a14;
+  --foreground: #e8edf5;
+  --blue-primary: #1a3a8f;
+  --blue-bright: #2563eb;
+  --blue-light: #3b82f6;
+  --red-primary: #cc1a1a;
+  --red-bright: #ef4444;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --color-blue-primary: var(--blue-primary);
+  --color-blue-bright: var(--blue-bright);
+  --color-blue-light: var(--blue-light);
+  --color-red-primary: var(--red-primary);
+  --color-red-bright: var(--red-bright);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a1628;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a3a8f;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Glow utility classes */
+.glow-blue {
+  box-shadow: 0 0 40px rgba(37, 99, 235, 0.3), 0 0 80px rgba(37, 99, 235, 0.15);
+}
+
+.glow-red {
+  box-shadow: 0 0 40px rgba(239, 68, 68, 0.3), 0 0 80px rgba(239, 68, 68, 0.1);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+/* Network grid background */
+.network-grid {
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Gradient borders */
+.border-gradient-blue {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.border-gradient-blue::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.5), rgba(37, 99, 235, 0.1));
+  z-index: -1;
+}
+
+/* Fiber pulse animation */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Section transitions */
+.section-divider {
+  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.4), rgba(204, 26, 26, 0.4), transparent);
+  height: 1px;
+}
