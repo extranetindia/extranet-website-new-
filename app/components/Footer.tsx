@@ -1,50 +1,46 @@
 import Image from "next/image";
-import { Phone, Mail, MapPin, Globe, Link, Camera, Play } from "lucide-react";
+import Link from "next/link";
+import { Phone, Mail, MapPin, Globe, Link as LinkIcon, Camera, Play } from "lucide-react";
 
 const footerLinks = {
   Plans: [
-    { label: "Home Broadband", href: "#plans" },
-    { label: "Business Fiber", href: "#plans" },
-    { label: "Enterprise Leased Line", href: "#plans" },
-    { label: "Wireless Internet", href: "#plans" },
-    { label: "Compare Plans", href: "#plans" },
+    { label: "Home Broadband", href: "/plans#home-broadband" },
+    { label: "Business Fiber", href: "/plans#enterprise" },
+    { label: "Enterprise Leased Line", href: "/plans#enterprise" },
+    { label: "Compare Plans", href: "/plans" },
   ],
   Company: [
-    { label: "About Us", href: "#about" },
+    { label: "About Us", href: "/about" },
+    { label: "Coverage", href: "/coverage" },
     { label: "Careers", href: "#" },
     { label: "Press & Media", href: "#" },
-    { label: "Investors", href: "#" },
-    { label: "Partners", href: "#" },
   ],
   Support: [
-    { label: "Help Center", href: "#" },
-    { label: "Network Status", href: "#" },
-    { label: "Report an Issue", href: "#" },
-    { label: "Raise a Ticket", href: "#" },
-    { label: "Contact Us", href: "#contact" },
+    { label: "Help Center", href: "/support" },
+    { label: "Network Status", href: "/support" },
+    { label: "Report an Issue", href: "/support" },
+    { label: "Contact Us", href: "/contact" },
   ],
   Legal: [
     { label: "Terms of Service", href: "#" },
     { label: "Privacy Policy", href: "#" },
     { label: "Refund Policy", href: "#" },
-    { label: "Fair Usage Policy", href: "#" },
     { label: "TRAI Compliance", href: "#" },
   ],
 };
 
 const social = [
   { icon: Globe, href: "#", label: "Facebook" },
-  { icon: Link, href: "#", label: "Twitter" },
-  { icon: Link, href: "#", label: "LinkedIn" },
+  { icon: LinkIcon, href: "#", label: "Twitter" },
+  { icon: LinkIcon, href: "#", label: "LinkedIn" },
   { icon: Camera, href: "#", label: "Instagram" },
   { icon: Play, href: "#", label: "YouTube" },
 ];
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative bg-[#020509] border-t border-blue-900/30">
-      {/* Top contact strip */}
-      <div className="border-b border-blue-900/20 bg-[#040810]">
+    <footer className="relative bg-slate-900 text-slate-300 border-t border-slate-800">
+      <div className="border-b border-slate-800 bg-slate-950/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid sm:grid-cols-3 gap-6">
             {[
@@ -68,7 +64,7 @@ export default function Footer() {
               },
             ].map((item) => (
               <div key={item.label} className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-blue-900/40 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-blue-900/50 flex items-center justify-center shrink-0">
                   <item.icon className="w-5 h-5 text-blue-400" />
                 </div>
                 <div>
@@ -84,13 +80,11 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid lg:grid-cols-5 gap-12">
-          {/* Brand column */}
           <div className="lg:col-span-1">
-            <a href="#home" className="flex items-center gap-3 mb-5">
-              <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white/5 ring-1 ring-white/10">
+            <Link href="/" className="flex items-center gap-3 mb-5">
+              <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white ring-1 ring-slate-700">
                 <Image
                   src="/extranet-logo.png"
                   alt="Extranet India"
@@ -106,10 +100,10 @@ export default function Footer() {
                   India Pvt. Ltd.
                 </div>
               </div>
-            </a>
+            </Link>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              Connecting India with enterprise-grade fiber and broadband internet.
-              Reliable. Fast. Trusted.
+              Connecting India with enterprise-grade fiber and broadband. Reliable.
+              Fast. Trusted.
             </p>
             <div className="flex gap-3">
               {social.map((s) => (
@@ -117,7 +111,7 @@ export default function Footer() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-9 h-9 rounded-lg bg-white/5 hover:bg-blue-900/40 border border-white/8 hover:border-blue-700/40 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-all duration-200"
+                  className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-blue-900/50 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-blue-300 transition-all"
                 >
                   <s.icon className="w-4 h-4" />
                 </a>
@@ -125,7 +119,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
               <h4 className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-5">
@@ -134,12 +127,12 @@ export default function Footer() {
               <ul className="flex flex-col gap-3">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <Link
                       href={link.href}
-                      className="text-sm text-slate-500 hover:text-slate-200 transition-colors"
+                      className="text-sm text-slate-500 hover:text-white transition-colors"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -148,18 +141,17 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/5">
+      <div className="border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-600 text-center sm:text-left">
-            © {new Date().getFullYear()} Extranet India Private Limited. All rights reserved.
-            Licensed by TRAI · DOT License No. UL/XXXXX/MH/ISP
+            © {new Date().getFullYear()} Extranet India Private Limited. All rights
+            reserved. Licensed by TRAI · DOT License No. UL/XXXXX/MH/ISP
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             {["ISO 9001:2015", "TRAI Licensed", "DOT Certified"].map((cert) => (
               <span
                 key={cert}
-                className="px-3 py-1 rounded-full bg-blue-900/20 border border-blue-900/30 text-xs text-blue-400/70 font-medium"
+                className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs text-blue-300/80 font-medium"
               >
                 {cert}
               </span>

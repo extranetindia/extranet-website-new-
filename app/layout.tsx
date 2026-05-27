@@ -9,10 +9,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Extranet India Private Limited — High-Speed Broadband & Fiber Internet",
+  title: {
+    default: "Extranet India Private Limited — High-Speed Broadband & Fiber Internet",
+    template: "%s | Extranet India",
+  },
   description:
     "Extranet India delivers enterprise-grade broadband, fiber, and wireless internet solutions. Blazing speeds, unmatched reliability, and 24/7 support across India.",
-  keywords: "Extranet India, broadband, fiber internet, ISP, high speed internet, wireless internet",
+  keywords:
+    "Extranet India, broadband, fiber internet, ISP, high speed internet, wireless internet",
 };
 
 export default function RootLayout({
@@ -22,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#050a14] text-[#e8edf5]">
+      <body className="min-h-full flex flex-col bg-white text-slate-900">
         {children}
       </body>
     </html>
