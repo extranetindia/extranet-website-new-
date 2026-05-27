@@ -124,11 +124,11 @@ export default function Navbar() {
 
           <div className="hidden lg:flex items-center gap-2">
             <a
-              href="tel:+918888888888"
+              href="tel:+919540901195"
               className="hidden xl:flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors mr-1"
             >
               <Phone className="w-4 h-4 text-blue-600" />
-              <span className="font-medium">+91 88888 88888</span>
+              <span className="font-medium">+91 9540901195</span>
             </a>
             <Link
               href="#"
@@ -180,11 +180,11 @@ export default function Navbar() {
               ))}
               <div className="mt-3 pt-3 border-t border-slate-200 flex flex-col gap-2">
                 <a
-                  href="tel:+918888888888"
+                  href="tel:+919540901195"
                   className="flex items-center gap-2 px-4 py-3 text-slate-600"
                 >
                   <Phone className="w-4 h-4 text-blue-600" />
-                  +91 88888 88888
+                  +91 95409 01195
                 </a>
                 <Link
                   href="#"

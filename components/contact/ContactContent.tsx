@@ -5,13 +5,13 @@ import Link from "next/link";
 
 const offices = [
   {
-    city: "New Delhi (HQ)",
-    address: "Extranet India Pvt. Ltd., Connaught Place, New Delhi — 110001",
+    city: "Greater Noida",
+    address: "Extranet Infotech India Pvt. Ltd., LGF - 5, Kasna, Greater Noida, Uttar Pradesh — 201310",
   },
-  {
-    city: "Mumbai (NOC)",
-    address: "Network Operations Center, Andheri East, Mumbai — 400069",
-  },
+  // {
+  //   city: "Mumbai (NOC)",
+  //   address: "Network Operations Center, Andheri East, Mumbai — 400069",
+  // },
 ];
 
 export default function ContactContent() {
@@ -86,9 +86,9 @@ export default function ContactContent() {
 
       <div className="lg:col-span-2 space-y-6">
         {[
-          { icon: Phone, label: "Phone", value: "+91 88888 88888" },
+          { icon: Phone, label: "Phone", value: "+91 9540901195" },
           { icon: Mail, label: "Email", value: "support@extranet.in" },
-          { icon: Clock, label: "Hours", value: "Mon–Sat, 9 AM – 8 PM IST" },
+          { icon: Clock, label: "Hours", value: "Open 24 Hours" },
         ].map((item) => (
           <div
             key={item.label}

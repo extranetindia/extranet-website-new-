@@ -17,19 +17,19 @@ const coverageTypes = [
     icon: Home,
     title: "Residential Fiber",
     description: "FTTH from 50 Mbps to 1 Gbps in 500+ cities.",
-    count: "500+ Cities",
+    count: "10+ Cities",
   },
   {
     icon: Building,
     title: "Business Leased Line",
     description: "Dedicated fiber for IT parks and commercial campuses.",
-    count: "200+ Zones",
+    count: "80+ Zones",
   },
   {
     icon: MapPin,
     title: "Last-Mile Wireless",
     description: "Fixed wireless where fiber rollout is in progress.",
-    count: "100+ Towns",
+    count: "50+ Towns",
   },
 ];
 
