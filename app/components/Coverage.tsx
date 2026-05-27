@@ -16,8 +16,8 @@ const coverageTypes = [
   {
     icon: Home,
     title: "Residential Fiber",
-    description: "FTTH from 50 Mbps to 1 Gbps in 500+ cities.",
-    count: "10+ Cities",
+    description: "FTTH from 50 Mbps to 1 Gbps in 50+ cities.",
+    count: "50+ Cities",
   },
   {
     icon: Building,
@@ -29,7 +29,7 @@ const coverageTypes = [
     icon: MapPin,
     title: "Last-Mile Wireless",
     description: "Fixed wireless where fiber rollout is in progress.",
-    count: "50+ Towns",
+    count: "40+ Towns",
   },
 ];
 
@@ -38,7 +38,7 @@ export default function Coverage() {
     <SectionPreview
       eyebrow="Network Coverage"
       title="Connected across India"
-      description="50,000+ km of fiber backbone with active expansion into Tier 2 and Tier 3 cities."
+      description="20,000+ km of fiber backbone with active expansion into Tier 2 and Tier 3 cities."
       href="/coverage"
       linkLabel="Full coverage map"
       className="bg-white"
@@ -62,7 +62,7 @@ export default function Coverage() {
           </motion.div>
         ))}
       </div>
-      <div className="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">
+      {/* <div className="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">
         <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
           <CheckCircle2 className="w-5 h-5 text-green-600" />
           Live in these cities
@@ -85,7 +85,7 @@ export default function Coverage() {
         >
           Check availability by pincode →
         </Link>
-      </div>
+      </div> */}
     </SectionPreview>
   );
 }

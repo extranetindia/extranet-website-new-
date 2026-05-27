@@ -42,7 +42,7 @@ export default function Testimonials() {
   return (
     <SectionPreview
       eyebrow="Customer Stories"
-      title="Trusted by 50,000+ customers"
+      title="Trusted by 10,000+ customers"
       description="Real reviews from homes and businesses across India."
       href="/support"
       linkLabel="Customer support"

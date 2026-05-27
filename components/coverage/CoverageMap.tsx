@@ -15,22 +15,22 @@ const coverageTypes = [
     icon: Home,
     title: "Residential Fiber",
     description:
-      "FTTH (Fiber to the Home) with speeds from 50 Mbps to 1 Gbps. Available in 500+ cities across India.",
-    count: "500+ Cities",
+      "FTTH (Fiber to the Home) with speeds from 50 Mbps to 1 Gbps. Available in 50+ cities across India.",
+    count: "50+ Cities",
   },
   {
     icon: Building,
     title: "Business Leased Line",
     description:
       "Dedicated fiber for commercial buildings, IT parks, and campuses with guaranteed SLAs.",
-    count: "200+ Business Zones",
+    count: "80+ Business Zones",
   },
   {
     icon: Radio,
     title: "Last-Mile Wireless",
     description:
       "High-capacity fixed wireless for areas where fiber deployment is in progress.",
-    count: "100+ Towns",
+    count: "40+ Towns",
   },
 ];
 
@@ -57,7 +57,7 @@ export default function CoverageMap() {
         ))}
       </div>
 
-      <div className="rounded-2xl bg-white border border-slate-200 p-8 shadow-sm">
+      {/* <div className="rounded-2xl bg-white border border-slate-200 p-8 shadow-sm">
         <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
           <CheckCircle2 className="w-5 h-5 text-green-600" />
           Live in these cities — and expanding fast
@@ -77,7 +77,7 @@ export default function CoverageMap() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <div className="rounded-2xl bg-gradient-to-br from-blue-700 to-blue-900 p-8 sm:p-10 text-white relative overflow-hidden">
         <div className="absolute inset-0 network-grid-light opacity-30" />

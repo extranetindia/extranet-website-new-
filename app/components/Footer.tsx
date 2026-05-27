@@ -5,27 +5,23 @@ import { Phone, Mail, MapPin, Globe, Link as LinkIcon, Camera, Play } from "luci
 const footerLinks = {
   Plans: [
     { label: "Home Broadband", href: "/plans#home-broadband" },
-    { label: "Business Fiber", href: "/plans#enterprise" },
-    { label: "Enterprise Leased Line", href: "/plans#enterprise" },
+    { label: "Business & Enterprise", href: "/plans#enterprise" },
+    // { label: "Enterprise Leased Line", href: "/plans#enterprise" },
     { label: "Compare Plans", href: "/plans" },
   ],
   Company: [
     { label: "About Us", href: "/about" },
     { label: "Coverage", href: "/coverage" },
-    { label: "Careers", href: "#" },
-    { label: "Press & Media", href: "#" },
   ],
   Support: [
     { label: "Help Center", href: "/support" },
-    { label: "Network Status", href: "/support" },
-    { label: "Report an Issue", href: "/support" },
     { label: "Contact Us", href: "/contact" },
   ],
   Legal: [
     { label: "Terms of Service", href: "#" },
     { label: "Privacy Policy", href: "#" },
     { label: "Refund Policy", href: "#" },
-    { label: "TRAI Compliance", href: "#" },
+    // { label: "TRAI Compliance", href: "#" },
   ],
 };
 
@@ -47,20 +43,20 @@ export default function Footer() {
               {
                 icon: Phone,
                 label: "Sales & Support",
-                value: "+91 88888 88888",
-                sub: "Mon–Sat, 9 AM – 8 PM",
+                value: "+91 9540901195",
+                sub: "Available 24/7",
               },
               {
                 icon: Mail,
                 label: "Email Us",
-                value: "support@extranet.in",
+                value: "help.extranet@gmail.com",
                 sub: "Response within 4 hours",
               },
               {
                 icon: MapPin,
                 label: "Registered Office",
-                value: "Extranet India Pvt. Ltd.",
-                sub: "New Delhi, India — 110001",
+                value: "Extranet InfotechIndia Pvt. Ltd.",
+                sub: "LGF - 4, Shiva Plaza, Kasna, Greater Noida, Uttar Pradesh, India — 201310",
               },
             ].map((item) => (
               <div key={item.label} className="flex items-start gap-4">
@@ -142,12 +138,13 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4"> */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col items-center justify-center gap-4">
           <p className="text-xs text-slate-600 text-center sm:text-left">
             © {new Date().getFullYear()} Extranet India Private Limited. All rights
-            reserved. Licensed by TRAI · DOT License No. UL/XXXXX/MH/ISP
+            reserved.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          {/* <div className="flex flex-wrap items-center justify-center gap-2">
             {["ISO 9001:2015", "TRAI Licensed", "DOT Certified"].map((cert) => (
               <span
                 key={cert}
@@ -156,7 +153,7 @@ export default function Footer() {
                 {cert}
               </span>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

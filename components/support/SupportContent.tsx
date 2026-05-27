@@ -24,23 +24,23 @@ const supportCards = [
     icon: MessageCircle,
     title: "Email Support",
     description: "Average response under 4 hours on business days.",
-    action: "support@extranet.in",
-    href: "mailto:support@extranet.in",
+    action: "help.extranet@gmail.com",
+    href: "mailto:help.extranet@gmail.com",
   },
-  {
-    icon: FileText,
-    title: "Raise a Ticket",
-    description: "Technical issues tracked with SLA-based resolution.",
-    action: "Open ticket portal",
-    href: "#",
-  },
-  {
-    icon: AlertCircle,
-    title: "Report Outage",
-    description: "Notify our NOC of service degradation in your area.",
-    action: "Report now",
-    href: "#",
-  },
+  // {
+  //   icon: FileText,
+  //   title: "Raise a Ticket",
+  //   description: "Technical issues tracked with SLA-based resolution.",
+  //   action: "Open ticket portal",
+  //   href: "#",
+  // },
+  // {
+  //   icon: AlertCircle,
+  //   title: "Report Outage",
+  //   description: "Notify our NOC of service degradation in your area.",
+  //   action: "Report now",
+  //   href: "#",
+  // },
 ];
 
 const faqs = [
@@ -71,7 +71,7 @@ export default function SupportContent() {
 
   return (
     <div className="space-y-16">
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5">
         {supportCards.map((card, i) => (
           <motion.a
             key={card.title}
@@ -90,7 +90,8 @@ export default function SupportContent() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-10">
+      {/* <div className="grid lg:grid-cols-2 gap-10"> */}
+      <div className="max-w-4xl mx-auto">
         <div>
           <h2 className="text-2xl font-black text-slate-900 mb-6">Frequently asked questions</h2>
           <div className="space-y-2">
@@ -130,7 +131,8 @@ export default function SupportContent() {
           </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-900 text-white p-8">
+        {/* <div className="rounded-2xl bg-slate-900 text-white p-8"> */}
+        {/* <div className="rounded-2xl bg-gradient-to-br from-blue-700 to-blue-900 text-white p-8 shadow-2xl">
           <Phone className="w-10 h-10 text-blue-400 mb-4" />
           <h2 className="text-2xl font-black mb-2">Complaint & help request</h2>
           <p className="text-slate-400 text-sm mb-6">
@@ -167,7 +169,7 @@ export default function SupportContent() {
               Contact us
             </Link>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

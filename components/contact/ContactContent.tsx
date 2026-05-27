@@ -87,8 +87,8 @@ export default function ContactContent() {
       <div className="lg:col-span-2 space-y-6">
         {[
           { icon: Phone, label: "Phone", value: "+91 9540901195" },
-          { icon: Mail, label: "Email", value: "support@extranet.in" },
-          { icon: Clock, label: "Hours", value: "Open 24 Hours" },
+          { icon: Mail, label: "Email", value: "help.extranet@gmail.com" },
+          { icon: Clock, label: "Hours", value: "24/7 Availability" },
         ].map((item) => (
           <div
             key={item.label}

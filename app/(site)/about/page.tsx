@@ -10,22 +10,22 @@ export const metadata: Metadata = {
 };
 
 const stats = [
-  { icon: Network, value: "50,000+ km", label: "Fiber backbone" },
-  { icon: Users, value: "50,000+", label: "Active subscribers" },
-  { icon: Building2, value: "500+", label: "Cities served" },
+  { icon: Network, value: "20,000+ km", label: "Fiber backbone" },
+  { icon: Users, value: "10,000+", label: "Active subscribers" },
+  { icon: Building2, value: "50+", label: "Cities served" },
   { icon: Award, value: "99.99%", label: "Enterprise SLA" },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero
+      {/* <PageHero
         badge="About Extranet"
         title={<>India&apos;s trusted enterprise ISP</>}
         description="Extranet India Private Limited builds and operates carrier-grade fiber networks for homes, businesses, and institutions — with transparency, reliability, and technical excellence at the core."
-      />
+      /> */}
 
-      <section className="py-20 bg-white">
+      <section className="py-35 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-black text-slate-900 mb-4">Company overview</h2>

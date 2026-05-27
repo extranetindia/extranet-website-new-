@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function CoveragePage() {
   return (
     <>
-      <PageHero
+      {/* <PageHero
         badge="Pan-India Network"
         title={
           <>
@@ -20,8 +20,8 @@ export default function CoveragePage() {
           </>
         }
         description="Our fiber backbone spans 50,000+ km with residential FTTH, business leased lines, and wireless last-mile where fiber is rolling out."
-      />
-      <section className="py-20 bg-slate-50">
+      /> */}
+      <section className="py-35 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <CoverageMap />
         </div>
