@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function PlansPage() {
   return (
     <>
-      <PageHero
+      {/* <PageHero
         badge="Plans & Pricing"
         title={
           <>
@@ -21,8 +21,11 @@ export default function PlansPage() {
           </>
         }
         description="Choose symmetric fiber speeds with unlimited data, no hidden fees, and free installation in covered cities. Upgrade or cancel anytime."
-      />
-      <PlansPageSections />
+      /> */}
+      {/* <PlansPageSections /> */}
+      <section className="pt-16.5">
+        <PlansPageSections />
+      </section>
     </>
   );
 }

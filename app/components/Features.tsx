@@ -15,13 +15,13 @@ import {
 import SectionPreview from "@/components/ui/SectionPreview";
 
 const features = [
-  {
-    icon: Zap,
-    title: "Blazing Fiber Speeds",
-    description:
-      "Symmetric fiber from 50 Mbps to 10 Gbps with equal upload and download.",
-    accent: "blue",
-  },
+  // {
+  //   icon: Zap,
+  //   title: "Blazing Fiber Speeds",
+  //   description:
+  //     "Symmetric fiber from 50 Mbps to 10 Gbps with equal upload and download.",
+  //   accent: "blue",
+  // },
   {
     icon: Shield,
     title: "Enterprise DDoS Protection",
@@ -29,13 +29,13 @@ const features = [
       "Real-time scrubbing centers protect against volumetric and application-layer attacks.",
     accent: "red",
   },
-  {
-    icon: Globe,
-    title: "Low-Latency Backbone",
-    description:
-      "Tier-1 peering and IXPs deliver sub-5ms latency in major metros.",
-    accent: "blue",
-  },
+  // {
+  //   icon: Globe,
+  //   title: "Low-Latency Backbone",
+  //   description:
+  //     "Tier-1 peering and IXPs deliver sub-5ms latency in major metros.",
+  //   accent: "blue",
+  // },
   {
     icon: Clock,
     title: "99.99% Uptime SLA",
@@ -50,23 +50,23 @@ const features = [
       "Static IPs, PTR records, and BGP for enterprises with their own AS.",
     accent: "blue",
   },
-  {
-    icon: Wifi,
-    title: "Managed Wi-Fi",
-    description:
-      "Wi-Fi 6E access points with centralized management and guest networks.",
-    accent: "red",
-  },
-  {
-    icon: Lock,
-    title: "Zero-Trust Security",
-    description:
-      "Firewall, filtering, and optional SD-WAN for distributed networks.",
-    accent: "blue",
-  },
+  // {
+  //   icon: Wifi,
+  //   title: "Managed Wi-Fi",
+  //   description:
+  //     "Wi-Fi 6E access points with centralized management and guest networks.",
+  //   accent: "red",
+  // },
+  // {
+  //   icon: Lock,
+  //   title: "Zero-Trust Security",
+  //   description:
+  //     "Firewall, filtering, and optional SD-WAN for distributed networks.",
+  //   accent: "blue",
+  // },
   {
     icon: HeadphonesIcon,
-    title: "24/7 NOC Support",
+    title: "24/7 Assistance",
     description:
       "Certified engineers in our Network Operations Center, always on call.",
     accent: "red",
@@ -76,8 +76,8 @@ const features = [
 export default function Features() {
   return (
     <SectionPreview
-      eyebrow="Why Extranet"
-      title="Built for the digital future"
+      // eyebrow="Why Extranet"
+      title="Why Extranet"
       description="Enterprise technology for homes and businesses across India — reliability, security, and speed in one network."
       href="/about"
       linkLabel="Learn about us"

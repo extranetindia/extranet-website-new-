@@ -38,7 +38,7 @@ export default function PlanCards({
   const gridClass =
     columns === 2
       ? "grid md:grid-cols-2 gap-6 lg:gap-8"
-      : "grid md:grid-cols-3 gap-6 lg:gap-8 items-start";
+      : "grid md:grid-cols-3 gap-8 lg:gap-10 items-start";
 
   return (
     <div className={gridClass}>
@@ -52,7 +52,7 @@ export default function PlanCards({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: i * 0.1 }}
-            className={`relative rounded-2xl bg-white border ${c.card} p-7 flex flex-col gap-6 transition-all duration-300 ${isPopular ? "md:-mt-2 md:mb-2" : ""}`}
+            className={`relative rounded-2xl bg-white border ${c.card} p-8 flex flex-col gap-6 transition-all duration-300 h-full min-h-[650px] ${isPopular ? "md:-mt-2 md:mb-2" : ""}`}
           >
             {plan.tag && (
               <div
