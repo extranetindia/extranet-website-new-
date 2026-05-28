@@ -16,29 +16,29 @@ export interface HeroBannerConfig {
   ctaLink: string;
   desktopBannerImage: string;
   mobileBannerImage: string;
-  featureBadges: HeroBannerFeatureBadge[];
+  featureBadges?: HeroBannerFeatureBadge[];
 }
 
 export const homeHeroBanners: HeroBannerConfig[] = [
   {
     id: "summer-fiber-campaign",
     isActive: true,
-    title: "Ultra-Fast Fiber Internet for Every Home",
-    subtitle: "Premium Broadband Offer",
+    title: "Enterprise Fiber Internet for Homes & Businesses",
+    subtitle: "Premium ISP Connectivity",
     supportingText:
-      "Get enterprise-grade speed, low latency, and uninterrupted connectivity with Extranet India Private Limited.",
-    speedHighlights: ["Up to 1 Gbps", "99.9% Uptime SLA", "Zero Throttling"],
+      "Ultra-fast broadband with unlimited data, low latency, and 24/7 support.",
+    speedHighlights: [
+      "Up to 1 Gbps Speeds",
+      "Unlimited Data",
+      "24/7 Customer Support",
+    ],
     pricingTeaser: "Plans start from INR 499/month",
     primaryCtaText: "View Plans",
-    secondaryCtaText: "Get Connected Today",
+    secondaryCtaText: "Contact Sales",
     ctaLink: "/plans",
-    desktopBannerImage: "/images/isp-hero-desktop.svg",
-    mobileBannerImage: "/images/isp-hero-mobile.svg",
-    featureBadges: [
-      { id: "install", label: "Free Installation" },
-      { id: "unlimited", label: "Unlimited Data" },
-      { id: "support", label: "24/7 Support" },
-      { id: "activation", label: "Same-Day Activation" },
-    ],
+    desktopBannerImage:
+      "https://plus.unsplash.com/premium_photo-1755873911560-4e007f722c16?auto=format&fit=crop&w=2400&q=80",
+    mobileBannerImage:
+      "https://plus.unsplash.com/premium_photo-1755873911560-4e007f722c16?auto=format&fit=crop&w=1200&q=80",
   },
 ];

@@ -88,9 +88,9 @@ export default function Navbar() {
                   href={link.href}
                   className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.href)
-                      ? "text-blue-700 bg-blue-50"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                  }`}
+                    ? "text-slate-600 font-medium"
+                    : "text-slate-600 font-medium"
+                  } hover:text-blue-700 hover:bg-blue-50`}
                 >
                   {link.label}
                   {link.children && (

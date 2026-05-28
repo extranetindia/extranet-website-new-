@@ -52,11 +52,6 @@ body {
   background-size: 48px 48px;
 }
 
-.hero-card-glass {
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(8px);
-}
-
 .section-divider {
   background: linear-gradient(
     90deg,

@@ -3,13 +3,9 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Zap,
   Shield,
-  Globe,
   Clock,
   Server,
-  Wifi,
-  Lock,
   HeadphonesIcon,
 } from "lucide-react";
 import SectionPreview from "@/components/ui/SectionPreview";
@@ -76,7 +72,7 @@ const features = [
 export default function Features() {
   return (
     <SectionPreview
-      // eyebrow="Why Extranet"
+      eyebrow="Why Extranet"
       title="Why Extranet"
       description="Enterprise technology for homes and businesses across India — reliability, security, and speed in one network."
       href="/about"
