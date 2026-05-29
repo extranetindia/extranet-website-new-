@@ -13,6 +13,7 @@ export interface PlanDefinition {
   tag: string | null;
   description: string;
   features: string[];
+  popular?: boolean;
 }
 
 export const homeBroadbandPlans: PlanDefinition[] = [
