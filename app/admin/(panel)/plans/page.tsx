@@ -1,9 +1,35 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
-import type { AdminPlan, PlanCategory } from "@/lib/admin/mock-data";
-import { initialPlans } from "@/lib/admin/mock-data";
+import { supabase } from "@/lib/supabase/client";
+
+type PlanCategory = "Home Broadband" | "Business" | "Enterprise";
+
+interface PlanRow {
+  id: string;
+  created_at?: string;
+  name: string;
+  speed: string;
+  price: string;
+  description: string | null;
+  features: string[] | string | null;
+  popular: boolean;
+  category: string;
+  button_text: string;
+}
+
+interface AdminPlan {
+  id: string;
+  name: string;
+  category: PlanCategory;
+  speed: string;
+  price: string;
+  buttonText: string;
+  popular: boolean;
+  features: string[];
+  description: string;
+}
 
 const defaultPlan: AdminPlan = {
   id: "",
@@ -14,14 +40,88 @@ const defaultPlan: AdminPlan = {
   buttonText: "Get Started",
   popular: false,
   features: [],
+  description: "",
 };
 
+function parseFeatures(features: PlanRow["features"]): string[] {
+  if (!features) return [];
+  if (Array.isArray(features)) return features;
+  if (typeof features === "string") {
+    try {
+      const parsed = JSON.parse(features) as unknown;
+      if (Array.isArray(parsed)) {
+        return parsed.map((item) => String(item));
+      }
+    } catch {
+      // fall through to comma-separated parsing
+    }
+    return features
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function rowToAdminPlan(row: PlanRow): AdminPlan {
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category as PlanCategory,
+    speed: row.speed,
+    price: row.price,
+    buttonText: row.button_text,
+    popular: Boolean(row.popular),
+    features: parseFeatures(row.features),
+    description: row.description ?? "",
+  };
+}
+
+function planToPayload(plan: AdminPlan, features: string[]) {
+  return {
+    name: plan.name,
+    speed: plan.speed,
+    price: plan.price,
+    description: plan.description || null,
+    features,
+    popular: plan.popular,
+    category: plan.category,
+    button_text: plan.buttonText,
+  };
+}
+
 export default function AdminPlansPage() {
-  const [plans, setPlans] = useState(initialPlans);
+  const [plans, setPlans] = useState<AdminPlan[]>([]);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<AdminPlan>(defaultPlan);
   const [featuresInput, setFeaturesInput] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const fetchPlans = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("plans")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Failed to fetch plans:", error);
+      setPlans([]);
+      return;
+    }
+
+    setPlans((data as PlanRow[]).map(rowToAdminPlan));
+  }, []);
+
+  useEffect(() => {
+    const load = async () => {
+      setLoading(true);
+      await fetchPlans();
+      setLoading(false);
+    };
+    void load();
+  }, [fetchPlans]);
 
   const sortedPlans = useMemo(
     () => [...plans].sort((a, b) => Number(b.popular) - Number(a.popular)),
@@ -30,7 +130,7 @@ export default function AdminPlansPage() {
 
   const openNew = () => {
     setEditingId(null);
-    setDraft({ ...defaultPlan, id: `plan-${Date.now()}` });
+    setDraft({ ...defaultPlan });
     setFeaturesInput("");
     setOpen(true);
   };
@@ -42,23 +142,70 @@ export default function AdminPlansPage() {
     setOpen(true);
   };
 
-  const submitPlan = () => {
+  const submitPlan = async () => {
+    setSaving(true);
     const features = featuresInput
       .split(",")
       .map((item) => item.trim())
       .filter(Boolean);
-    const nextPlan = { ...draft, features };
+    const payload = planToPayload({ ...draft, features }, features);
 
-    setPlans((previous) =>
-      editingId
-        ? previous.map((plan) => (plan.id === editingId ? nextPlan : plan))
-        : [...previous, nextPlan],
-    );
+    if (editingId) {
+      const { error } = await supabase
+        .from("plans")
+        .update(payload)
+        .eq("id", editingId);
+
+      if (error) {
+        console.error("Failed to update plan:", error);
+        setSaving(false);
+        return;
+      }
+    } else {
+      const { error } = await supabase.from("plans").insert(payload);
+
+      // if (error) {
+      //   console.error("Failed to insert plan:", error);
+      //   setSaving(false);
+      //   return;
+      // }
+
+      if (error) {
+        alert(JSON.stringify(error, null, 2));
+        console.error(error);
+        setSaving(false);
+        return;
+      }
+    }
+
+    await fetchPlans();
+    setSaving(false);
     setOpen(false);
   };
 
-  const removePlan = (id: string) => {
-    setPlans((previous) => previous.filter((plan) => plan.id !== id));
+  const removePlan = async (id: string) => {
+    const { error } = await supabase.from("plans").delete().eq("id", id);
+
+    if (error) {
+      console.error("Failed to delete plan:", error);
+      return;
+    }
+
+    await fetchPlans();
+  };
+
+  const togglePopular = async (plan: AdminPlan) => {
+    const { error } = await supabase
+      .from("plans")
+      .update({ popular: !plan.popular })
+      .eq("id", plan.id);
+
+    if (error) {
+      console.error("Failed to update popular flag:", error);
+      return;
+    }
+
+    await fetchPlans();
   };
 
   return (
@@ -94,53 +241,59 @@ export default function AdminPlansPage() {
               </tr>
             </thead>
             <tbody>
-              {sortedPlans.map((plan) => (
-                <tr key={plan.id} className="border-b border-slate-100">
-                  <td className="px-3 py-3 font-medium text-slate-900">{plan.name}</td>
-                  <td className="px-3 py-3 text-slate-700">{plan.category}</td>
-                  <td className="px-3 py-3 text-slate-700">{plan.speed}</td>
-                  <td className="px-3 py-3 text-slate-700">{plan.price}</td>
-                  <td className="px-3 py-3">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setPlans((previous) =>
-                          previous.map((item) =>
-                            item.id === plan.id
-                              ? { ...item, popular: !item.popular }
-                              : item,
-                          ),
-                        )
-                      }
-                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                        plan.popular
-                          ? "bg-blue-100 text-blue-700"
-                          : "bg-slate-100 text-slate-500"
-                      }`}
-                    >
-                      {plan.popular ? "Popular" : "Not Popular"}
-                    </button>
-                  </td>
-                  <td className="px-3 py-3">
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => openEdit(plan)}
-                        className="rounded-lg border border-slate-200 p-1.5 text-slate-600 transition hover:bg-slate-100"
-                      >
-                        <Pencil size={14} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => removePlan(plan.id)}
-                        className="rounded-lg border border-red-200 p-1.5 text-red-600 transition hover:bg-red-50"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="px-3 py-8 text-center text-slate-500">
+                    Loading plans...
                   </td>
                 </tr>
-              ))}
+              ) : sortedPlans.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-3 py-8 text-center text-slate-500">
+                    No plans found. Add your first plan.
+                  </td>
+                </tr>
+              ) : (
+                sortedPlans.map((plan) => (
+                  <tr key={plan.id} className="border-b border-slate-100">
+                    <td className="px-3 py-3 font-medium text-slate-900">{plan.name}</td>
+                    <td className="px-3 py-3 text-slate-700">{plan.category}</td>
+                    <td className="px-3 py-3 text-slate-700">{plan.speed}</td>
+                    <td className="px-3 py-3 text-slate-700">{plan.price}</td>
+                    <td className="px-3 py-3">
+                      <button
+                        type="button"
+                        onClick={() => void togglePopular(plan)}
+                        className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                          plan.popular
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-slate-100 text-slate-500"
+                        }`}
+                      >
+                        {plan.popular ? "Popular" : "Not Popular"}
+                      </button>
+                    </td>
+                    <td className="px-3 py-3">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => openEdit(plan)}
+                          className="rounded-lg border border-slate-200 p-1.5 text-slate-600 transition hover:bg-slate-100"
+                        >
+                          <Pencil size={14} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => void removePlan(plan.id)}
+                          className="rounded-lg border border-red-200 p-1.5 text-red-600 transition hover:bg-red-50"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
@@ -270,10 +423,11 @@ export default function AdminPlansPage() {
               </button>
               <button
                 type="button"
-                onClick={submitPlan}
-                className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
+                onClick={() => void submitPlan()}
+                disabled={saving}
+                className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
               >
-                Save Plan
+                {saving ? "Saving..." : "Save Plan"}
               </button>
             </div>
           </div>
