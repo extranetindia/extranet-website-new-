@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+// import { Check } from "lucide-react";
+import { Check, Zap } from "lucide-react";
 import type { PlanDefinition } from "@/lib/plans";
 
 const colorMap = {
@@ -47,6 +48,8 @@ export default function PlanCards({
         const c = colorMap.blue;
         // const isPopular = plan.tag === "Most Popular";
         const isPopular = plan.popular;
+        // const Icon = plan.icon;
+        // import { Zap } from "lucide-react";
         return (
           <motion.div
             key={plan.name}
@@ -67,8 +70,11 @@ export default function PlanCards({
               <div
                 className={`w-10 h-10 rounded-xl ${c.icon} flex items-center justify-center mb-4`}
               >
+                <Zap className="w-5 h-5" />
+                {/* const Icon = plan.icon; */}
+                {/* <Icon className="w-5 h-5" /> */}
                 {/* <plan.icon className="w-5 h-5" /> */}
-                {plan.icon}
+                {/* {plan.icon} */}
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-1">{plan.name}</h3>
               <p className="text-slate-500 text-sm">{plan.description}</p>
