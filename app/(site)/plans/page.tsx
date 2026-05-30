@@ -25,7 +25,7 @@ export default function PlansPage() {
         description="Choose symmetric fiber speeds with unlimited data, no hidden fees, and free installation in covered cities. Upgrade or cancel anytime."
       /> */}
       {/* <PlansPageSections /> */}
-      <section className="pt-16.5">
+      <section className="pt-14 sm:pt-16">
         <PlansPageSections />
       </section>
     </>

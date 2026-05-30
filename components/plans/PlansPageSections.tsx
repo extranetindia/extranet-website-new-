@@ -61,17 +61,19 @@ import PlanCards from "./PlanCards";
 export default async function PlansPageSections() {
   const { data: plans } = await supabase.from("plans").select("*");
 
+  if (!plans?.length) return null;
+
+  const formattedPlans = plans.map((plan) => ({
+    ...plan,
+    color: "blue" as const,
+    icon: null,
+    period: "/month",
+    tag: plan.popular ? "Most Popular" : null,
+  }));
+
   return (
-    <section className="max-w-7xl mx-auto px-4 py-20">
-      {/* <h1 className="text-4xl font-bold mb-10">
-        Supabase Plans
-      </h1> */}
-
-      {/* <pre className="mb-10 bg-black text-white p-6 rounded-xl overflow-auto">
-        {JSON.stringify(plans, null, 2)}
-      </pre> */}
-
-      {plans && <PlanCards plans={plans} />}
+    <section className="mx-auto max-w-7xl overflow-hidden px-4 py-12 sm:px-6 sm:py-16 md:py-20 lg:px-8">
+      {formattedPlans && <PlanCards plans={formattedPlans} />}
     </section>
   );
 }

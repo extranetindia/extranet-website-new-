@@ -18,7 +18,7 @@ export default function ContactContent() {
   return (
     <div className="grid lg:grid-cols-5 gap-10">
       <div className="lg:col-span-3">
-        <div className="rounded-2xl bg-white border border-slate-200 p-8 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
           <h2 className="text-2xl font-black text-slate-900 mb-6">Send us a message</h2>
           <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
             <div className="grid sm:grid-cols-2 gap-4">
@@ -28,7 +28,7 @@ export default function ContactContent() {
                 </label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
                   placeholder="Your name"
                 />
               </div>
@@ -38,7 +38,7 @@ export default function ContactContent() {
                 </label>
                 <input
                   type="tel"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
                   placeholder="+91"
                 />
               </div>
@@ -49,7 +49,7 @@ export default function ContactContent() {
               </label>
               <input
                 type="email"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
                 placeholder="you@company.com"
               />
             </div>
@@ -57,7 +57,7 @@ export default function ContactContent() {
               <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Inquiry type
               </label>
-              <select className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+              <select className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100">
                 <option>New connection — Home</option>
                 <option>New connection — Business</option>
                 <option>Enterprise / Leased line</option>
@@ -76,7 +76,7 @@ export default function ContactContent() {
             </div>
             <button
               type="submit"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold transition-colors"
+              className="w-full min-h-[44px] rounded-xl bg-blue-700 px-8 py-3.5 font-bold text-white transition-colors hover:bg-blue-800 sm:w-auto"
             >
               Submit inquiry
             </button>

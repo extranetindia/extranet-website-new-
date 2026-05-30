@@ -95,11 +95,11 @@ export default function CoverageMap() {
             <input
               type="text"
               placeholder="Enter your pincode"
-              className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:border-white/40"
+              className="min-h-[44px] flex-1 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-blue-200 focus:border-white/40 focus:outline-none"
             />
             <button
               type="button"
-              className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 font-semibold text-sm transition-colors shrink-0"
+              className="min-h-[44px] shrink-0 rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold transition-colors hover:bg-red-700"
             >
               Check availability
             </button>

@@ -41,6 +41,13 @@ export default function Navbar() {
     setOpenDropdown(null);
   }, [pathname]);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href.split("#")[0]);
 
@@ -56,15 +63,15 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 py-3">
-          <Link href="/" className="relative block h-10 shrink-0">
+        <div className="flex h-14 items-center justify-between py-2 sm:h-16 sm:py-3">
+          <Link href="/" className="relative block h-8 shrink-0 sm:h-10">
             <Image
               src="/logo.png"
               alt="Extranet"
               width={160}
               height={40}
               priority
-              className="h-10 w-auto"
+              className="h-8 w-auto sm:h-10"
             />
           </Link>
 
@@ -138,9 +145,10 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -153,40 +161,40 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden bg-white border-t border-slate-200 overflow-hidden"
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-slate-200 bg-white lg:hidden"
           >
-            <nav className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+            <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                  className={`min-h-[44px] rounded-lg px-4 py-3 font-medium transition-colors ${
                     isActive(link.href)
-                      ? "text-blue-700 bg-blue-50"
+                      ? "bg-blue-50 text-blue-700"
                       : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
                   {link.label}
                 </Link>
               ))}
-              <div className="mt-3 pt-3 border-t border-slate-200 flex flex-col gap-2">
+              <div className="mt-3 flex flex-col gap-2 border-t border-slate-200 pt-3">
                 <a
                   href="tel:+919540901195"
-                  className="flex items-center gap-2 px-4 py-3 text-slate-600"
+                  className="flex min-h-[44px] items-center gap-2 px-4 py-3 text-slate-600"
                 >
                   <Phone className="w-4 h-4 text-blue-600" />
                   +91 95409 01195
                 </a>
                 <Link
-                  href="#"
-                  className="mx-4 py-3 rounded-xl border border-slate-200 text-slate-700 font-semibold text-center text-sm"
+                  href="https://user.extranetindia.com/Customer/Default.aspx"
+                  className="mx-0 min-h-[44px] rounded-xl border border-slate-200 py-3.5 text-center text-sm font-semibold text-slate-700"
                 >
                   My Account
                 </Link>
                 <Link
                   href="/contact"
-                  className="mx-4 py-3 rounded-xl bg-blue-700 text-white text-sm font-semibold text-center"
+                  className="mx-0 min-h-[44px] rounded-xl bg-blue-700 py-3.5 text-center text-sm font-semibold text-white"
                 >
                   Get Connected
                 </Link>

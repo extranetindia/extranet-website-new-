@@ -60,8 +60,8 @@ export default async function HomePlansPreview() {
   }));
 
   return (
-    <section className="bg-white py-20">
-      <div className="container mx-auto">
+    <section className="overflow-hidden bg-white py-12 sm:py-16 md:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <PlanCards
           plans={formattedPlans}
           ctaHref="/contact"

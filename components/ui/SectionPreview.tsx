@@ -24,9 +24,9 @@ export default function SectionPreview({
   className = "bg-slate-50",
 }: SectionPreviewProps) {
   return (
-    <section className={`relative py-20 ${className}`}>
+    <section className={`relative py-12 sm:py-16 md:py-20 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+        <div className="mb-8 flex flex-col gap-5 sm:mb-10 md:mb-12 lg:flex-row lg:items-end lg:justify-between lg:gap-6">
           <div className="max-w-2xl">
             <motion.span
               initial={{ opacity: 0, y: 12 }}
@@ -41,7 +41,7 @@ export default function SectionPreview({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.05 }}
-              className="text-3xl sm:text-4xl font-black text-slate-900 mt-2 mb-3"
+              className="text-2xl font-black text-slate-900 mt-2 mb-3 sm:text-3xl md:text-4xl"
             >
               {title}
             </motion.h2>
@@ -57,7 +57,7 @@ export default function SectionPreview({
           </div>
           <Link
             href={href}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm transition-colors shadow-lg shadow-blue-900/15 shrink-0"
+            className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition-colors hover:bg-blue-800 sm:w-auto shrink-0"
           >
             {linkLabel}
             <ArrowRight className="w-4 h-4" />

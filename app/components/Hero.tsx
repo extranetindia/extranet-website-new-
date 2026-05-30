@@ -25,7 +25,11 @@ export default async function Hero() {
   return (
     <Link
       href="/plans"
-      className="relative block h-[85vh] min-h-[620px] max-h-[980px] w-full overflow-hidden cursor-pointer"
+      className="relative block w-full overflow-hidden cursor-pointer
+        aspect-[16/10] max-h-[240px]
+        min-[400px]:max-h-[280px]
+        sm:aspect-[16/9] sm:max-h-[340px]
+        md:aspect-auto md:h-[85vh] md:min-h-[620px] md:max-h-[980px]"
       aria-label="View plans"
     >
       <Image
@@ -33,8 +37,8 @@ export default async function Hero() {
         alt="Extranet hero banner"
         fill
         priority
-        className="object-cover object-center"
-        sizes="100vw"
+        className="object-cover object-center max-md:object-[center_20%] md:object-center"
+        sizes="(max-width: 768px) 100vw, 100vw"
       />
     </Link>
   );

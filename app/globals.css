@@ -76,3 +76,12 @@ body {
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
+.mobile-carousel > div {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.mobile-carousel > div::-webkit-scrollbar {
+  display: none;
+}

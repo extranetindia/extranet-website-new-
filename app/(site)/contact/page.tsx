@@ -15,7 +15,7 @@ export default function ContactPage() {
         title="Talk to our team"
         description="New connections, enterprise quotes, or general questions — we respond within one business day."
       />
-      <section className="py-20 bg-slate-50">
+      <section className="bg-slate-50 py-12 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ContactContent />
         </div>

@@ -103,7 +103,7 @@ export default function SupportContent() {
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-semibold text-slate-900 hover:bg-slate-50"
+                  className="flex min-h-[44px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 sm:px-5"
                 >
                   {faq.q}
                   <ChevronDown

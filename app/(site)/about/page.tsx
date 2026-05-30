@@ -25,10 +25,10 @@ export default function AboutPage() {
         description="Extranet India Private Limited builds and operates carrier-grade fiber networks for homes, businesses, and institutions — with transparency, reliability, and technical excellence at the core."
       /> */}
 
-      <section className="py-35 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      <section className="bg-white pb-12 pt-24 sm:pb-16 sm:pt-28 md:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
           <div>
-            <h2 className="text-3xl font-black text-slate-900 mb-4">Company overview</h2>
+            <h2 className="mb-4 text-2xl font-black text-slate-900 sm:text-3xl">Company overview</h2>
             <p className="text-slate-600 leading-relaxed mb-4">
               Founded with a mission to democratize enterprise-grade connectivity,
               Extranet operates metro rings, long-haul fiber, and last-mile FTTH
@@ -41,11 +41,11 @@ export default function AboutPage() {
               TRAI-compliant service standards.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="p-6 rounded-2xl bg-slate-50 border border-slate-200"
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6"
               >
                 <s.icon className="w-8 h-8 text-blue-700 mb-3" />
                 <div className="text-2xl font-black text-slate-900">{s.value}</div>
@@ -56,7 +56,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-slate-50">
+      <section className="bg-slate-50 py-12 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-black text-slate-900 mb-4 text-center">
             Mission & reliability
@@ -92,7 +92,7 @@ export default function AboutPage() {
           <div className="mt-12 text-center">
             <Link
               href="/plans"
-              className="inline-flex px-8 py-4 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold transition-colors"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-blue-700 px-8 py-4 font-bold text-white transition-colors hover:bg-blue-800"
             >
               Explore our plans
             </Link>

@@ -9,15 +9,9 @@ import {
   HeadphonesIcon,
 } from "lucide-react";
 import SectionPreview from "@/components/ui/SectionPreview";
+import MobileCarousel from "@/components/ui/MobileCarousel";
 
 const features = [
-  // {
-  //   icon: Zap,
-  //   title: "Blazing Fiber Speeds",
-  //   description:
-  //     "Symmetric fiber from 50 Mbps to 10 Gbps with equal upload and download.",
-  //   accent: "blue",
-  // },
   {
     icon: Shield,
     title: "Enterprise DDoS Protection",
@@ -25,13 +19,6 @@ const features = [
       "Real-time scrubbing centers protect against volumetric and application-layer attacks.",
     accent: "red",
   },
-  // {
-  //   icon: Globe,
-  //   title: "Low-Latency Backbone",
-  //   description:
-  //     "Tier-1 peering and IXPs deliver sub-5ms latency in major metros.",
-  //   accent: "blue",
-  // },
   {
     icon: Clock,
     title: "99.99% Uptime SLA",
@@ -46,20 +33,6 @@ const features = [
       "Static IPs, PTR records, and BGP for enterprises with their own AS.",
     accent: "blue",
   },
-  // {
-  //   icon: Wifi,
-  //   title: "Managed Wi-Fi",
-  //   description:
-  //     "Wi-Fi 6E access points with centralized management and guest networks.",
-  //   accent: "red",
-  // },
-  // {
-  //   icon: Lock,
-  //   title: "Zero-Trust Security",
-  //   description:
-  //     "Firewall, filtering, and optional SD-WAN for distributed networks.",
-  //   accent: "blue",
-  // },
   {
     icon: HeadphonesIcon,
     title: "24/7 Assistance",
@@ -68,6 +41,36 @@ const features = [
     accent: "red",
   },
 ];
+
+function FeatureCard({
+  feat,
+  index,
+}: {
+  feat: (typeof features)[0];
+  index: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.05 }}
+      className="group h-full rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-blue-200 hover:shadow-md"
+    >
+      <div
+        className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${
+          feat.accent === "blue"
+            ? "bg-blue-50 text-blue-700"
+            : "bg-red-50 text-red-600"
+        }`}
+      >
+        <feat.icon className="h-5 w-5" />
+      </div>
+      <h3 className="mb-2 text-base font-bold text-slate-900">{feat.title}</h3>
+      <p className="text-sm leading-relaxed text-slate-600">{feat.description}</p>
+    </motion.div>
+  );
+}
 
 export default function Features() {
   return (
@@ -79,43 +82,36 @@ export default function Features() {
       linkLabel="Learn about us"
       className="bg-slate-50"
     >
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <MobileCarousel
+        ariaLabel="Why Extranet features"
+        slideClassName="w-[82%] max-w-[300px] shrink-0 snap-start snap-always"
+      >
         {features.map((feat, i) => (
-          <motion.div
-            key={feat.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-            className="group p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-200 hover:shadow-md transition-all"
-          >
-            <div
-              className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${
-                feat.accent === "blue"
-                  ? "bg-blue-50 text-blue-700"
-                  : "bg-red-50 text-red-600"
-              }`}
-            >
-              <feat.icon className="w-5 h-5" />
-            </div>
-            <h3 className="text-base font-bold text-slate-900 mb-2">{feat.title}</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">{feat.description}</p>
-          </motion.div>
+          <FeatureCard key={feat.title} feat={feat} index={i} />
+        ))}
+      </MobileCarousel>
+
+      <div className="hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-4">
+        {features.map((feat, i) => (
+          <FeatureCard key={feat.title} feat={feat} index={i} />
         ))}
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mt-12 rounded-2xl bg-gradient-to-r from-blue-700 to-blue-800 p-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-white"
+        className="mt-8 flex flex-col items-stretch justify-between gap-5 rounded-2xl bg-gradient-to-r from-blue-700 to-blue-800 p-6 text-white sm:mt-12 sm:flex-row sm:items-center sm:gap-6 sm:p-8"
       >
         <div>
-          <h3 className="text-xl font-bold mb-1">Ready for real internet speed?</h3>
-          <p className="text-blue-100 text-sm">Join 50,000+ customers on Extranet.</p>
+          <h3 className="mb-1 text-lg font-bold sm:text-xl">
+            Ready for real internet speed?
+          </h3>
+          <p className="text-sm text-blue-100">Join 50,000+ customers on Extranet.</p>
         </div>
         <Link
           href="/plans"
-          className="shrink-0 px-7 py-3.5 rounded-xl bg-white text-blue-800 font-bold text-sm hover:bg-blue-50 transition-colors"
+          className="min-h-[44px] shrink-0 rounded-xl bg-white px-7 py-3.5 text-center text-sm font-bold text-blue-800 transition-colors hover:bg-blue-50"
         >
           See all plans
         </Link>

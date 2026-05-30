@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-// import { Check } from "lucide-react";
 import { Check, Zap } from "lucide-react";
+import MobileCarousel from "@/components/ui/MobileCarousel";
 import type { PlanDefinition } from "@/lib/plans";
 
 const colorMap = {
@@ -30,6 +30,73 @@ interface PlanCardsProps {
   columns?: 2 | 3;
 }
 
+function PlanCard({
+  plan,
+  index,
+  ctaHref,
+  ctaLabel,
+}: {
+  plan: PlanDefinition;
+  index: number;
+  ctaHref: string;
+  ctaLabel: string;
+}) {
+  const c = colorMap[plan.color ?? "blue"] ?? colorMap.blue;
+  const isPopular = plan.popular ?? plan.tag === "Most Popular";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.45, delay: index * 0.1 }}
+      className={`relative flex h-full min-h-[480px] flex-col gap-5 rounded-2xl border bg-white p-6 transition-all duration-300 sm:min-h-[520px] sm:gap-6 sm:p-8 md:min-h-[650px] ${c.card} ${isPopular ? "md:-mt-2 md:mb-2" : ""}`}
+    >
+      {(plan.tag || isPopular) && (
+        <div
+          className={`absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-wider ${c.badge}`}
+        >
+          {plan.tag ?? "Most Popular"}
+        </div>
+      )}
+      <div>
+        <div
+          className={`mb-4 flex h-10 w-10 items-center justify-center rounded-xl ${c.icon}`}
+        >
+          <Zap className="h-5 w-5" />
+        </div>
+        <h3 className="mb-1 text-xl font-bold text-slate-900">{plan.name}</h3>
+        <p className="text-sm text-slate-500">{plan.description}</p>
+      </div>
+      <div>
+        <div className="mb-1 text-3xl font-black text-slate-900">{plan.speed}</div>
+        <div className="flex items-baseline gap-1">
+          <span className="text-3xl font-black text-slate-900 sm:text-4xl">
+            {plan.price}
+          </span>
+          {plan.period && (
+            <span className="font-medium text-slate-500">{plan.period}</span>
+          )}
+        </div>
+      </div>
+      <ul className="flex flex-1 flex-col gap-2.5">
+        {plan.features?.map((feat) => (
+          <li key={feat} className="flex items-start gap-3 text-sm">
+            <Check className={`mt-0.5 h-4 w-4 shrink-0 ${c.check}`} />
+            <span className="text-slate-600">{feat}</span>
+          </li>
+        ))}
+      </ul>
+      <Link
+        href={ctaHref}
+        className={`w-full min-h-[44px] rounded-xl py-3.5 text-center text-sm font-bold text-white shadow-lg transition-all duration-200 hover:scale-[1.01] ${c.btn}`}
+      >
+        {ctaLabel}
+      </Link>
+    </motion.div>
+  );
+}
+
 export default function PlanCards({
   plans,
   ctaHref = "/contact",
@@ -38,71 +105,34 @@ export default function PlanCards({
 }: PlanCardsProps) {
   const gridClass =
     columns === 2
-      ? "grid md:grid-cols-2 gap-6 lg:gap-8"
-      : "grid md:grid-cols-3 gap-8 lg:gap-10 items-start";
+      ? "hidden gap-6 md:grid md:grid-cols-2 lg:gap-8"
+      : "hidden items-start gap-8 md:grid md:grid-cols-3 lg:gap-10";
 
   return (
-    <div className={gridClass}>
-      {plans.map((plan, i) => {
-        // const c = colorMap[plan.color];
-        const c = colorMap.blue;
-        // const isPopular = plan.tag === "Most Popular";
-        const isPopular = plan.popular;
-        // const Icon = plan.icon;
-        // import { Zap } from "lucide-react";
-        return (
-          <motion.div
+    <>
+      <MobileCarousel ariaLabel="Broadband plans" slideClassName="w-[82%] max-w-[320px] shrink-0 snap-start snap-always">
+        {plans.map((plan, i) => (
+          <PlanCard
             key={plan.name}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: i * 0.1 }}
-            className={`relative rounded-2xl bg-white border ${c.card} p-8 flex flex-col gap-6 transition-all duration-300 h-full min-h-[650px] ${isPopular ? "md:-mt-2 md:mb-2" : ""}`}
-          >
-            {plan.tag && (
-              <div
-                className={`absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${c.badge}`}
-              >
-                {plan.tag}
-              </div>
-            )}
-            <div>
-              <div
-                className={`w-10 h-10 rounded-xl ${c.icon} flex items-center justify-center mb-4`}
-              >
-                <Zap className="w-5 h-5" />
-                {/* const Icon = plan.icon; */}
-                {/* <Icon className="w-5 h-5" /> */}
-                {/* <plan.icon className="w-5 h-5" /> */}
-                {/* {plan.icon} */}
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-1">{plan.name}</h3>
-              <p className="text-slate-500 text-sm">{plan.description}</p>
-            </div>
-            <div>
-              <div className="text-3xl font-black text-slate-900 mb-1">{plan.speed}</div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-black text-slate-900">{plan.price}</span>
-                <span className="text-slate-500 font-medium">{plan.period}</span>
-              </div>
-            </div>
-            <ul className="flex flex-col gap-2.5 flex-1">
-              {plan.features.map((feat) => (
-                <li key={feat} className="flex items-start gap-3 text-sm">
-                  <Check className={`w-4 h-4 mt-0.5 shrink-0 ${c.check}`} />
-                  <span className="text-slate-600">{feat}</span>
-                </li>
-              ))}
-            </ul>
-            <Link
-              href={ctaHref}
-              className={`w-full py-3.5 rounded-xl text-white font-bold text-sm text-center transition-all duration-200 shadow-lg hover:scale-[1.01] ${c.btn}`}
-            >
-              {ctaLabel}
-            </Link>
-          </motion.div>
-        );
-      })}
-    </div>
+            plan={plan}
+            index={i}
+            ctaHref={ctaHref}
+            ctaLabel={ctaLabel}
+          />
+        ))}
+      </MobileCarousel>
+
+      <div className={gridClass}>
+        {plans.map((plan, i) => (
+          <PlanCard
+            key={plan.name}
+            plan={plan}
+            index={i}
+            ctaHref={ctaHref}
+            ctaLabel={ctaLabel}
+          />
+        ))}
+      </div>
+    </>
   );
 }
