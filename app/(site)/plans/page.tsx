@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import PageHero from "@/components/ui/PageHero";
 import PlansPageSections from "@/components/plans/PlansPageSections";

@@ -53,15 +53,13 @@
 //   );
 // }
 
+export const dynamic = "force-dynamic";
+
 import { supabase } from "@/lib/supabase/client";
 import PlanCards from "./PlanCards";
 
 export default async function PlansPageSections() {
-  const { data: plans, error } = await supabase
-    .from("plans")
-    .select("*");
-
-  console.log(plans, error);
+  const { data: plans } = await supabase.from("plans").select("*");
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-20">
