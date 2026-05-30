@@ -131,7 +131,7 @@ export default function Navbar() {
               <span className="font-medium">+91 9540901195</span>
             </a>
             <Link
-              href="#"
+              href="https://user.extranetindia.com/Customer/Default.aspx"
               className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:border-blue-300 hover:text-blue-700 text-sm font-semibold transition-all bg-white"
             >
               My Account
