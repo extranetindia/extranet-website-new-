@@ -63,15 +63,18 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between py-2 sm:h-16 sm:py-3">
-          <Link href="/" className="relative block h-8 shrink-0 sm:h-10">
+        <div className="flex h-14 items-center justify-between sm:h-16">
+          <Link
+            href="/"
+            className="relative flex h-9 items-center sm:h-10"
+          >
             <Image
               src="/logo.png"
               alt="Extranet"
               width={160}
               height={40}
               priority
-              className="h-8 w-auto sm:h-10"
+              className="h-9 w-auto max-w-[140px] object-contain object-left sm:h-10 sm:max-w-none"
             />
           </Link>
 

@@ -43,6 +43,7 @@ function PlanCard({
 }) {
   const c = colorMap[plan.color ?? "blue"] ?? colorMap.blue;
   const isPopular = plan.popular ?? plan.tag === "Most Popular";
+  const showBadge = Boolean(plan.tag || isPopular);
 
   return (
     <motion.div
@@ -50,11 +51,11 @@ function PlanCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45, delay: index * 0.1 }}
-      className={`relative flex h-full min-h-[480px] flex-col gap-5 rounded-2xl border bg-white p-6 transition-all duration-300 sm:min-h-[520px] sm:gap-6 sm:p-8 md:min-h-[650px] ${c.card} ${isPopular ? "md:-mt-2 md:mb-2" : ""}`}
+      className={`relative flex h-full min-h-[480px] flex-col gap-5 overflow-visible rounded-2xl border bg-white p-6 transition-all duration-300 sm:min-h-[520px] sm:gap-6 sm:p-8 md:min-h-[650px] ${showBadge ? "pt-8 sm:pt-9" : ""} ${c.card} ${isPopular ? "md:-mt-1 md:mb-1" : ""}`}
     >
-      {(plan.tag || isPopular) && (
+      {showBadge && (
         <div
-          className={`absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-wider ${c.badge}`}
+          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-wider shadow-sm ${c.badge}`}
         >
           {plan.tag ?? "Most Popular"}
         </div>
@@ -105,12 +106,16 @@ export default function PlanCards({
 }: PlanCardsProps) {
   const gridClass =
     columns === 2
-      ? "hidden gap-6 md:grid md:grid-cols-2 lg:gap-8"
-      : "hidden items-start gap-8 md:grid md:grid-cols-3 lg:gap-10";
+      ? "hidden gap-6 overflow-visible pt-6 md:grid md:grid-cols-2 lg:gap-8"
+      : "hidden items-start gap-8 overflow-visible pt-6 md:grid md:grid-cols-3 lg:gap-10";
 
   return (
     <>
-      <MobileCarousel ariaLabel="Broadband plans" slideClassName="w-[82%] max-w-[320px] shrink-0 snap-start snap-always">
+      <MobileCarousel
+        ariaLabel="Broadband plans"
+        slideClassName="w-[80%] max-w-[320px] shrink-0 snap-start snap-always overflow-visible"
+        trackPaddingTop="pt-7"
+      >
         {plans.map((plan, i) => (
           <PlanCard
             key={plan.name}

@@ -72,7 +72,7 @@ export default async function PlansPageSections() {
   }));
 
   return (
-    <section className="mx-auto max-w-7xl overflow-hidden px-4 py-12 sm:px-6 sm:py-16 md:py-20 lg:px-8">
+    <section className="mx-auto max-w-7xl overflow-visible px-4 py-12 sm:px-6 sm:py-16 md:py-20 lg:px-8">
       {formattedPlans && <PlanCards plans={formattedPlans} />}
     </section>
   );

@@ -3,11 +3,16 @@ export const dynamic = "force-dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
+import {
+  HERO_ASPECT,
+  resolveHeroBannerUrls,
+  type HeroBannerRow,
+} from "@/lib/cms/hero";
 
 export default async function Hero() {
   const { data, error } = await supabase
     .from("hero_banner")
-    .select("image_url")
+    .select("id, image_url, desktop_image_url, mobile_image_url, created_at")
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -16,30 +21,54 @@ export default async function Hero() {
     console.error("Failed to fetch hero banner:", error);
   }
 
-  const imageUrl = data?.image_url;
+  const { desktop, mobile } = resolveHeroBannerUrls(data as HeroBannerRow | null);
 
-  if (!imageUrl) {
+  if (!desktop) {
     return null;
   }
 
+  const mobileSrc = mobile ?? desktop;
+
   return (
-    <Link
-      href="/plans"
-      className="relative block w-full overflow-hidden cursor-pointer
-        aspect-[16/10] max-h-[240px]
-        min-[400px]:max-h-[280px]
-        sm:aspect-[16/9] sm:max-h-[340px]
-        md:aspect-auto md:h-[85vh] md:min-h-[620px] md:max-h-[980px]"
-      aria-label="View plans"
+    <section
+      aria-label="Promotional banner"
+      className="pt-[calc(3.5rem+1rem)] sm:pt-[calc(4rem+1.5rem)]"
     >
-      <Image
-        src={imageUrl}
-        alt="Extranet hero banner"
-        fill
-        priority
-        className="object-cover object-center max-md:object-[center_20%] md:object-center"
-        sizes="(max-width: 768px) 100vw, 100vw"
-      />
-    </Link>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Link
+          href="/plans"
+          className="group relative block w-full cursor-pointer overflow-hidden rounded-2xl shadow-lg shadow-slate-200/70 ring-1 ring-slate-200/80 transition-shadow hover:shadow-xl hover:shadow-slate-300/60 md:rounded-3xl"
+          aria-label="View broadband plans"
+        >
+          {/* Mobile banner — 1080×720 (3:2) */}
+          <div
+            className={`relative w-full ${HERO_ASPECT.mobile.className} md:hidden`}
+          >
+            <Image
+              src={mobileSrc}
+              alt="Extranet broadband plans"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="(max-width: 767px) 100vw, 0px"
+            />
+          </div>
+
+          {/* Desktop banner — 1600×600 (8:3) */}
+          <div
+            className={`relative hidden w-full ${HERO_ASPECT.desktop.className} md:block`}
+          >
+            <Image
+              src={desktop}
+              alt="Extranet broadband plans"
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="(min-width: 768px) min(1280px, 100vw)"
+            />
+          </div>
+        </Link>
+      </div>
+    </section>
   );
 }

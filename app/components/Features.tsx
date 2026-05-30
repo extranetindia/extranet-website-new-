@@ -84,7 +84,7 @@ export default function Features() {
     >
       <MobileCarousel
         ariaLabel="Why Extranet features"
-        slideClassName="w-[82%] max-w-[300px] shrink-0 snap-start snap-always"
+        slideClassName="w-[84%] max-w-[300px] shrink-0 snap-start snap-always"
       >
         {features.map((feat, i) => (
           <FeatureCard key={feat.title} feat={feat} index={i} />

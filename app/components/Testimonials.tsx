@@ -88,7 +88,7 @@ export default function Testimonials() {
     >
       <MobileCarousel
         ariaLabel="Customer testimonials"
-        slideClassName="w-[88%] max-w-[340px] shrink-0 snap-start snap-always"
+        slideClassName="w-[90%] max-w-[340px] shrink-0 snap-start snap-always"
       >
         {testimonials.map((t, i) => (
           <TestimonialCard key={t.name} testimonial={t} index={i} />
