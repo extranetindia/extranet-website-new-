@@ -17,6 +17,11 @@ export const metadata: Metadata = {
     "Extranet India delivers enterprise-grade broadband, fiber, and wireless internet solutions. Blazing speeds, unmatched reliability, and 24/7 support across India.",
   keywords:
     "Extranet India, broadband, fiber internet, ISP, high speed internet, wireless internet",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

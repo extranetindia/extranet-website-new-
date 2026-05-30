@@ -13,19 +13,16 @@ export default function AdminLoginPage() {
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center">
         <div className="grid w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-blue-900/10 lg:grid-cols-2">
           <div className="hidden bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 p-10 text-white lg:block">
-            <div className="flex items-center gap-3">
+            <Link href="/" className="relative inline-block rounded-lg bg-white px-3 py-2">
               <Image
-                src="/extranet-logo.png"
+                src="/logo.png"
                 alt="Extranet"
-                width={44}
-                height={44}
-                className="rounded-lg bg-white p-1.5"
+                width={160}
+                height={40}
+                priority
+                className="h-10 w-auto"
               />
-              <div>
-                <p className="text-lg font-bold tracking-tight">Extranet India</p>
-                <p className="text-xs text-blue-200">ISP Admin Console</p>
-              </div>
-            </div>
+            </Link>
             <h1 className="mt-16 text-4xl font-bold leading-tight">
               Enterprise ISP Operations Dashboard
             </h1>
@@ -37,19 +34,16 @@ export default function AdminLoginPage() {
 
           <section className="p-6 sm:p-10">
             <div className="mb-8 lg:hidden">
-              <div className="flex items-center gap-3">
+              <Link href="/" className="relative block h-10 shrink-0">
                 <Image
-                  src="/extranet-logo.png"
+                  src="/logo.png"
                   alt="Extranet"
-                  width={40}
+                  width={160}
                   height={40}
-                  className="rounded-lg border border-slate-200 p-1"
+                  priority
+                  className="h-10 w-auto"
                 />
-                <div>
-                  <p className="text-lg font-bold text-slate-900">Extranet Admin</p>
-                  <p className="text-xs text-slate-500">Secure login</p>
-                </div>
-              </div>
+              </Link>
             </div>
 
             <h2 className="text-2xl font-bold text-slate-900">Sign in</h2>

@@ -55,7 +55,7 @@ export default function Footer() {
               {
                 icon: MapPin,
                 label: "Registered Office",
-                value: "Extranet InfotechIndia Pvt. Ltd.",
+                value: "Extranet Infotech India Pvt. Ltd.",
                 sub: "LGF - 4, Shiva Plaza, Kasna, Greater Noida, Uttar Pradesh, India — 201310",
               },
             ].map((item) => (
@@ -79,23 +79,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid lg:grid-cols-5 gap-12">
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-3 mb-5">
-              <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white ring-1 ring-slate-700">
-                <Image
-                  src="/extranet-logo.png"
-                  alt="Extranet India"
-                  fill
-                  className="object-contain p-1"
-                />
-              </div>
-              <div>
-                <span className="text-lg font-bold text-white">
-                  extra<span className="text-red-500">A</span>net
-                </span>
-                <div className="text-[9px] text-blue-400/80 tracking-widest uppercase">
-                  India Pvt. Ltd.
-                </div>
-              </div>
+            <Link href="/" className="relative mb-5 block h-10 shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Extranet"
+                width={160}
+                height={40}
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
               Connecting India with enterprise-grade fiber and broadband. Reliable.

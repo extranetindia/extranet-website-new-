@@ -13,7 +13,7 @@ interface SettingsForm {
 
 const initialForm: SettingsForm = {
   companyName: "Extranet India Private Limited",
-  logoUrl: "/extranet-logo.png",
+  logoUrl: "/logo.png",
   themeMode: "system",
   facebook: "",
   twitter: "",

@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import NextImage from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  Image,
+  Image as ImageIcon,
   Boxes,
   MapPin,
   MessageSquare,
@@ -24,7 +25,7 @@ interface AdminSidebarProps {
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { label: "Hero Banner", href: "/admin/hero", icon: Image },
+  { label: "Hero Banner", href: "/admin/hero", icon: ImageIcon },
   { label: "Plans", href: "/admin/plans", icon: Boxes },
   { label: "Coverage", href: "/admin/coverage", icon: MapPin },
   { label: "Testimonials", href: "/admin/testimonials", icon: MessageSquare },
@@ -42,12 +43,16 @@ function NavContent({
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4">
-        <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-blue-700">Extranet</p>
-          {!collapsed && (
-            <p className="truncate text-xs text-slate-500">Admin Control Center</p>
-          )}
-        </div>
+        <Link href="/admin" className="min-w-0 shrink-0" onClick={onCloseMobile}>
+          <NextImage
+            src="/logo.png"
+            alt="Extranet"
+            width={160}
+            height={40}
+            priority
+            className={`w-auto ${collapsed ? "h-8" : "h-9"}`}
+          />
+        </Link>
         <button
           type="button"
           onClick={onToggle}
