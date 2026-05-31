@@ -71,7 +71,12 @@ function PlanCard({
       </div>
       <div>
         <div className="mb-1 text-3xl font-black text-slate-900">{plan.speed}</div>
-        <div className="flex items-baseline gap-1">
+        <div className="flex flex-wrap items-baseline gap-2">
+          {plan.originalPrice && (
+            <span className="text-lg font-semibold text-slate-400 line-through sm:text-xl">
+              {plan.originalPrice}
+            </span>
+          )}
           <span className="text-3xl font-black text-slate-900 sm:text-4xl">
             {plan.price}
           </span>
@@ -118,7 +123,7 @@ export default function PlanCards({
       >
         {plans.map((plan, i) => (
           <PlanCard
-            key={plan.name}
+            key={plan.id ?? plan.name}
             plan={plan}
             index={i}
             ctaHref={ctaHref}
@@ -130,7 +135,7 @@ export default function PlanCards({
       <div className={gridClass}>
         {plans.map((plan, i) => (
           <PlanCard
-            key={plan.name}
+            key={plan.id ?? plan.name}
             plan={plan}
             index={i}
             ctaHref={ctaHref}

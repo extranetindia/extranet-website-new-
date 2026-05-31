@@ -1,69 +1,23 @@
-// "use client";
-
-// import PlanCards from "@/components/plans/PlanCards";
-// import SectionPreview from "@/components/ui/SectionPreview";
-// import { homeBroadbandPlans } from "@/lib/plans";
-
-// export default function HomePlansPreview() {
-//   return (
-//     <SectionPreview
-//       eyebrow="Broadband Plans"
-//       title="Plans for every home and business"
-//       description="Transparent pricing with unlimited data. Compare speeds and choose the plan that fits your needs."
-//       href="/plans"
-//       linkLabel="View all plans"
-//       className="bg-white"
-//     >
-//       <PlanCards plans={homeBroadbandPlans} ctaHref="/contact" />
-//     </SectionPreview>
-//   );
-// }
-
-// import { supabase } from "@/lib/supabase/client";
-
-// export default async function HomePlansPreview() {
-//   const { data: plans, error } = await supabase
-//     .from("plans")
-//     .select("*");
-
-//   return (
-//     <div className="p-10 text-white">
-//       <h1 className="text-3xl font-bold mb-6">
-//         Supabase Connection Test
-//       </h1>
-
-//       {/* <pre className="bg-black p-6 rounded-xl overflow-auto text-sm">
-//         {JSON.stringify({ plans, error }, null, 2)}
-//       </pre> */}
-//     </div>
-//   );
-// }
-
 export const dynamic = "force-dynamic";
 
 import { supabase } from "@/lib/supabase/client";
-import PlanCards from "./PlanCards";
+import type { PlanRow } from "@/lib/database/schema";
+import CityPricedPlans from "./CityPricedPlans";
 
 export default async function HomePlansPreview() {
   const { data: plans } = await supabase
     .from("plans")
-    .select("*");
+    .select("*")
+    .order("created_at", { ascending: false });
 
   if (!plans?.length) return null;
-
-  const formattedPlans = plans.map((plan) => ({
-    ...plan,
-    color: "blue",
-    icon: null,
-    period: "/month",
-    tag: plan.popular ? "Most Popular" : null,
-  }));
 
   return (
     <section className="overflow-hidden bg-white py-12 sm:py-16 md:py-20">
       <div className="mx-auto max-w-7xl overflow-visible px-4 sm:px-6 lg:px-8">
-        <PlanCards
-          plans={formattedPlans}
+        <CityPricedPlans
+          basePlans={plans as PlanRow[]}
+          variant="home"
           ctaHref="/contact"
           ctaLabel="Get Started"
         />

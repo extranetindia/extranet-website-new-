@@ -5,7 +5,7 @@ export type PlanColor = "blue" | "red";
 
 export interface PlanDefinition {
   name: string;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   speed: string;
   price: string;
   period: string;
@@ -14,6 +14,9 @@ export interface PlanDefinition {
   description: string;
   features: string[];
   popular?: boolean;
+  /** City-specific compare-at price (strikethrough). */
+  originalPrice?: string | null;
+  id?: string;
 }
 
 export const homeBroadbandPlans: PlanDefinition[] = [

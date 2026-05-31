@@ -3,6 +3,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
+import PlanCityPricingFields from "@/components/admin/PlanCityPricingFields";
+import {
+  buildCityPricingFormRows,
+  fetchCities,
+  fetchPlanPricingForPlan,
+  savePlanCityPricing,
+  type CityPricingFormRow,
+} from "@/lib/database/plan-pricing";
 
 type PlanCategory = "Home Broadband" | "Business" | "Enterprise";
 
@@ -98,6 +106,13 @@ export default function AdminPlansPage() {
   const [draft, setDraft] = useState<AdminPlan>(defaultPlan);
   const [featuresInput, setFeaturesInput] = useState("");
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  const [cityPricingRows, setCityPricingRows] = useState<CityPricingFormRow[]>(
+    [],
+  );
+  const [cityPricingLoading, setCityPricingLoading] = useState(false);
+  const [cityPricingError, setCityPricingError] = useState<string | null>(null);
 
   const fetchPlans = useCallback(async () => {
     const { data, error } = await supabase
@@ -114,6 +129,47 @@ export default function AdminPlansPage() {
     setPlans((data as PlanRow[]).map(rowToAdminPlan));
   }, []);
 
+  const loadCityPricing = useCallback(async (planId: string | null) => {
+    setCityPricingLoading(true);
+    setCityPricingError(null);
+
+    const { data: cities, error: citiesError } = await fetchCities();
+
+    if (citiesError) {
+      setCityPricingRows([]);
+      setCityPricingError(citiesError.message);
+      setCityPricingLoading(false);
+      return;
+    }
+
+    if (!planId) {
+      setCityPricingRows(
+        cities.map((city) => ({
+          cityId: city.id,
+          cityName: city.name,
+          pricingId: null,
+          price: "",
+          originalPrice: "",
+        })),
+      );
+      setCityPricingLoading(false);
+      return;
+    }
+
+    const { data: existing, error: pricingError } =
+      await fetchPlanPricingForPlan(planId);
+
+    if (pricingError) {
+      setCityPricingRows(buildCityPricingFormRows(cities, []));
+      setCityPricingError(pricingError.message);
+      setCityPricingLoading(false);
+      return;
+    }
+
+    setCityPricingRows(buildCityPricingFormRows(cities, existing));
+    setCityPricingLoading(false);
+  }, []);
+
   useEffect(() => {
     const load = async () => {
       setLoading(true);
@@ -123,15 +179,34 @@ export default function AdminPlansPage() {
     void load();
   }, [fetchPlans]);
 
+  useEffect(() => {
+    if (!open) return;
+    void loadCityPricing(editingId);
+  }, [open, editingId, loadCityPricing]);
+
   const sortedPlans = useMemo(
     () => [...plans].sort((a, b) => Number(b.popular) - Number(a.popular)),
     [plans],
   );
 
+  const handleCityPricingChange = (
+    cityId: string,
+    field: "price" | "originalPrice",
+    value: string,
+  ) => {
+    setCityPricingRows((previous) =>
+      previous.map((row) =>
+        row.cityId === cityId ? { ...row, [field]: value } : row,
+      ),
+    );
+  };
+
   const openNew = () => {
     setEditingId(null);
     setDraft({ ...defaultPlan });
     setFeaturesInput("");
+    setSaveError(null);
+    setCityPricingError(null);
     setOpen(true);
   };
 
@@ -139,16 +214,29 @@ export default function AdminPlansPage() {
     setEditingId(plan.id);
     setDraft(plan);
     setFeaturesInput(plan.features.join(", "));
+    setSaveError(null);
+    setCityPricingError(null);
     setOpen(true);
+  };
+
+  const closeModal = () => {
+    setOpen(false);
+    setSaveError(null);
+    setCityPricingError(null);
   };
 
   const submitPlan = async () => {
     setSaving(true);
+    setSaveError(null);
+    setCityPricingError(null);
+
     const features = featuresInput
       .split(",")
       .map((item) => item.trim())
       .filter(Boolean);
     const payload = planToPayload({ ...draft, features }, features);
+
+    let planId = editingId;
 
     if (editingId) {
       const { error } = await supabase
@@ -158,21 +246,35 @@ export default function AdminPlansPage() {
 
       if (error) {
         console.error("Failed to update plan:", error);
+        setSaveError(error.message);
         setSaving(false);
         return;
       }
     } else {
-      const { error } = await supabase.from("plans").insert(payload);
-
-      // if (error) {
-      //   console.error("Failed to insert plan:", error);
-      //   setSaving(false);
-      //   return;
-      // }
+      const { data: inserted, error } = await supabase
+        .from("plans")
+        .insert(payload)
+        .select("id")
+        .single();
 
       if (error) {
-        alert(JSON.stringify(error, null, 2));
-        console.error(error);
+        console.error("Failed to insert plan:", error);
+        setSaveError(error.message);
+        setSaving(false);
+        return;
+      }
+
+      planId = (inserted as { id: string }).id;
+    }
+
+    if (planId) {
+      const { error: pricingSaveError } = await savePlanCityPricing(
+        planId,
+        cityPricingRows,
+      );
+
+      if (pricingSaveError) {
+        setCityPricingError(pricingSaveError.message);
         setSaving(false);
         return;
       }
@@ -180,7 +282,7 @@ export default function AdminPlansPage() {
 
     await fetchPlans();
     setSaving(false);
-    setOpen(false);
+    closeModal();
   };
 
   const removePlan = async (id: string) => {
@@ -301,123 +403,144 @@ export default function AdminPlansPage() {
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4">
-          <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl">
-            <div className="mb-4 flex items-center justify-between">
+          <div className="flex max-h-[min(92dvh,900px)] w-full max-w-2xl flex-col rounded-2xl border border-slate-200 bg-white shadow-2xl">
+            <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-5 py-4">
               <h3 className="text-base font-semibold text-slate-900">
                 {editingId ? "Edit Plan" : "Add New Plan"}
               </h3>
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={closeModal}
                 className="rounded-lg p-1 text-slate-500 transition hover:bg-slate-100"
               >
                 <X size={16} />
               </button>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                  Plan Name
-                </span>
-                <input
-                  value={draft.name}
-                  onChange={(event) =>
-                    setDraft((previous) => ({ ...previous, name: event.target.value }))
-                  }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+            <div className="flex-1 overflow-y-auto px-5 py-4">
+              {saveError && (
+                <p className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                  {saveError}
+                </p>
+              )}
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    Plan Name
+                  </span>
+                  <input
+                    value={draft.name}
+                    onChange={(event) =>
+                      setDraft((previous) => ({ ...previous, name: event.target.value }))
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    Category
+                  </span>
+                  <select
+                    value={draft.category}
+                    onChange={(event) =>
+                      setDraft((previous) => ({
+                        ...previous,
+                        category: event.target.value as PlanCategory,
+                      }))
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  >
+                    <option>Home Broadband</option>
+                    <option>Business</option>
+                    <option>Enterprise</option>
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    Speed
+                  </span>
+                  <input
+                    value={draft.speed}
+                    onChange={(event) =>
+                      setDraft((previous) => ({ ...previous, speed: event.target.value }))
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    Default Pricing (fallback)
+                  </span>
+                  <input
+                    value={draft.price}
+                    onChange={(event) =>
+                      setDraft((previous) => ({ ...previous, price: event.target.value }))
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  />
+                  <span className="mt-1 block text-xs text-slate-500">
+                    Used when no city-specific price is set.
+                  </span>
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    Button Text
+                  </span>
+                  <input
+                    value={draft.buttonText}
+                    onChange={(event) =>
+                      setDraft((previous) => ({
+                        ...previous,
+                        buttonText: event.target.value,
+                      }))
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  />
+                </label>
+                <label className="mt-7 flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={draft.popular}
+                    onChange={(event) =>
+                      setDraft((previous) => ({
+                        ...previous,
+                        popular: event.target.checked,
+                      }))
+                    }
+                  />
+                  <span className="text-sm font-medium text-slate-700">
+                    Mark as Popular
+                  </span>
+                </label>
+                <label className="block md:col-span-2">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    Features (comma-separated)
+                  </span>
+                  <input
+                    value={featuresInput}
+                    onChange={(event) => setFeaturesInput(event.target.value)}
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  />
+                </label>
+
+                <PlanCityPricingFields
+                  rows={cityPricingRows}
+                  loading={cityPricingLoading}
+                  error={cityPricingError}
+                  disabled={saving}
+                  fallbackPrice={draft.price}
+                  onChange={handleCityPricingChange}
                 />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                  Category
-                </span>
-                <select
-                  value={draft.category}
-                  onChange={(event) =>
-                    setDraft((previous) => ({
-                      ...previous,
-                      category: event.target.value as PlanCategory,
-                    }))
-                  }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-                >
-                  <option>Home Broadband</option>
-                  <option>Business</option>
-                  <option>Enterprise</option>
-                </select>
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                  Speed
-                </span>
-                <input
-                  value={draft.speed}
-                  onChange={(event) =>
-                    setDraft((previous) => ({ ...previous, speed: event.target.value }))
-                  }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                  Pricing
-                </span>
-                <input
-                  value={draft.price}
-                  onChange={(event) =>
-                    setDraft((previous) => ({ ...previous, price: event.target.value }))
-                  }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                  Button Text
-                </span>
-                <input
-                  value={draft.buttonText}
-                  onChange={(event) =>
-                    setDraft((previous) => ({
-                      ...previous,
-                      buttonText: event.target.value,
-                    }))
-                  }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-                />
-              </label>
-              <label className="mt-7 flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={draft.popular}
-                  onChange={(event) =>
-                    setDraft((previous) => ({
-                      ...previous,
-                      popular: event.target.checked,
-                    }))
-                  }
-                />
-                <span className="text-sm font-medium text-slate-700">
-                  Mark as Popular
-                </span>
-              </label>
-              <label className="block md:col-span-2">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                  Features (comma-separated)
-                </span>
-                <input
-                  value={featuresInput}
-                  onChange={(event) => setFeaturesInput(event.target.value)}
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-                />
-              </label>
+              </div>
             </div>
 
-            <div className="mt-5 flex justify-end gap-2">
+            <div className="flex shrink-0 justify-end gap-2 border-t border-slate-100 px-5 py-4">
               <button
                 type="button"
-                onClick={() => setOpen(false)}
-                className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                onClick={closeModal}
+                disabled={saving}
+                className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 disabled:opacity-60"
               >
                 Cancel
               </button>
