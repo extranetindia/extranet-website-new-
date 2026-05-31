@@ -1,12 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { useAuthUser } from "@/lib/hooks/useAuthUser";
 
 export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { signIn, loading, error } = useAuth();
+  const { user, loading: authLoading } = useAuthUser();
+  const router = useRouter();
+
+  // Redirect to /admin if already authenticated
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push("/admin");
+    }
+  }, [user, authLoading, router]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      return;
+    }
+
+    await signIn(email, password);
+  };
+
+  if (authLoading) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center">
+          <div className="text-center">
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-slate-300 border-t-blue-700" />
+            <p className="mt-4 text-slate-600">Loading...</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 px-4 py-10 sm:px-6 lg:px-8">
@@ -51,7 +89,13 @@ export default function AdminLoginPage() {
               Access your dashboard to manage website content.
             </p>
 
-            <form className="mt-8 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            {error && (
+              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+
+            <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
               <label className="block">
                 <span className="mb-1.5 block text-sm font-medium text-slate-700">
                   Email
@@ -61,7 +105,11 @@ export default function AdminLoginPage() {
                   <input
                     type="email"
                     placeholder="admin@extranet.in"
-                    className="w-full border-0 bg-transparent py-3 text-sm text-slate-900 outline-none"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={loading}
+                    className="w-full border-0 bg-transparent py-3 text-sm text-slate-900 outline-none disabled:opacity-50"
+                    required
                   />
                 </div>
               </label>
@@ -75,12 +123,17 @@ export default function AdminLoginPage() {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
-                    className="w-full border-0 bg-transparent py-3 text-sm text-slate-900 outline-none"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    disabled={loading}
+                    className="w-full border-0 bg-transparent py-3 text-sm text-slate-900 outline-none disabled:opacity-50"
+                    required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((value) => !value)}
-                    className="text-slate-500 transition hover:text-slate-700"
+                    disabled={loading}
+                    className="text-slate-500 transition hover:text-slate-700 disabled:opacity-50"
                     aria-label="Toggle password visibility"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -88,20 +141,12 @@ export default function AdminLoginPage() {
                 </div>
               </label>
 
-              <div className="flex items-center justify-between">
-                <Link
-                  href="#"
-                  className="text-sm font-medium text-blue-700 transition hover:text-blue-800"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-
               <button
                 type="submit"
-                className="w-full rounded-xl bg-blue-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+                disabled={loading || !email || !password}
+                className="w-full rounded-xl bg-blue-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Login to Dashboard
+                {loading ? "Signing in..." : "Login to Dashboard"}
               </button>
             </form>
 
