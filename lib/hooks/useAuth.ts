@@ -26,11 +26,12 @@ export function useAuth() {
           return false
         }
 
-        if (data.user) {
+        if (data.user || data.session) {
           router.push('/admin')
           return true
         }
 
+        setError('Authentication succeeded but no session was returned.')
         return false
       } catch (err) {
         const message = err instanceof Error ? err.message : 'An error occurred'
