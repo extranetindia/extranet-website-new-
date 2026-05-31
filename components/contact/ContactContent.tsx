@@ -1,90 +1,248 @@
 "use client";
 
-import { Mail, MapPin, Phone, Clock } from "lucide-react";
+import { useState } from "react";
+import { Mail, MapPin, Phone, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { createLead, INQUIRY_TYPES } from "@/lib/database/leads";
 
 const offices = [
   {
     city: "Greater Noida",
-    address: "Extranet Infotech India Pvt. Ltd., LGF - 5, Kasna, Greater Noida, Uttar Pradesh — 201310",
+    address:
+      "Extranet Infotech India Pvt. Ltd., LGF - 5, Kasna, Greater Noida, Uttar Pradesh — 201310",
   },
-  // {
-  //   city: "Mumbai (NOC)",
-  //   address: "Network Operations Center, Andheri East, Mumbai — 400069",
-  // },
 ];
 
+interface ContactFormState {
+  fullName: string;
+  phone: string;
+  email: string;
+  inquiryType: string;
+  message: string;
+}
+
+const initialForm: ContactFormState = {
+  fullName: "",
+  phone: "",
+  email: "",
+  inquiryType: INQUIRY_TYPES[0],
+  message: "",
+};
+
 export default function ContactContent() {
+  const [form, setForm] = useState<ContactFormState>(initialForm);
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setSuccess(false);
+
+    const fullName = form.fullName.trim();
+    const phone = form.phone.trim();
+
+    if (!fullName) {
+      setError("Please enter your full name.");
+      return;
+    }
+
+    if (!phone) {
+      setError("Please enter your phone number.");
+      return;
+    }
+
+    setSubmitting(true);
+
+    const { error: submitError } = await createLead({
+      full_name: fullName,
+      phone,
+      email: form.email.trim() || null,
+      inquiry_type: form.inquiryType,
+      message: form.message.trim() || null,
+    });
+
+    setSubmitting(false);
+
+    if (submitError) {
+      setError(
+        submitError.message ||
+          "We could not submit your inquiry. Please try again or call us directly.",
+      );
+      return;
+    }
+
+    setSuccess(true);
+    setForm(initialForm);
+  };
+
   return (
-    <div className="grid lg:grid-cols-5 gap-10">
+    <div className="grid gap-10 lg:grid-cols-5">
       <div className="lg:col-span-3">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
-          <h2 className="text-2xl font-black text-slate-900 mb-6">Send us a message</h2>
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid sm:grid-cols-2 gap-4">
+          <h2 className="mb-6 text-2xl font-black text-slate-900">Send us a message</h2>
+
+          {success && (
+            <div
+              className="mb-5 flex items-start gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800"
+              role="status"
+            >
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
+              <p>
+                Thank you! Your inquiry has been received. Our team will contact you
+                shortly.
+              </p>
+            </div>
+          )}
+
+          {error && (
+            <div
+              className="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+              role="alert"
+            >
+              <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
+              <p>{error}</p>
+            </div>
+          )}
+
+          <form className="space-y-5" onSubmit={(event) => void handleSubmit(event)}>
+            <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label
+                  htmlFor="contact-full-name"
+                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                >
                   Full name
                 </label>
                 <input
+                  id="contact-full-name"
+                  name="fullName"
                   type="text"
-                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                  required
+                  value={form.fullName}
+                  disabled={submitting}
+                  onChange={(event) =>
+                    setForm((previous) => ({
+                      ...previous,
+                      fullName: event.target.value,
+                    }))
+                  }
+                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label
+                  htmlFor="contact-phone"
+                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                >
                   Phone
                 </label>
                 <input
+                  id="contact-phone"
+                  name="phone"
                   type="tel"
-                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                  required
+                  value={form.phone}
+                  disabled={submitting}
+                  onChange={(event) =>
+                    setForm((previous) => ({
+                      ...previous,
+                      phone: event.target.value,
+                    }))
+                  }
+                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                   placeholder="+91"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label
+                htmlFor="contact-email"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
                 Email
               </label>
               <input
+                id="contact-email"
+                name="email"
                 type="email"
-                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                value={form.email}
+                disabled={submitting}
+                onChange={(event) =>
+                  setForm((previous) => ({
+                    ...previous,
+                    email: event.target.value,
+                  }))
+                }
+                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                 placeholder="you@company.com"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label
+                htmlFor="contact-inquiry-type"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
                 Inquiry type
               </label>
-              <select className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100">
-                <option>New connection — Home</option>
-                <option>New connection — Business</option>
-                <option>Enterprise / Leased line</option>
-                <option>General inquiry</option>
+              <select
+                id="contact-inquiry-type"
+                name="inquiryType"
+                required
+                value={form.inquiryType}
+                disabled={submitting}
+                onChange={(event) =>
+                  setForm((previous) => ({
+                    ...previous,
+                    inquiryType: event.target.value,
+                  }))
+                }
+                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+              >
+                {INQUIRY_TYPES.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label
+                htmlFor="contact-message"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
                 Message
               </label>
               <textarea
+                id="contact-message"
+                name="message"
                 rows={5}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 resize-none"
+                value={form.message}
+                disabled={submitting}
+                onChange={(event) =>
+                  setForm((previous) => ({
+                    ...previous,
+                    message: event.target.value,
+                  }))
+                }
+                className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                 placeholder="Tell us about your requirements..."
               />
             </div>
             <button
               type="submit"
-              className="w-full min-h-[44px] rounded-xl bg-blue-700 px-8 py-3.5 font-bold text-white transition-colors hover:bg-blue-800 sm:w-auto"
+              disabled={submitting}
+              className="w-full min-h-[44px] rounded-xl bg-blue-700 px-8 py-3.5 font-bold text-white transition-colors hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
-              Submit inquiry
+              {submitting ? "Submitting..." : "Submit inquiry"}
             </button>
           </form>
         </div>
       </div>
 
-      <div className="lg:col-span-2 space-y-6">
+      <div className="space-y-6 lg:col-span-2">
         {[
           { icon: Phone, label: "Phone", value: "+91 9540901195" },
           { icon: Mail, label: "Email", value: "help.extranet@gmail.com" },
@@ -92,13 +250,13 @@ export default function ContactContent() {
         ].map((item) => (
           <div
             key={item.label}
-            className="flex gap-4 p-5 rounded-2xl bg-white border border-slate-200"
+            className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5"
           >
-            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-              <item.icon className="w-5 h-5 text-blue-700" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50">
+              <item.icon className="h-5 w-5 text-blue-700" />
             </div>
             <div>
-              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">
                 {item.label}
               </div>
               <div className="font-semibold text-slate-900">{item.value}</div>
@@ -106,9 +264,9 @@ export default function ContactContent() {
           </div>
         ))}
 
-        <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
-          <MapPin className="w-5 h-5 text-blue-700 mb-3" />
-          <h3 className="font-bold text-slate-900 mb-3">Office locations</h3>
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <MapPin className="mb-3 h-5 w-5 text-blue-700" />
+          <h3 className="mb-3 font-bold text-slate-900">Office locations</h3>
           <ul className="space-y-3">
             {offices.map((o) => (
               <li key={o.city}>
@@ -120,20 +278,20 @@ export default function ContactContent() {
         </div>
 
         <div className="rounded-2xl bg-gradient-to-r from-blue-700 to-blue-800 p-6 text-white">
-          <h3 className="font-bold text-lg mb-2">Ready to connect?</h3>
-          <p className="text-blue-100 text-sm mb-4">
+          <h3 className="mb-2 text-lg font-bold">Ready to connect?</h3>
+          <p className="mb-4 text-sm text-blue-100">
             Browse plans or check coverage before you reach out.
           </p>
           <div className="flex flex-col gap-2">
             <Link
               href="/plans"
-              className="text-center py-2.5 rounded-lg bg-white text-blue-800 font-semibold text-sm hover:bg-blue-50"
+              className="rounded-lg bg-white py-2.5 text-center text-sm font-semibold text-blue-800 hover:bg-blue-50"
             >
               View plans
             </Link>
             <Link
               href="/coverage"
-              className="text-center py-2.5 rounded-lg border border-white/30 font-semibold text-sm hover:bg-white/10"
+              className="rounded-lg border border-white/30 py-2.5 text-center text-sm font-semibold hover:bg-white/10"
             >
               Check coverage
             </Link>

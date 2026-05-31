@@ -12,6 +12,7 @@ const titleMap: Record<string, string> = {
   "/admin": "Dashboard",
   "/admin/hero": "Hero Banner",
   "/admin/plans": "Plans Management",
+  "/admin/leads": "Leads",
   "/admin/coverage": "Coverage Management",
   "/admin/testimonials": "Testimonials Management",
   "/admin/support": "Support Settings",
