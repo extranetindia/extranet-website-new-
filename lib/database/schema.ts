@@ -75,3 +75,21 @@ export type PlanPricingInsert = Pick<
 export type PlanPricingUpdate = Partial<
   Pick<PlanPricingRow, "price" | "original_price">
 >;
+
+export interface SupportSettingsRow {
+  id: string;
+  phone: string | null;
+  email: string | null;
+  whatsapp: string | null;
+  office_address: string | null;
+  support_timings: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export type SupportSettingsUpdate = Partial<
+  Pick<
+    SupportSettingsRow,
+    "phone" | "email" | "whatsapp" | "office_address" | "support_timings"
+  >
+>;

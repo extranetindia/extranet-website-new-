@@ -2,46 +2,17 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Headphones,
-  MessageCircle,
-  FileText,
-  AlertCircle,
-  ChevronDown,
-  Phone,
-} from "lucide-react";
-import Link from "next/link";
+import { Headphones, MessageCircle, ChevronDown, Phone } from "lucide-react";
 
-const supportCards = [
-  {
-    icon: Headphones,
-    title: "24/7 Customer Care",
-    description: "Billing, plan changes, and general inquiries.",
-    action: "Call +91 9540900888",
-    href: "tel:+91 9540900888",
-  },
-  {
-    icon: MessageCircle,
-    title: "Email Support",
-    description: "Average response under 4 hours on business days.",
-    action: "help.extranet@gmail.com",
-    href: "mailto:help.extranet@gmail.com",
-  },
-  // {
-  //   icon: FileText,
-  //   title: "Raise a Ticket",
-  //   description: "Technical issues tracked with SLA-based resolution.",
-  //   action: "Open ticket portal",
-  //   href: "#",
-  // },
-  // {
-  //   icon: AlertCircle,
-  //   title: "Report Outage",
-  //   description: "Notify our NOC of service degradation in your area.",
-  //   action: "Report now",
-  //   href: "#",
-  // },
-];
+interface SupportContentProps {
+  supportSettings: {
+    phone: string;
+    email: string;
+    whatsapp: string;
+    officeAddress: string;
+    supportTimings: string;
+  };
+}
 
 const faqs = [
   {
@@ -66,8 +37,32 @@ const faqs = [
   },
 ];
 
-export default function SupportContent() {
+export default function SupportContent({ supportSettings }: SupportContentProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  const supportCards = [
+    {
+      icon: Headphones,
+      title: "24/7 Customer Care",
+      description: "Billing, plan changes, and general inquiries.",
+      action: `Call ${supportSettings.phone}`,
+      href: `tel:${supportSettings.phone.replace(/\s+/g, "")}`,
+    },
+    {
+      icon: MessageCircle,
+      title: "Email Support",
+      description: "Average response under 4 hours on business days.",
+      action: supportSettings.email,
+      href: `mailto:${supportSettings.email}`,
+    },
+    // {
+    //   icon: Phone,
+    //   title: "WhatsApp Support",
+    //   description: "Chat with our support team instantly.",
+    //   action: `WhatsApp ${supportSettings.whatsapp}`,
+    //   href: `https://wa.me/${supportSettings.whatsapp.replace(/\D/g, "")}`,
+    // },
+  ];
 
   return (
     <div className="space-y-16">
@@ -90,85 +85,52 @@ export default function SupportContent() {
         ))}
       </div>
 
-      {/* <div className="grid lg:grid-cols-2 gap-10"> */}
-      <div className="max-w-4xl mx-auto">
-        <div>
-          <h2 className="text-2xl font-black text-slate-900 mb-6">Frequently asked questions</h2>
-          <div className="space-y-2">
-            {faqs.map((faq, i) => (
-              <div
-                key={faq.q}
-                className="rounded-xl border border-slate-200 bg-white overflow-hidden"
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="flex min-h-[44px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 sm:px-5"
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start gap-6">
+        <div className="max-w-4xl mx-auto lg:mx-0">
+          <div>
+            <h2 className="text-2xl font-black text-slate-900 mb-6 text-center">Frequently asked questions</h2>
+            <div className="space-y-2">
+              {faqs.map((faq, i) => (
+                <div
+                  key={faq.q}
+                  className="rounded-xl border border-slate-200 bg-white overflow-hidden"
                 >
-                  {faq.q}
-                  <ChevronDown
-                    className={`w-5 h-5 shrink-0 text-slate-400 transition-transform ${
-                      openFaq === i ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <AnimatePresence>
-                  {openFaq === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-5 pb-4 text-slate-600 text-sm leading-relaxed">
-                        {faq.a}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="flex min-h-[44px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 sm:px-5"
+                  >
+                    {faq.q}
+                    <ChevronDown
+                      className={`w-5 h-5 shrink-0 text-slate-400 transition-transform ${
+                        openFaq === i ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {openFaq === i && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="px-5 pb-4 text-slate-600 text-sm leading-relaxed">
+                          {faq.a}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* <div className="rounded-2xl bg-slate-900 text-white p-8"> */}
-        {/* <div className="rounded-2xl bg-gradient-to-br from-blue-700 to-blue-900 text-white p-8 shadow-2xl">
-          <Phone className="w-10 h-10 text-blue-400 mb-4" />
-          <h2 className="text-2xl font-black mb-2">Complaint & help request</h2>
-          <p className="text-slate-400 text-sm mb-6">
-            For unresolved issues, register a formal complaint. TRAI-compliant
-            resolution timelines apply.
-          </p>
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="text"
-              placeholder="Account / Customer ID"
-              className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
-            />
-            <select className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-blue-500">
-              <option>Billing issue</option>
-              <option>Speed / connectivity</option>
-              <option>Installation delay</option>
-              <option>Other</option>
-            </select>
-            <textarea
-              rows={4}
-              placeholder="Describe your issue"
-              className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 resize-none"
-            />
-            <button
-              type="submit"
-              className="w-full py-3.5 rounded-xl bg-red-600 hover:bg-red-700 font-bold text-sm transition-colors"
-            >
-              Submit request
-            </button>
-          </form>
-          <p className="text-xs text-slate-500 mt-4">
-            Need sales instead?{" "}
-            <Link href="/contact" className="text-blue-400 hover:underline">
-              Contact us
-            </Link>
-          </p>
+        {/* <div className="rounded-2xl border border-slate-200 bg-white p-6">
+          <h3 className="text-lg font-semibold text-slate-900">Office and support hours</h3>
+          <p className="mt-4 text-sm text-slate-600">{supportSettings.officeAddress}</p>
+          <p className="mt-4 text-sm text-slate-500">{supportSettings.supportTimings}</p>
         </div> */}
       </div>
     </div>

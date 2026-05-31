@@ -5,13 +5,15 @@ import { Mail, MapPin, Phone, Clock, CheckCircle2, AlertCircle } from "lucide-re
 import Link from "next/link";
 import { createLead, INQUIRY_TYPES } from "@/lib/database/leads";
 
-const offices = [
-  {
-    city: "Greater Noida",
-    address:
-      "Extranet Infotech India Pvt. Ltd., LGF - 5, Kasna, Greater Noida, Uttar Pradesh — 201310",
-  },
-];
+interface ContactContentProps {
+  supportSettings: {
+    phone: string;
+    email: string;
+    whatsapp: string;
+    officeAddress: string;
+    supportTimings: string;
+  };
+}
 
 interface ContactFormState {
   fullName: string;
@@ -29,7 +31,7 @@ const initialForm: ContactFormState = {
   message: "",
 };
 
-export default function ContactContent() {
+export default function ContactContent({ supportSettings }: ContactContentProps) {
   const [form, setForm] = useState<ContactFormState>(initialForm);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -244,9 +246,9 @@ export default function ContactContent() {
 
       <div className="space-y-6 lg:col-span-2">
         {[
-          { icon: Phone, label: "Phone", value: "+91 9540901195" },
-          { icon: Mail, label: "Email", value: "help.extranet@gmail.com" },
-          { icon: Clock, label: "Hours", value: "24/7 Availability" },
+          { icon: Phone, label: "Phone", value: supportSettings.phone },
+          { icon: Mail, label: "Email", value: supportSettings.email },
+          { icon: Clock, label: "Hours", value: supportSettings.supportTimings },
         ].map((item) => (
           <div
             key={item.label}
@@ -268,12 +270,10 @@ export default function ContactContent() {
           <MapPin className="mb-3 h-5 w-5 text-blue-700" />
           <h3 className="mb-3 font-bold text-slate-900">Office locations</h3>
           <ul className="space-y-3">
-            {offices.map((o) => (
-              <li key={o.city}>
-                <div className="text-sm font-semibold text-slate-900">{o.city}</div>
-                <div className="text-sm text-slate-600">{o.address}</div>
-              </li>
-            ))}
+            <li>
+              <div className="text-sm font-semibold text-slate-900">Corporate Office</div>
+              <div className="text-sm text-slate-600">{supportSettings.officeAddress}</div>
+            </li>
           </ul>
         </div>
 
