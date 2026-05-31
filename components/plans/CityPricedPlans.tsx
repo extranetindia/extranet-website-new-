@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CitySelector from "@/components/city/CitySelector";
 import PlanCards from "@/components/plans/PlanCards";
 import type { PlanRow } from "@/lib/database/schema";
@@ -44,7 +44,7 @@ export default function CityPricedPlans({
   ctaLabel = "Get Started",
   columns = 3,
 }: CityPricedPlansProps) {
-  const { cities, cityId, selectedCity, setCityId, loading: citiesLoading, ready } =
+  const { cities, cityId, setCityId, loading: citiesLoading, ready } =
     useSelectedCity();
   const [pricingLoading, setPricingLoading] = useState(false);
   const [displayPlans, setDisplayPlans] = useState<SupabasePlanCard[]>(() =>
@@ -89,57 +89,48 @@ export default function CityPricedPlans({
     void applyPricing(cityId);
   }, [ready, cityId, basePlans, applyPricing]);
 
-  const heading = useMemo(() => {
-    if (variant === "home") {
-      return {
-        title: "Best Popular Plans In",
-        showInlineCity: true,
-      };
-    }
-    return {
-      title: "Choose Your City",
-      showInlineCity: false,
-    };
-  }, [variant]);
+  const headingTitle =
+    variant === "home" ? "Best Popular Plans In" : "Choose Your City";
 
   return (
     <div>
       <div
-        className={`mb-8 flex flex-col gap-4 sm:mb-10 ${
-          variant === "home"
-            ? "sm:flex-row sm:flex-wrap sm:items-end sm:justify-between"
-            : "sm:gap-5"
+        className={`mb-8 sm:mb-10 ${
+          variant === "plans" ? "flex flex-col gap-4 sm:gap-5" : ""
         }`}
       >
-        <div className={variant === "plans" ? "max-w-2xl" : undefined}>
-          <h2
-            className={`font-black text-slate-900 ${
-              variant === "home"
-                ? "text-2xl sm:text-3xl md:text-4xl"
-                : "text-2xl sm:text-3xl"
-            }`}
-          >
-            {heading.title}
-            {variant === "home" && selectedCity && !citiesLoading && (
-              <span className="text-blue-700"> {selectedCity.name}</span>
-            )}
+        {variant === "home" ? (
+          <h2 className="flex flex-wrap items-baseline gap-x-2 gap-y-2 font-black text-slate-900">
+            <span className="text-2xl sm:text-3xl md:text-4xl">{headingTitle}</span>
+            <CitySelector
+              id="home-city-selector"
+              variant="inline"
+              cities={cities}
+              value={cityId}
+              onChange={setCityId}
+              loading={citiesLoading}
+            />
           </h2>
-          {variant === "plans" && (
+        ) : (
+          <div className="max-w-2xl">
+            <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">
+              {headingTitle}
+            </h2>
             <p className="mt-2 text-sm text-slate-600 sm:text-base">
               Select your city to see localized pricing. Plans without city pricing
               use our standard rates.
             </p>
-          )}
-        </div>
-
-        <CitySelector
-          id={variant === "home" ? "home-city-selector" : "plans-city-selector"}
-          cities={cities}
-          value={cityId}
-          onChange={setCityId}
-          loading={citiesLoading}
-          className={variant === "home" ? "w-full sm:shrink-0 sm:max-w-[240px]" : "w-full sm:max-w-xs"}
-        />
+            <div className="mt-4 w-full sm:max-w-xs">
+              <CitySelector
+                id="plans-city-selector"
+                cities={cities}
+                value={cityId}
+                onChange={setCityId}
+                loading={citiesLoading}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {pricingLoading ? (
