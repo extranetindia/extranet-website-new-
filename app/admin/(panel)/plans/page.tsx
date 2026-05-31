@@ -12,7 +12,7 @@ import {
   type CityPricingFormRow,
 } from "@/lib/database/plan-pricing";
 
-type PlanCategory = "Home Broadband" | "Business" | "Enterprise";
+type PlanCategory = "home" | "business";
 
 interface PlanRow {
   id: string;
@@ -25,12 +25,13 @@ interface PlanRow {
   popular: boolean;
   category: string;
   button_text: string;
+  plan_type?: "home" | "business";
 }
 
 interface AdminPlan {
   id: string;
   name: string;
-  category: PlanCategory;
+  planType: PlanCategory;
   speed: string;
   price: string;
   buttonText: string;
@@ -42,7 +43,7 @@ interface AdminPlan {
 const defaultPlan: AdminPlan = {
   id: "",
   name: "",
-  category: "Home Broadband",
+  planType: "home",
   speed: "",
   price: "",
   buttonText: "Get Started",
@@ -75,7 +76,7 @@ function rowToAdminPlan(row: PlanRow): AdminPlan {
   return {
     id: row.id,
     name: row.name,
-    category: row.category as PlanCategory,
+    planType: (row.plan_type ?? "home") as PlanCategory,
     speed: row.speed,
     price: row.price,
     buttonText: row.button_text,
@@ -93,7 +94,8 @@ function planToPayload(plan: AdminPlan, features: string[]) {
     description: plan.description || null,
     features,
     popular: plan.popular,
-    category: plan.category,
+    category: plan.planType === "business" ? "Business" : "Home Broadband",
+    plan_type: plan.planType,
     button_text: plan.buttonText,
   };
 }
@@ -335,7 +337,7 @@ export default function AdminPlansPage() {
             <thead className="border-b border-slate-200 text-slate-500">
               <tr>
                 <th className="px-3 py-2 font-medium">Plan</th>
-                <th className="px-3 py-2 font-medium">Category</th>
+                <th className="px-3 py-2 font-medium">Plan Category</th>
                 <th className="px-3 py-2 font-medium">Speed</th>
                 <th className="px-3 py-2 font-medium">Pricing</th>
                 <th className="px-3 py-2 font-medium">Popular</th>
@@ -359,7 +361,9 @@ export default function AdminPlansPage() {
                 sortedPlans.map((plan) => (
                   <tr key={plan.id} className="border-b border-slate-100">
                     <td className="px-3 py-3 font-medium text-slate-900">{plan.name}</td>
-                    <td className="px-3 py-3 text-slate-700">{plan.category}</td>
+                    <td className="px-3 py-3 text-slate-700">
+                      {plan.planType === "business" ? "Business" : "Home"}
+                    </td>
                     <td className="px-3 py-3 text-slate-700">{plan.speed}</td>
                     <td className="px-3 py-3 text-slate-700">{plan.price}</td>
                     <td className="px-3 py-3">
@@ -439,21 +443,20 @@ export default function AdminPlansPage() {
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                    Category
+                    Plan Category
                   </span>
                   <select
-                    value={draft.category}
+                    value={draft.planType}
                     onChange={(event) =>
                       setDraft((previous) => ({
                         ...previous,
-                        category: event.target.value as PlanCategory,
+                        planType: event.target.value as PlanCategory,
                       }))
                     }
                     className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
                   >
-                    <option>Home Broadband</option>
-                    <option>Business</option>
-                    <option>Enterprise</option>
+                    <option value="home">Home</option>
+                    <option value="business">Business</option>
                   </select>
                 </label>
                 <label className="block">

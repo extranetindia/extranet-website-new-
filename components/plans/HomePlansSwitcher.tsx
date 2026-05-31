@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CityPricedPlans from "./CityPricedPlans";
 import type { PlanRow } from "@/lib/database/schema";
 
@@ -27,6 +27,17 @@ export default function HomePlansSwitcher({
       }),
     [basePlans, planType],
   );
+
+  useEffect(() => {
+    const homePlans = basePlans.filter(
+      (plan) => (plan as any).plan_type === "home" || !(plan as any).plan_type,
+    );
+    const businessPlans = basePlans.filter((plan) => (plan as any).plan_type === "business");
+
+    console.log("Total plans loaded:", basePlans.length);
+    console.log("Home plans count:", homePlans.length);
+    console.log("Business plans count:", businessPlans.length);
+  }, [basePlans]);
 
   return (
     <div>

@@ -13,7 +13,7 @@ const CITY_COLUMNS = "id, name, active, created_at";
 const PLAN_PRICING_COLUMNS =
   "id, plan_id, city_id, price, original_price, created_at, updated_at";
 const PLAN_COLUMNS =
-  "id, created_at, name, speed, price, description, features, popular, category, button_text";
+  "id, created_at, name, speed, price, description, features, popular, category, plan_type, button_text";
 
 // ---------------------------------------------------------------------------
 // Cities
