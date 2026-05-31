@@ -20,14 +20,6 @@ export interface CoverageCity {
   active: boolean;
 }
 
-export interface AdminTestimonial {
-  id: string;
-  customerName: string;
-  companyName: string;
-  rating: number;
-  testimonial: string;
-}
-
 export interface SupportSettingsData {
   phone: string;
   email: string;
@@ -35,49 +27,6 @@ export interface SupportSettingsData {
   officeAddress: string;
   supportTimings: string;
 }
-
-export interface DashboardMetric {
-  label: string;
-  value: string;
-  delta: string;
-}
-
-export interface RecentActivity {
-  id: string;
-  message: string;
-  time: string;
-}
-
-export const dashboardMetrics: DashboardMetric[] = [
-  { label: "Total Plans", value: "8", delta: "+2 this month" },
-  { label: "Active Hero Banners", value: "1", delta: "Primary campaign live" },
-  { label: "Coverage Cities", value: "542", delta: "+18 new cities" },
-  { label: "Testimonials", value: "126", delta: "+9 approved" },
-  { label: "Support Requests", value: "37", delta: "12 high priority" },
-];
-
-export const recentActivities: RecentActivity[] = [
-  {
-    id: "act-1",
-    message: "Hero banner campaign updated for Summer Fiber Offer.",
-    time: "5 mins ago",
-  },
-  {
-    id: "act-2",
-    message: "New enterprise plan published with 10 Gbps tier.",
-    time: "22 mins ago",
-  },
-  {
-    id: "act-3",
-    message: "Coverage enabled for Surat and Vadodara zones.",
-    time: "58 mins ago",
-  },
-  {
-    id: "act-4",
-    message: "5 new customer testimonials approved.",
-    time: "2 hours ago",
-  },
-];
 
 export const quickActions = [
   "Add New Plan",
@@ -124,25 +73,6 @@ export const initialCoverageCities: CoverageCity[] = [
   { id: "city-2", name: "Delhi", state: "Delhi NCR", active: true },
   { id: "city-3", name: "Bengaluru", state: "Karnataka", active: true },
   { id: "city-4", name: "Indore", state: "Madhya Pradesh", active: false },
-];
-
-export const initialTestimonials: AdminTestimonial[] = [
-  {
-    id: "test-1",
-    customerName: "Rohit Malhotra",
-    companyName: "PixelForge Labs",
-    rating: 5,
-    testimonial:
-      "Outstanding uptime and network stability for our distributed team.",
-  },
-  {
-    id: "test-2",
-    customerName: "Ananya Roy",
-    companyName: "NorthEdge Retail",
-    rating: 4,
-    testimonial:
-      "Fast installation and reliable connectivity across our outlets.",
-  },
 ];
 
 export const initialSupportSettings: SupportSettingsData = {
