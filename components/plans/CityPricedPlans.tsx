@@ -16,6 +16,10 @@ import {
 
 const pricingCache = new Map<string, Awaited<ReturnType<typeof resolvePlansPricesForCity>>["data"]>();
 
+function getPricingCacheKey(cityId: string, plans: PlanRow[]) {
+  return `${cityId}:${plans.map((plan) => plan.id).join(",")}`;
+}
+
 interface CityPricedPlansProps {
   basePlans: PlanRow[];
   variant: "home" | "plans";
@@ -57,7 +61,8 @@ export default function CityPricedPlans({
       const requestId = ++requestIdRef.current;
       setPricingLoading(true);
 
-      let resolved = pricingCache.get(targetCityId);
+      const cacheKey = getPricingCacheKey(targetCityId, basePlans);
+      let resolved = pricingCache.get(cacheKey);
 
       if (!resolved) {
         const result = await resolvePlansPricesForCity(basePlans, targetCityId);
@@ -70,7 +75,7 @@ export default function CityPricedPlans({
         }
 
         resolved = result.data;
-        pricingCache.set(targetCityId, resolved);
+        pricingCache.set(cacheKey, resolved);
       }
 
       const merged = mergeResolvedPricesIntoPlans(basePlans, resolved);

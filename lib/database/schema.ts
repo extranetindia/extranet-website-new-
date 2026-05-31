@@ -14,6 +14,8 @@ export interface PlanRow {
   description: string | null;
   features: string[] | string | null;
   popular: boolean;
+  /** Type of plan: 'home' or 'business' */
+  plan_type?: "home" | "business";
   category: string;
   button_text: string;
 }
