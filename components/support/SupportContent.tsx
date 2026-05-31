@@ -86,19 +86,20 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
       </div>
 
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start gap-6">
-        <div className="max-w-4xl mx-auto lg:mx-0">
+        <div className="w-full max-w-6xl mx-auto lg:mx-auto">
           <div>
-            <h2 className="text-2xl font-black text-slate-900 mb-6 text-center">Frequently asked questions</h2>
+            <h2 className="text-2xl font-black text-slate-900 mb-6 text-center">Frequently asked questions</h2> 
             <div className="space-y-2">
               {faqs.map((faq, i) => (
                 <div
                   key={faq.q}
-                  className="rounded-xl border border-slate-200 bg-white overflow-hidden"
+                  className="w-full rounded-xl border border-slate-200 bg-white overflow-hidden"
                 >
                   <button
                     type="button"
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="flex min-h-[44px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 sm:px-5"
+                    // className="flex min-h-[44px] w-full items-center justify-center gap-3 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 sm:px-5"
+                  className="flex min-h-[44px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50"
                   >
                     {faq.q}
                     <ChevronDown
@@ -115,6 +116,7 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                       >
+                        {/* <p className="px-5 pb-4 text-slate-600 text-sm leading-relaxed"> */}
                         <p className="px-5 pb-4 text-slate-600 text-sm leading-relaxed">
                           {faq.a}
                         </p>
