@@ -6,6 +6,7 @@ import type { PlanRow } from "@/lib/database/schema";
 
 interface HomePlansSwitcherProps {
   basePlans: PlanRow[];
+  variant?: "home" | "plans";
   ctaHref?: string;
   ctaLabel?: string;
   columns?: 2 | 3;
@@ -13,6 +14,7 @@ interface HomePlansSwitcherProps {
 
 export default function HomePlansSwitcher({
   basePlans,
+  variant = "home",
   ctaHref = "/contact",
   ctaLabel = "Get Started",
   columns = 3,
@@ -76,7 +78,7 @@ export default function HomePlansSwitcher({
 
       <CityPricedPlans
         basePlans={filteredPlans}
-        variant="home"
+        variant={variant}
         ctaHref={ctaHref}
         ctaLabel={ctaLabel}
         columns={columns}

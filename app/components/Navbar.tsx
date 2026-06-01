@@ -9,15 +9,7 @@ import { Menu, X, Phone, ChevronDown } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "https://www.extranetindia.com/" },
-  {
-    label: "Plans",
-    href: "/plans",
-    children: [
-      { label: "Home Broadband", href: "/plans#home-broadband" },
-      { label: "Business & Enterprise", href: "/plans#enterprise" },
-      { label: "Compare Plans", href: "/plans" },
-    ],
-  },
+  { label: "Plans", href: "/plans" },
   { label: "Coverage", href: "/coverage" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
@@ -80,46 +72,17 @@ export default function Navbar() {
 
           <nav className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => (
-              <div
-                key={link.label}
-                className="relative"
-                onMouseEnter={() => link.children && setOpenDropdown(link.label)}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
+              <div key={link.label} className="relative">
                 <Link
                   href={link.href}
                   className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.href)
-                    ? "text-slate-600 font-medium"
-                    : "text-slate-600 font-medium"
+                      ? "text-slate-600 font-medium"
+                      : "text-slate-600 font-medium"
                   } hover:text-blue-700 hover:bg-blue-50`}
                 >
                   {link.label}
-                  {link.children && (
-                    <ChevronDown className="w-3.5 h-3.5 opacity-60" />
-                  )}
                 </Link>
-                <AnimatePresence>
-                  {link.children && openDropdown === link.label && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 mt-1 w-56 rounded-xl bg-white border border-slate-200 shadow-xl shadow-slate-200/60 overflow-hidden"
-                    >
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.label}
-                          href={child.href}
-                          className="block px-4 py-3 text-sm text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-0"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
             ))}
           </nav>
