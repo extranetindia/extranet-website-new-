@@ -1,87 +1,61 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import CityPricedPlans from "./CityPricedPlans";
 import type { PlanRow } from "@/lib/database/schema";
 
+type PlanType = "home" | "business";
+
 interface HomePlansSwitcherProps {
   basePlans: PlanRow[];
-  variant?: "home" | "plans";
   ctaHref?: string;
   ctaLabel?: string;
-  columns?: 2 | 3;
 }
+
+const tabs: Array<{ label: string; value: PlanType }> = [
+  { label: "Home Plans", value: "home" },
+  { label: "Business Plans", value: "business" },
+];
 
 export default function HomePlansSwitcher({
   basePlans,
-  variant = "home",
   ctaHref = "/contact",
   ctaLabel = "Get Started",
-  columns = 3,
 }: HomePlansSwitcherProps) {
-  const [planType, setPlanType] = useState<"home" | "business">("home");
+  const [selectedType, setSelectedType] = useState<PlanType>("home");
 
   const filteredPlans = useMemo(
-    () =>
-      basePlans.filter((p) => {
-        const t = (p as any).plan_type ?? "home";
-        return t === planType;
-      }),
-    [basePlans, planType],
+    () => basePlans.filter((plan) => plan.plan_type === selectedType),
+    [basePlans, selectedType],
   );
 
-  useEffect(() => {
-    const homePlans = basePlans.filter(
-      (plan) => (plan as any).plan_type === "home" || !(plan as any).plan_type,
-    );
-    const businessPlans = basePlans.filter((plan) => (plan as any).plan_type === "business");
-
-    console.log("Total plans loaded:", basePlans.length);
-    console.log("Home plans count:", homePlans.length);
-    console.log("Business plans count:", businessPlans.length);
-  }, [basePlans]);
-
   return (
-    <div>
-      <div className="mb-6 sm:mb-8">
-        <div className="flex items-center">
-          <div className="w-full sm:max-w-xs">
-            <div className="inline-flex w-full rounded-full bg-slate-100 p-1 shadow-sm">
-              <button
-                type="button"
-                onClick={() => setPlanType("home")}
-                aria-pressed={planType === "home"}
-                className={`flex-1 text-sm font-semibold py-2 px-3 rounded-full transition-all duration-200 focus:outline-none ${
-                  planType === "home"
-                    ? "bg-blue-600 text-white shadow-md"
-                    : "text-slate-700 hover:bg-slate-200"
-                }`}
-              >
-                Home Plans
-              </button>
-              <button
-                type="button"
-                onClick={() => setPlanType("business")}
-                aria-pressed={planType === "business"}
-                className={`flex-1 text-sm font-semibold py-2 px-3 rounded-full transition-all duration-200 focus:outline-none ${
-                  planType === "business"
-                    ? "bg-blue-600 text-white shadow-md"
-                    : "text-slate-700 hover:bg-slate-200"
-                }`}
-              >
-                Business Plans
-              </button>
-            </div>
-          </div>
-        </div>
+    <div className="space-y-8">
+      <div className="inline-flex overflow-hidden rounded-full border border-slate-200 bg-slate-100 p-1 shadow-sm">
+        {tabs.map((tab) => {
+          const active = tab.value === selectedType;
+          return (
+            <button
+              key={tab.value}
+              type="button"
+              onClick={() => setSelectedType(tab.value)}
+              className={`px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 ${
+                active
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-600 hover:bg-slate-200"
+              }`}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
 
       <CityPricedPlans
         basePlans={filteredPlans}
-        variant={variant}
+        variant="home"
         ctaHref={ctaHref}
         ctaLabel={ctaLabel}
-        columns={columns}
       />
     </div>
   );

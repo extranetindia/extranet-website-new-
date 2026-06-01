@@ -152,6 +152,8 @@ export default function AdminPlansPage() {
           pricingId: null,
           price: "",
           originalPrice: "",
+          installationFee: "",
+          refundableDeposit: "",
         })),
       );
       setCityPricingLoading(false);
@@ -193,7 +195,7 @@ export default function AdminPlansPage() {
 
   const handleCityPricingChange = (
     cityId: string,
-    field: "price" | "originalPrice",
+    field: "price" | "originalPrice" | "installationFee" | "refundableDeposit",
     value: string,
   ) => {
     setCityPricingRows((previous) =>

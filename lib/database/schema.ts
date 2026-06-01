@@ -9,7 +9,7 @@ export interface PlanRow {
   created_at?: string;
   name: string;
   speed: string;
-  /** Legacy default price — used when no plan_pricing row exists for a city. */
+  /** Legacy default price — used when no plan pricing row exists for a city. */
   price: string;
   description: string | null;
   features: string[] | string | null;
@@ -23,8 +23,10 @@ export interface PlanRow {
 export interface CityRow {
   id: string;
   name: string;
+  slug: string;
   active: boolean;
   created_at: string;
+  updated_at: string;
 }
 
 export interface PlanPricingRow {
@@ -33,6 +35,9 @@ export interface PlanPricingRow {
   city_id: string;
   price: string;
   original_price: string | null;
+  installation_fee: string | null;
+  refundable_deposit: string | null;
+  active: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -64,18 +69,27 @@ export interface ResolvedPlanPrice {
   source: "plan_pricing" | "plans_fallback";
 }
 
-export type CityInsert = Pick<CityRow, "name"> & Partial<Pick<CityRow, "active">>;
+export type CityInsert = Pick<CityRow, "name" | "slug"> &
+  Partial<Pick<CityRow, "active">>;
 
-export type CityUpdate = Partial<Pick<CityRow, "name" | "active">>;
+export type CityUpdate = Partial<Pick<CityRow, "name" | "slug" | "active">>;
 
 export type PlanPricingInsert = Pick<
   PlanPricingRow,
   "plan_id" | "city_id" | "price"
 > &
-  Partial<Pick<PlanPricingRow, "original_price">>;
+  Partial<
+    Pick<
+      PlanPricingRow,
+      "original_price" | "installation_fee" | "refundable_deposit" | "active"
+    >
+  >;
 
 export type PlanPricingUpdate = Partial<
-  Pick<PlanPricingRow, "price" | "original_price">
+  Pick<
+    PlanPricingRow,
+    "price" | "original_price" | "installation_fee" | "refundable_deposit" | "active"
+  >
 >;
 
 export interface SupportSettingsRow {

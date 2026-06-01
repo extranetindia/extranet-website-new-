@@ -10,7 +10,8 @@ import { Menu, X, Phone, ChevronDown } from "lucide-react";
 const navLinks = [
   { label: "Home", href: "https://www.extranetindia.com/" },
   { label: "Plans", href: "/plans" },
-  { label: "Coverage", href: "/coverage" },
+  // { label: "Coverage", href: "/coverage" },
+  { label: "For ILL", href: "/contact" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
   { label: "Contact", href: "/contact" },
