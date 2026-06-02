@@ -132,7 +132,7 @@ export default function Footer() {
         {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4"> */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col items-center justify-center gap-4">
           <p className="text-xs text-slate-600 text-center sm:text-left">
-            © {new Date().getFullYear()} Extranet India Private Limited. All rights
+            © {new Date().getFullYear()} Extranet Infotech. All rights
             reserved.
           </p>
           {/* <div className="flex flex-wrap items-center justify-center gap-2">
