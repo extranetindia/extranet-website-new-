@@ -18,10 +18,11 @@ const footerLinks = {
     { label: "Contact Us", href: "/contact" },
   ],
   Legal: [
-    { label: "Terms of Service", href: "#" },
-    { label: "Privacy Policy", href: "#" },
-    { label: "Refund Policy", href: "#" },
-    // { label: "TRAI Compliance", href: "#" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Refund Policy", href: "/refund" },
+    { label: "Acceptable Use Policy", href: "/acceptable-use" },
+    { label: "Cancellation Policy", href: "/cancellation" },
   ],
 };
 
@@ -55,8 +56,9 @@ export default function Footer() {
               {
                 icon: MapPin,
                 label: "Registered Office",
-                value: "Extranet Infotech India Pvt. Ltd.",
-                sub: "LGF - 4, Shiva Plaza, Kasna, Greater Noida, Uttar Pradesh, India — 201310",
+                value: "Extranet Infotech",
+                // sub: "LGF - 4, Shiva Plaza, Kasna, Greater Noida, Uttar Pradesh, India — 201310",
+                sub: "A-110, Sector-37, Near Samsara School, Greater Noida, Uttar Pradesh 201310",
               },
             ].map((item) => (
               <div key={item.label} className="flex items-start gap-4">
