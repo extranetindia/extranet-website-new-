@@ -50,52 +50,46 @@ function PlanCard({
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.45, delay: index * 0.1 }}
-      className={`relative flex h-full min-h-[480px] flex-col gap-5 overflow-visible rounded-2xl border bg-white p-6 transition-all duration-300 sm:min-h-[520px] sm:gap-6 sm:p-8 md:min-h-[650px] ${showBadge ? "pt-8 sm:pt-9" : ""} ${c.card} ${isPopular ? "md:-mt-1 md:mb-1" : ""}`}
+      transition={{ duration: 0.35, delay: index * 0.08 }}
+      className={`relative flex h-full flex-col justify-between gap-5 overflow-visible rounded-[16px] border bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-slate-200/70 ${c.card} ${isPopular ? "border-red-300" : ""}`}
     >
       {showBadge && (
         <div
-          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-wider shadow-sm ${c.badge}`}
+          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] ${isPopular ? "border-red-200 bg-red-50 text-red-700" : "border-slate-200 bg-white text-slate-600"}`}
         >
           {plan.tag ?? "Most Popular"}
         </div>
       )}
-      <div>
-        <div
-          className={`mb-4 flex h-10 w-10 items-center justify-center rounded-xl ${c.icon}`}
-        >
-          <Zap className="h-5 w-5" />
+      <div className="space-y-4 pt-3">
+        <div className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
+          {plan.speed}
         </div>
-        <h3 className="mb-1 text-xl font-bold text-slate-900">{plan.name}</h3>
-        <p className="text-sm text-slate-500">{plan.description}</p>
+        <h3 className="text-xl font-bold text-slate-900">{plan.name}</h3>
       </div>
-      <div>
-        <div className="mb-1 text-3xl font-black text-slate-900">{plan.speed}</div>
-        <div className="flex flex-wrap items-baseline gap-2">
-          {plan.originalPrice && (
-            <span className="text-lg font-semibold text-slate-400 line-through sm:text-xl">
-              {plan.originalPrice}
-            </span>
-          )}
-          <span className="text-3xl font-black text-slate-900 sm:text-4xl">
+      <div className="space-y-3">
+        <div className="flex items-end gap-2">
+          <span className="text-4xl font-black text-slate-900 sm:text-5xl">
             {plan.price}
           </span>
-          {plan.period && (
-            <span className="font-medium text-slate-500">{plan.period}</span>
-          )}
+          <span className="pb-1 text-sm font-semibold text-slate-500">/mo</span>
         </div>
+        {plan.originalPrice ? (
+          <div className="text-sm font-medium text-slate-400 line-through">
+            {plan.originalPrice}
+          </div>
+        ) : null}
       </div>
-      <ul className="flex flex-1 flex-col gap-2.5">
+      <ul className="flex flex-1 flex-col gap-2">
         {plan.features?.map((feat) => (
-          <li key={feat} className="flex items-start gap-3 text-sm">
-            <Check className={`mt-0.5 h-4 w-4 shrink-0 ${c.check}`} />
-            <span className="text-slate-600">{feat}</span>
+          <li key={feat} className="flex items-start gap-3 text-sm text-slate-600">
+            <Check className={`mt-1 h-4 w-4 shrink-0 ${isPopular ? "text-red-600" : "text-blue-600"}`} />
+            <span>{feat}</span>
           </li>
         ))}
       </ul>
       <Link
         href={ctaHref}
-        className={`w-full min-h-[44px] rounded-xl py-3.5 text-center text-sm font-bold text-white shadow-lg transition-all duration-200 hover:scale-[1.01] ${c.btn}`}
+        className={`w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white transition duration-200 ${isPopular ? "bg-red-600 hover:bg-red-700" : "bg-blue-700 hover:bg-blue-800"}`}
       >
         {ctaLabel}
       </Link>

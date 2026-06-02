@@ -99,23 +99,31 @@ export default function CityPricedPlans({
 
   return (
     <div>
-      <div
-        className={`mb-8 sm:mb-10 ${
-          variant === "plans" ? "flex flex-col gap-4 sm:gap-5" : ""
-        }`}
-      >
+      <div className="mb-10">
         {variant === "home" ? (
-          <h2 className="flex flex-wrap items-baseline gap-x-2 gap-y-2 font-black text-slate-900">
-            <span className="text-2xl sm:text-3xl md:text-4xl">{headingTitle}</span>
-            <CitySelector
-              id="home-city-selector"
-              variant="inline"
-              cities={cities}
-              value={cityId}
-              onChange={setCityId}
-              loading={citiesLoading}
-            />
-          </h2>
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div className="max-w-3xl">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">
+                Plans made simple
+              </p>
+              <h2 className="max-w-2xl text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+                Simple, Transparent Plans
+              </h2>
+              <p className="mt-4 max-w-xl text-sm leading-6 text-slate-600 sm:text-base">
+                Choose an ISP plan that fits your needs with clear pricing and no hidden fees. Pick your city and compare the best offers side-by-side.
+              </p>
+            </div>
+            <div className="w-full sm:max-w-sm">
+              <CitySelector
+                id="home-city-selector"
+                variant="inline"
+                cities={cities}
+                value={cityId}
+                onChange={setCityId}
+                loading={citiesLoading}
+              />
+            </div>
+          </div>
         ) : (
           <div className="max-w-2xl">
             <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">
