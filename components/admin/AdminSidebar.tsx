@@ -11,6 +11,7 @@ import {
   MessageSquare,
   Headset,
   Settings,
+  FileText,
   LogOut,
   PanelLeftClose,
   PanelLeftOpen,
@@ -32,6 +33,7 @@ const navItems = [
   { label: "Coverage", href: "/admin/coverage", icon: MapPin },
   { label: "Testimonials", href: "/admin/testimonials", icon: MessageSquare },
   { label: "Support", href: "/admin/support", icon: Headset },
+  { label: "Legal Policies", href: "/admin/legal", icon: FileText },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

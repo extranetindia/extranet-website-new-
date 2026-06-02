@@ -10,7 +10,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Extranet India Private Limited — High-Speed Broadband & Fiber Internet",
+    default: "Extranet Infotech — High-Speed Broadband & Fiber Internet",
     template: "%s | Extranet India",
   },
   description:

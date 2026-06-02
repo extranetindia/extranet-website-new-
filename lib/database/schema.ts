@@ -90,6 +90,25 @@ export interface SupportSettingsRow {
   updated_at: string;
 }
 
+export interface LegalPageRow {
+  id: string;
+  slug: string;
+  title: string;
+  content: string;
+  last_updated: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export type LegalPageUpdate = Partial<
+  Pick<LegalPageRow, "title" | "content" | "last_updated">
+>;
+
+export type LegalPageInsert = Pick<
+  LegalPageRow,
+  "slug" | "title" | "content" | "last_updated"
+>;
+
 export type SupportSettingsUpdate = Partial<
   Pick<
     SupportSettingsRow,
