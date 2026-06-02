@@ -12,8 +12,8 @@ export default function RefundPage() {
     <LegalPolicyPage
       slug="refund"
       title="Refund Policy"
-      description="Refund policy for Extranet India broadband installation, activation, and subscription charges."
-      summary="This Refund Policy explains how Extranet India handles refunds for installation, subscription, and activation-related charges for broadband and fiber services."
+    //   description="Refund policy for Extranet India broadband installation, activation, and subscription charges."
+    //   summary="This Refund Policy explains how Extranet India handles refunds for installation, subscription, and activation-related charges for broadband and fiber services."
     />
   );
 }

@@ -1,77 +1,60 @@
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 interface LegalContentRendererProps {
   content: string;
 }
 
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-function markdownToHtml(markdown: string) {
-  const lines = markdown.replace(/\r\n/g, "\n").split("\n");
-  const html: string[] = [];
-  let listOpen = false;
-
-  const closeList = () => {
-    if (listOpen) {
-      html.push("</ul>");
-      listOpen = false;
-    }
-  };
-
-  for (let rawLine of lines) {
-    const line = rawLine.trim();
-    if (!line) {
-      closeList();
-      continue;
-    }
-
-    const escaped = escapeHtml(line);
-
-    if (/^###\s+/.test(line)) {
-      closeList();
-      html.push(`<h3>${escapeHtml(line.replace(/^###\s+/, ""))}</h3>`);
-      continue;
-    }
-
-    if (/^##\s+/.test(line)) {
-      closeList();
-      html.push(`<h2>${escapeHtml(line.replace(/^##\s+/, ""))}</h2>`);
-      continue;
-    }
-
-    if (/^#\s+/.test(line)) {
-      closeList();
-      html.push(`<h1>${escapeHtml(line.replace(/^#\s+/, ""))}</h1>`);
-      continue;
-    }
-
-    if (/^([-*]|\d+\.)\s+/.test(line)) {
-      if (!listOpen) {
-        html.push("<ul>");
-        listOpen = true;
-      }
-      html.push(`<li>${escapeHtml(line.replace(/^([-*]|\d+\.)\s+/, ""))}</li>`);
-      continue;
-    }
-
-    closeList();
-    html.push(`<p>${escaped}</p>`);
-  }
-
-  closeList();
-  return html.join("");
-}
-
 export default function LegalContentRenderer({ content }: LegalContentRendererProps) {
   return (
-    <div
-      className="space-y-8 text-slate-700"
-      dangerouslySetInnerHTML={{ __html: markdownToHtml(content) }}
-    />
+    <article className="space-y-6 text-slate-700">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: ({ children, ...props }) => (
+            <h1 className="mt-8 text-3xl font-semibold tracking-tight text-slate-900" {...props}>
+              {children}
+            </h1>
+          ),
+          h2: ({ children, ...props }) => (
+            <h2 className="mt-8 text-2xl font-semibold tracking-tight text-slate-900" {...props}>
+              {children}
+            </h2>
+          ),
+          h3: ({ children, ...props }) => (
+            <h3 className="mt-6 text-xl font-semibold tracking-tight text-slate-900" {...props}>
+              {children}
+            </h3>
+          ),
+          p: ({ children, ...props }) => (
+            <p className="mt-4 leading-8 text-slate-700" {...props}>
+              {children}
+            </p>
+          ),
+          ul: ({ children, ...props }) => (
+            <ul className="mt-4 list-disc space-y-2 pl-6" {...props}>
+              {children}
+            </ul>
+          ),
+          ol: ({ children, ...props }) => (
+            <ol className="mt-4 list-decimal space-y-2 pl-6" {...props}>
+              {children}
+            </ol>
+          ),
+          li: ({ children, ...props }) => (
+            <li className="leading-7 text-slate-700" {...props}>
+              {children}
+            </li>
+          ),
+          strong: ({ children, ...props }) => (
+            <strong className="font-semibold text-slate-900" {...props}>
+              {children}
+            </strong>
+          ),
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </article>
   );
 }

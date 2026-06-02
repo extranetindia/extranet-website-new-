@@ -6,7 +6,7 @@ interface LegalPolicyPageProps {
   slug: string;
   title: string;
   description: string;
-  summary: string;
+  summary?: string;
 }
 
 export default async function LegalPolicyPage({
@@ -20,7 +20,7 @@ export default async function LegalPolicyPage({
   return (
     <LegalPage
       title={data?.title ?? title}
-      summary={data?.title ? summary : description}
+      summary={data?.title ? (summary ?? description) : description}
       lastUpdated={data?.last_updated ?? "TBD"}
     >
       {data?.content ? (

@@ -13,7 +13,7 @@ export default function PrivacyPage() {
       slug="privacy"
       title="Privacy Policy"
       description="Privacy policy describing the information Extranet India collects from broadband and fiber internet customers."
-      summary="This Privacy Policy explains how Extranet India collects, uses, protects, and retains customer information for broadband and enterprise internet services."
+    //   summary="This Privacy Policy explains how Extranet India collects, uses, protects, and retains customer information for broadband and enterprise internet services."
     />
   );
 }
