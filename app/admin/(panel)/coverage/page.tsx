@@ -10,25 +10,16 @@ import {
   updateCity,
 } from "@/lib/database/plan-pricing";
 
-const defaultCity: Omit<CityRow, "id" | "created_at" | "updated_at"> = {
+const defaultCity: Omit<CityRow, "id" | "created_at"> = {
   name: "",
-  slug: "",
   active: true,
 };
-
-function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
 
 export default function AdminCoveragePage() {
   const [cities, setCities] = useState<CityRow[]>([]);
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [draft, setDraft] = useState<Omit<CityRow, "id" | "created_at" | "updated_at">>(
+  const [draft, setDraft] = useState<Omit<CityRow, "id" | "created_at">>(
     defaultCity,
   );
   const [search, setSearch] = useState("");
@@ -65,7 +56,7 @@ export default function AdminCoveragePage() {
 
   const startAdd = () => {
     setEditingId(null);
-    setDraft({ ...defaultCity, slug: "" });
+    setDraft({ ...defaultCity });
     setOpen(true);
   };
 
@@ -73,17 +64,13 @@ export default function AdminCoveragePage() {
     setEditingId(city.id);
     setDraft({
       name: city.name,
-      slug: city.slug,
       active: city.active,
     });
     setOpen(true);
   };
 
   const saveCity = async () => {
-    const payload = {
-      ...draft,
-      slug: draft.slug || slugify(draft.name),
-    };
+    const payload = draft;
 
     if (editingId) {
       const { data, error } = await updateCity(editingId, payload);
@@ -158,7 +145,6 @@ export default function AdminCoveragePage() {
               <thead className="border-b border-slate-200 text-left text-slate-500">
                 <tr>
                   <th className="px-3 py-2 font-medium">City</th>
-                  <th className="px-3 py-2 font-medium">Slug</th>
                   <th className="px-3 py-2 font-medium">Status</th>
                   <th className="px-3 py-2 font-medium">Actions</th>
                 </tr>
@@ -166,13 +152,13 @@ export default function AdminCoveragePage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={4} className="px-3 py-8 text-center text-slate-500">
+                    <td colSpan={3} className="px-3 py-8 text-center text-slate-500">
                       Loading cities...
                     </td>
                   </tr>
                 ) : sortedCities.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-3 py-8 text-center text-slate-500">
+                    <td colSpan={3} className="px-3 py-8 text-center text-slate-500">
                       No cities found.
                     </td>
                   </tr>
@@ -180,7 +166,6 @@ export default function AdminCoveragePage() {
                   sortedCities.map((city) => (
                     <tr key={city.id} className="border-b border-slate-100">
                       <td className="px-3 py-3 font-medium text-slate-900">{city.name}</td>
-                      <td className="px-3 py-3 text-slate-700">{city.slug}</td>
                       <td className="px-3 py-3">
                         <button
                           type="button"
@@ -246,19 +231,6 @@ export default function AdminCoveragePage() {
                   onChange={(event) =>
                     setDraft((previous) => ({ ...previous, name: event.target.value }))
                   }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                  Slug
-                </span>
-                <input
-                  value={draft.slug}
-                  onChange={(event) =>
-                    setDraft((previous) => ({ ...previous, slug: event.target.value }))
-                  }
-                  placeholder="auto-generated from name"
                   className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
                 />
               </label>

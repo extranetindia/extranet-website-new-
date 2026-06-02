@@ -10,7 +10,7 @@ interface PlanCityPricingFieldsProps {
   fallbackPrice?: string;
   onChange: (
     cityId: string,
-    field: "price" | "originalPrice" | "installationFee" | "refundableDeposit",
+    field: "price" | "originalPrice",
     value: string,
   ) => void;
 }
@@ -94,36 +94,7 @@ export default function PlanCityPricingFields({
                     className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:text-slate-500"
                   />
                 </label>
-                <label className="block">
-                  <span className="mb-1 block text-xs font-medium text-slate-600">
-                    Installation Fee
-                  </span>
-                  <input
-                    type="text"
-                    value={row.installationFee}
-                    disabled={disabled}
-                    placeholder="e.g. ₹999"
-                    onChange={(event) =>
-                      onChange(row.cityId, "installationFee", event.target.value)
-                    }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:text-slate-500"
-                  />
-                </label>
-                <label className="block">
-                  <span className="mb-1 block text-xs font-medium text-slate-600">
-                    Refundable Deposit
-                  </span>
-                  <input
-                    type="text"
-                    value={row.refundableDeposit}
-                    disabled={disabled}
-                    placeholder="e.g. ₹1,499"
-                    onChange={(event) =>
-                      onChange(row.cityId, "refundableDeposit", event.target.value)
-                    }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:text-slate-500"
-                  />
-                </label>
+
               </div>
             </div>
           ))}

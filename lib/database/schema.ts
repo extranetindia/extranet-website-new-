@@ -23,10 +23,8 @@ export interface PlanRow {
 export interface CityRow {
   id: string;
   name: string;
-  slug: string;
   active: boolean;
   created_at: string;
-  updated_at: string;
 }
 
 export interface PlanPricingRow {
@@ -35,9 +33,6 @@ export interface PlanPricingRow {
   city_id: string;
   price: string;
   original_price: string | null;
-  installation_fee: string | null;
-  refundable_deposit: string | null;
-  active: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -69,27 +64,19 @@ export interface ResolvedPlanPrice {
   source: "plan_pricing" | "plans_fallback";
 }
 
-export type CityInsert = Pick<CityRow, "name" | "slug"> &
+export type CityInsert = Pick<CityRow, "name"> &
   Partial<Pick<CityRow, "active">>;
 
-export type CityUpdate = Partial<Pick<CityRow, "name" | "slug" | "active">>;
+export type CityUpdate = Partial<Pick<CityRow, "name" | "active">>;
 
 export type PlanPricingInsert = Pick<
   PlanPricingRow,
   "plan_id" | "city_id" | "price"
 > &
-  Partial<
-    Pick<
-      PlanPricingRow,
-      "original_price" | "installation_fee" | "refundable_deposit" | "active"
-    >
-  >;
+  Partial<Pick<PlanPricingRow, "original_price">>;
 
 export type PlanPricingUpdate = Partial<
-  Pick<
-    PlanPricingRow,
-    "price" | "original_price" | "installation_fee" | "refundable_deposit" | "active"
-  >
+  Pick<PlanPricingRow, "price" | "original_price">
 >;
 
 export interface SupportSettingsRow {

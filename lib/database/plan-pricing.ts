@@ -10,9 +10,9 @@ import type {
 } from "@/lib/database/schema";
 
 const CITY_COLUMNS =
-  "id, name, slug, active, created_at, updated_at";
+  "id, name, active, created_at";
 const PLAN_PRICING_COLUMNS =
-  "id, plan_id, city_id, price, original_price, installation_fee, refundable_deposit, active, created_at, updated_at";
+  "id, plan_id, city_id, price, original_price, created_at, updated_at";
 const PLAN_COLUMNS =
   "id, created_at, name, speed, price, description, features, popular, category, plan_type, button_text";
 
@@ -70,7 +70,7 @@ export async function fetchCityByName(
 }
 
 export async function createCity(
-  payload: Pick<CityRow, "name" | "slug" | "active">,
+  payload: Pick<CityRow, "name"> & Partial<Pick<CityRow, "active">>,
 ): Promise<{ data: CityRow | null; error: Error | null }> {
   const { data, error } = await supabase
     .from("cities")
@@ -86,7 +86,7 @@ export async function createCity(
 
 export async function updateCity(
   cityId: string,
-  payload: Partial<Pick<CityRow, "name" | "slug" | "active">>,
+  payload: Partial<Pick<CityRow, "name" | "active">>,
 ): Promise<{ data: CityRow | null; error: Error | null }> {
   const { data, error } = await supabase
     .from("cities")
@@ -180,8 +180,6 @@ export interface CityPricingFormRow {
   pricingId: string | null;
   price: string;
   originalPrice: string;
-  installationFee: string;
-  refundableDeposit: string;
 }
 
 export function buildCityPricingFormRows(
@@ -198,8 +196,6 @@ export function buildCityPricingFormRows(
       pricingId: row?.id ?? null,
       price: row?.price ?? "",
       originalPrice: row?.original_price ?? "",
-      installationFee: row?.installation_fee ?? "",
-      refundableDeposit: row?.refundable_deposit ?? "",
     };
   });
 }
@@ -215,8 +211,6 @@ export async function savePlanCityPricing(
   for (const row of rows) {
     const price = row.price.trim();
     const originalPrice = row.originalPrice.trim() || null;
-    const installationFee = row.installationFee.trim() || null;
-    const refundableDeposit = row.refundableDeposit.trim() || null;
 
     if (!price) {
       if (row.pricingId) {
@@ -238,9 +232,6 @@ export async function savePlanCityPricing(
         .update({
           price,
           original_price: originalPrice,
-          installation_fee: installationFee,
-          refundable_deposit: refundableDeposit,
-          active: true,
         })
         .eq("id", row.pricingId);
 
@@ -253,9 +244,6 @@ export async function savePlanCityPricing(
         city_id: row.cityId,
         price,
         original_price: originalPrice,
-        installation_fee: installationFee,
-        refundable_deposit: refundableDeposit,
-        active: true,
       });
 
       if (error) {
