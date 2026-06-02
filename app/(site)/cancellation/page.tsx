@@ -12,8 +12,8 @@ export default function CancellationPage() {
     <LegalPolicyPage
       slug="cancellation"
       title="Cancellation Policy"
-      description="Cancellation policy for Extranet India broadband and enterprise internet customers."
-      summary="This Cancellation Policy explains how residential and business broadband customers may cancel service, return equipment, and settle final charges."
+    //   description="Cancellation policy for Extranet India broadband and enterprise internet customers."
+    //   summary="This Cancellation Policy explains how residential and business broadband customers may cancel service, return equipment, and settle final charges."
     />
   );
 }
