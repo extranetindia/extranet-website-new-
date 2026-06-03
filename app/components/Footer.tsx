@@ -5,13 +5,14 @@ import { Phone, Mail, MapPin, Globe, Link as LinkIcon, Camera, Play } from "luci
 const footerLinks = {
   Plans: [
     { label: "Home Broadband", href: "/plans#home-broadband" },
-    { label: "Business & Enterprise", href: "/plans#enterprise" },
+    { label: "Business", href: "/plans#enterprise" },
     // { label: "Enterprise Leased Line", href: "/plans#enterprise" },
-    { label: "Compare Plans", href: "/plans" },
+    // { label: "Compare Plans", href: "/plans" },
   ],
   Company: [
     { label: "About Us", href: "/about" },
     { label: "Coverage", href: "/coverage" },
+    { label: "For ILL", href: "/contact" },
   ],
   Support: [
     { label: "Help Center", href: "/support" },

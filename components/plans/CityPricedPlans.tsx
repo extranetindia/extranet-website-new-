@@ -107,7 +107,7 @@ export default function CityPricedPlans({
                 Plans made simple
               </p>
               <h2 className="max-w-2xl text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-                Simple, Transparent Plans
+                Simple, Transparent  Plans
               </h2>
               <p className="mt-4 max-w-xl text-sm leading-6 text-slate-600 sm:text-base">
                 Choose an ISP plan that fits your needs with clear pricing and no hidden fees. Pick your city and compare the best offers side-by-side.

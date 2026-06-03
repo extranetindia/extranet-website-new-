@@ -1,5 +1,23 @@
 import type { ReactNode } from "react";
 
+function formatLastUpdated(value: string) {
+  if (!value || value === "TBD") {
+    return value;
+  }
+
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return value;
+  }
+
+  return parsed.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 interface LegalPageProps {
   title: string;
   summary: string;
@@ -28,7 +46,7 @@ export default function LegalPage({
               {summary}
             </p>
             <p className="mt-5 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
-              Last updated: {lastUpdated}
+              Last Updated: {formatLastUpdated(lastUpdated)}
             </p>
           </header>
 
