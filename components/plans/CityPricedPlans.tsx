@@ -105,7 +105,7 @@ export default function CityPricedPlans({
         {variant === "home" ? (
           <div className="w-full text-center">
             <div className="flex items-center justify-center gap-3 text-center">
-              <h2 className="text-3xl font-black tracking-tight text-slate-900 sm:text-5xl">
+              <h2 className="text-3xl font-medium tracking-tight text-slate-900 sm:text-3xl">
                 Best Popular Plans In
               </h2>
               <CitySelector

@@ -78,7 +78,7 @@ export default function CitySelector({
           id={id}
           disabled={isDisabled}
           onClick={() => !isDisabled && setIsOpen(!isOpen)}
-          className="max-w-full cursor-pointer bg-transparent py-1 pr-7 text-2xl font-black text-orange-500 outline-none transition focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-blue-300 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-3xl"
+          className="max-w-full cursor-pointer bg-transparent py-1 pr-7 text-2xl font-bold text-orange-500 outline-none transition focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-blue-300 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-3xl"
           aria-label={ariaLabel}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
