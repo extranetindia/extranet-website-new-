@@ -78,7 +78,7 @@ export default function CitySelector({
           id={id}
           disabled={isDisabled}
           onClick={() => !isDisabled && setIsOpen(!isOpen)}
-          className="max-w-full cursor-pointer bg-transparent py-1 pr-7 text-2xl font-black text-blue-700 outline-none transition focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-blue-300 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-3xl md:text-4xl"
+          className="max-w-full cursor-pointer bg-transparent py-1 pr-7 text-2xl font-black text-orange-500 outline-none transition focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-blue-300 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-3xl"
           aria-label={ariaLabel}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
@@ -87,7 +87,7 @@ export default function CitySelector({
           {selectedCity?.name || "Select city"}
         </button>
         <ChevronDown
-          className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-blue-700 transition-transform sm:h-5 sm:w-5"
+          className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-orange-500 transition-transform sm:h-5 sm:w-5"
           style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
           aria-hidden
         />

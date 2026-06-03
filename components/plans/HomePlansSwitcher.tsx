@@ -1,15 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import CityPricedPlans from "./CityPricedPlans";
-import type { PlanRow } from "@/lib/database/schema";
-
 type PlanType = "home" | "business";
 
 interface HomePlansSwitcherProps {
-  basePlans: PlanRow[];
-  ctaHref?: string;
-  ctaLabel?: string;
+  selectedType: PlanType;
+  onSelectType: (value: PlanType) => void;
 }
 
 const tabs: Array<{ label: string; value: PlanType }> = [
@@ -18,19 +13,11 @@ const tabs: Array<{ label: string; value: PlanType }> = [
 ];
 
 export default function HomePlansSwitcher({
-  basePlans,
-  ctaHref = "/contact",
-  ctaLabel = "Get Started",
+  selectedType,
+  onSelectType,
 }: HomePlansSwitcherProps) {
-  const [selectedType, setSelectedType] = useState<PlanType>("home");
-
-  const filteredPlans = useMemo(
-    () => basePlans.filter((plan) => plan.plan_type === selectedType),
-    [basePlans, selectedType],
-  );
-
   return (
-    <div className="space-y-7">
+    <div className="mx-auto flex justify-center">
       <div className="inline-flex overflow-hidden rounded-full border border-slate-200 bg-slate-100 p-1.5 shadow-sm">
         {tabs.map((tab) => {
           const active = tab.value === selectedType;
@@ -38,7 +25,7 @@ export default function HomePlansSwitcher({
             <button
               key={tab.value}
               type="button"
-              onClick={() => setSelectedType(tab.value)}
+              onClick={() => onSelectType(tab.value)}
               className={`px-4 py-1.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 ${
                 active
                   ? "bg-white text-slate-900 shadow-sm"
@@ -50,13 +37,6 @@ export default function HomePlansSwitcher({
           );
         })}
       </div>
-
-      <CityPricedPlans
-        basePlans={filteredPlans}
-        variant="home"
-        ctaHref={ctaHref}
-        ctaLabel={ctaLabel}
-      />
     </div>
   );
 }

@@ -26,6 +26,7 @@ interface CityPricedPlansProps {
   ctaHref?: string;
   ctaLabel?: string;
   columns?: 2 | 3;
+  renderControls?: React.ReactNode;
 }
 
 function PlanCardsSkeleton() {
@@ -47,6 +48,7 @@ export default function CityPricedPlans({
   ctaHref = "/contact",
   ctaLabel = "Get Started",
   columns = 3,
+  renderControls,
 }: CityPricedPlansProps) {
   const { cities, cityId, setCityId, loading: citiesLoading, ready } =
     useSelectedCity();
@@ -99,21 +101,13 @@ export default function CityPricedPlans({
 
   return (
     <div>
-      <div className="mb-10">
+      <div className="mb-10 w-full">
         {variant === "home" ? (
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
-            <div className="max-w-3xl">
-              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">
-                Plans made simple
-              </p>
-              <h2 className="max-w-2xl text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-                Simple, Transparent  Plans
+          <div className="w-full text-center">
+            <div className="flex items-center justify-center gap-3 text-center">
+              <h2 className="text-3xl font-black tracking-tight text-slate-900 sm:text-5xl">
+                Best Popular Plans In
               </h2>
-              <p className="mt-4 max-w-xl text-sm leading-6 text-slate-600 sm:text-base">
-                Choose an ISP plan that fits your needs with clear pricing and no hidden fees. Pick your city and compare the best offers side-by-side.
-              </p>
-            </div>
-            <div className="w-full sm:max-w-sm">
               <CitySelector
                 id="home-city-selector"
                 variant="inline"
@@ -145,7 +139,7 @@ export default function CityPricedPlans({
           </div>
         )}
       </div>
-
+      {renderControls ? <div className="mt-8 flex justify-center">{renderControls}</div> : null}
       {pricingLoading ? (
         <PlanCardsSkeleton />
       ) : (
