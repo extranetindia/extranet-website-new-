@@ -47,7 +47,7 @@ export default function CoverageMap() {
             transition={{ delay: i * 0.08 }}
             className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm"
           >
-            <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-4">
+            <div className="w-11 h-11 rounded-xl bg-text-[#134799] text-blue-700 flex items-center justify-center mb-4">
               <type.icon className="w-5 h-5" />
             </div>
             <div className="text-2xl font-black text-slate-900 mb-1">{type.count}</div>
@@ -79,13 +79,13 @@ export default function CoverageMap() {
         </div>
       </div> */}
 
-      <div className="rounded-2xl bg-gradient-to-br from-blue-700 to-blue-900 p-8 sm:p-10 text-white relative overflow-hidden">
+      <div className="rounded-2xl bg-gradient-to-br from-[#134799] to-blue-900 p-8 sm:p-10 text-white relative overflow-hidden">
         <div className="absolute inset-0 network-grid-light opacity-30" />
         <div className="relative z-10 grid lg:grid-cols-2 gap-8 items-center">
           <div>
             <MapPin className="w-10 h-10 text-blue-200 mb-4" />
             <h3 className="text-2xl font-black mb-2">Network expansion</h3>
-            <p className="text-blue-100 text-sm leading-relaxed">
+            <p className="text-white/80 text-sm leading-relaxed">
               We are actively laying fiber in 40+ Tier 2 cities this year, with
               wireless backhaul bridging gaps until FTTH is live. Enterprise
               customers can request priority build-out surveys.

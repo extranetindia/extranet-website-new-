@@ -75,7 +75,7 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.06 }}
-            className="block p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all"
+            className="block p-6 rounded-2xl bg-white border border-slate-200 hover:border-[#134799]/30 hover:shadow-md transition-all"
           >
             <card.icon className="w-8 h-8 text-blue-700 mb-4" />
             <h3 className="font-bold text-slate-900 mb-2">{card.title}</h3>

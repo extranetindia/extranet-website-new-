@@ -325,7 +325,7 @@ export default function AdminPlansPage() {
           <button
             type="button"
             onClick={openNew}
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799]"
           >
             <Plus size={16} />
             Add New Plan
@@ -551,7 +551,7 @@ export default function AdminPlansPage() {
                 type="button"
                 onClick={() => void submitPlan()}
                 disabled={saving}
-                className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
+                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:opacity-60"
               >
                 {saving ? "Saving..." : "Save Plan"}
               </button>

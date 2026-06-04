@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
 
   if (authLoading) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 px-4 py-10 sm:px-6 lg:px-8">
+      <main className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-text-[#134799] px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center">
           <div className="text-center">
             <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-slate-300 border-t-blue-700" />
@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 px-4 py-10 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-text-[#134799] px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center">
         <div className="grid w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-blue-900/10 lg:grid-cols-2">
           <div className="hidden bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 p-10 text-white lg:block">
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
             <h1 className="mt-16 text-4xl font-bold leading-tight">
               Enterprise ISP Operations Dashboard
             </h1>
-            <p className="mt-4 text-blue-100">
+            <p className="mt-4 text-white/80">
               Manage banners, plans, coverage, testimonials, and support settings
               from one secure control center.
             </p>
@@ -144,7 +144,7 @@ export default function AdminLoginPage() {
               <button
                 type="submit"
                 disabled={loading || !email || !password}
-                className="w-full rounded-xl bg-blue-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-xl bg-[#134799] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Signing in..." : "Login to Dashboard"}
               </button>

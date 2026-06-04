@@ -10,7 +10,6 @@ import { Menu, X, Phone, ChevronDown } from "lucide-react";
 const navLinks = [
   { label: "Home", href: "https://www.extranetindia.com/" },
   { label: "Plans", href: "/plans" },
-  // { label: "Coverage", href: "/coverage" },
   { label: "For ILL", href: "/contact" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
@@ -80,7 +79,7 @@ export default function Navbar() {
                     isActive(link.href)
                       ? "text-slate-600 font-medium"
                       : "text-slate-600 font-medium"
-                  } hover:text-blue-700 hover:bg-blue-50`}
+                  } hover:text-blue-700 hover:bg-text-[#134799]`}
                 >
                   {link.label}
                 </Link>
@@ -93,18 +92,18 @@ export default function Navbar() {
               href="tel:+919540901195"
               className="hidden xl:flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors mr-1"
             >
-              <Phone className="w-4 h-4 text-blue-600" />
+              <Phone className="w-4 h-4 text-[#134799]" />
               <span className="font-medium">+91 9540901195</span>
             </a>
             <Link
               href="https://user.extranetindia.com/Customer/Default.aspx"
-              className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:border-blue-300 hover:text-blue-700 text-sm font-semibold transition-all bg-white"
+              className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:border-[#134799]/30 hover:text-blue-700 text-sm font-semibold transition-all bg-white"
             >
               My Account
             </Link>
             <Link
               href="/contact"
-              className="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold transition-all shadow-md shadow-blue-900/20"
+              className="px-5 py-2.5 rounded-xl bg-[#134799] hover:bg-[#134799] text-white text-sm font-semibold transition-all shadow-md shadow-blue-900/20"
             >
               Get Connected
             </Link>
@@ -138,7 +137,7 @@ export default function Navbar() {
                   href={link.href}
                   className={`min-h-[44px] rounded-lg px-4 py-3 font-medium transition-colors ${
                     isActive(link.href)
-                      ? "bg-blue-50 text-blue-700"
+                      ? "bg-text-[#134799] text-blue-700"
                       : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
@@ -150,7 +149,7 @@ export default function Navbar() {
                   href="tel:+919540901195"
                   className="flex min-h-[44px] items-center gap-2 px-4 py-3 text-slate-600"
                 >
-                  <Phone className="w-4 h-4 text-blue-600" />
+                  <Phone className="w-4 h-4 text-[#134799]" />
                   +91 95409 01195
                 </a>
                 <Link
@@ -161,7 +160,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href="/contact"
-                  className="mx-0 min-h-[44px] rounded-xl bg-blue-700 py-3.5 text-center text-sm font-semibold text-white"
+                  className="mx-0 min-h-[44px] rounded-xl bg-[#134799] py-3.5 text-center text-sm font-semibold text-white"
                 >
                   Get Connected
                 </Link>

@@ -137,7 +137,7 @@ export default function AdminLegalPage() {
                       onClick={() => setActiveSlug(page.slug)}
                       className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-medium transition ${
                         active
-                          ? "bg-blue-700 text-white"
+                          ? "bg-[#134799] text-white"
                           : "bg-white text-slate-700 hover:bg-slate-100"
                       }`}
                     >
@@ -213,7 +213,7 @@ export default function AdminLegalPage() {
                 <button
                   type="submit"
                   disabled={saving || loading}
-                  className="inline-flex items-center justify-center rounded-xl bg-blue-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex items-center justify-center rounded-xl bg-[#134799] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {saving ? "Saving..." : "Save Policy"}
                 </button>

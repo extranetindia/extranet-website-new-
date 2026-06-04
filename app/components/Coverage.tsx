@@ -53,7 +53,7 @@ export default function Coverage() {
             transition={{ delay: i * 0.08 }}
             className="p-6 rounded-2xl bg-slate-50 border border-slate-200"
           >
-            <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-4">
+            <div className="w-11 h-11 rounded-xl bg-text-[#134799] text-blue-700 flex items-center justify-center mb-4">
               <type.icon className="w-5 h-5" />
             </div>
             <div className="text-2xl font-black text-slate-900 mb-1">{type.count}</div>
@@ -81,7 +81,7 @@ export default function Coverage() {
         <p className="text-sm text-slate-500 mb-4">+ 10 more metros on the full coverage page</p>
         <Link
           href="/coverage"
-          className="text-sm font-semibold text-blue-700 hover:text-blue-800"
+          className="text-sm font-semibold text-blue-700 hover:text-[#134799]"
         >
           Check availability by pincode →
         </Link>

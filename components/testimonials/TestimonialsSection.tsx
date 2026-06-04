@@ -36,7 +36,7 @@ function TestimonialAvatar({ name, imageUrl }: { name: string; imageUrl: string 
   }
 
   return (
-    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-700 text-sm font-bold text-white">
+    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#134799] text-sm font-bold text-white">
       {getTestimonialInitials(name)}
     </div>
   );

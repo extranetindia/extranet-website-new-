@@ -103,7 +103,7 @@ export default function CitySelector({
                   onClick={() => handleCitySelect(city.id)}
                   className={`block w-full px-4 py-2.5 text-base text-left font-medium transition-colors ${
                     value === city.id
-                      ? "bg-blue-50 text-blue-700"
+                      ? "bg-text-[#134799] text-blue-700"
                       : "text-slate-900 hover:bg-slate-50"
                   }`}
                   type="button"
@@ -130,7 +130,7 @@ export default function CitySelector({
       )}
       <div className="relative">
         <MapPin
-          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-blue-600"
+          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#134799]"
           aria-hidden
         />
         <select
@@ -138,7 +138,7 @@ export default function CitySelector({
           value={value ?? ""}
           disabled={isDisabled}
           onChange={(event) => onChange(event.target.value)}
-          className="min-h-[44px] w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-10 text-sm font-semibold text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 sm:min-w-[220px]"
+          className="min-h-[44px] w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-10 text-sm font-semibold text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-[#134799]/10 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 sm:min-w-[220px]"
           aria-label={ariaLabel}
         >
           {selectOptions}

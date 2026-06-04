@@ -130,7 +130,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                       fullName: event.target.value,
                     }))
                   }
-                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
                   placeholder="Your name"
                 />
               </div>
@@ -154,7 +154,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                       phone: event.target.value,
                     }))
                   }
-                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
                   placeholder="+91"
                 />
               </div>
@@ -178,7 +178,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     email: event.target.value,
                   }))
                 }
-                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
                 placeholder="you@company.com"
               />
             </div>
@@ -201,7 +201,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     inquiryType: event.target.value,
                   }))
                 }
-                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
               >
                 {INQUIRY_TYPES.map((type) => (
                   <option key={type} value={type}>
@@ -229,14 +229,14 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     message: event.target.value,
                   }))
                 }
-                className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
                 placeholder="Tell us about your requirements..."
               />
             </div>
             <button
               type="submit"
               disabled={submitting}
-              className="w-full min-h-[44px] rounded-xl bg-blue-700 px-8 py-3.5 font-bold text-white transition-colors hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="w-full min-h-[44px] rounded-xl bg-[#134799] px-8 py-3.5 font-bold text-white transition-colors hover:bg-[#134799] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {submitting ? "Submitting..." : "Submit inquiry"}
             </button>
@@ -254,7 +254,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
             key={item.label}
             className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5"
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-text-[#134799]">
               <item.icon className="h-5 w-5 text-blue-700" />
             </div>
             <div>
@@ -277,15 +277,15 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
           </ul>
         </div>
 
-        <div className="rounded-2xl bg-gradient-to-r from-blue-700 to-blue-800 p-6 text-white">
+        <div className="rounded-2xl bg-gradient-to-r from-[#134799] to-[#0f3b7f] p-6 text-white">
           <h3 className="mb-2 text-lg font-bold">Ready to connect?</h3>
-          <p className="mb-4 text-sm text-blue-100">
+          <p className="mb-4 text-sm text-white/80">
             Browse plans or check coverage before you reach out.
           </p>
           <div className="flex flex-col gap-2">
             <Link
               href="/plans"
-              className="rounded-lg bg-white py-2.5 text-center text-sm font-semibold text-blue-800 hover:bg-blue-50"
+              className="rounded-lg bg-white py-2.5 text-center text-sm font-semibold text-[#134799] hover:bg-text-[#134799]"
             >
               View plans
             </Link>

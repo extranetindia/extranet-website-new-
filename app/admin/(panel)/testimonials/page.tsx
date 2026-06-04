@@ -232,7 +232,7 @@ export default function AdminTestimonialsPage() {
               type="button"
               onClick={startAdd}
               disabled={loading}
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:opacity-60"
             >
               <Plus size={16} />
               Add Testimonial
@@ -439,7 +439,7 @@ export default function AdminTestimonialsPage() {
                       active: event.target.checked,
                     }))
                   }
-                  className="h-4 w-4 rounded border-slate-300 text-blue-700 focus:ring-blue-500"
+                  className="h-4 w-4 rounded border-slate-300 text-blue-700 focus:ring-text-[#134799]0"
                 />
                 <span className="text-sm font-medium text-slate-700">
                   Active (visible on homepage)
@@ -459,7 +459,7 @@ export default function AdminTestimonialsPage() {
                 type="button"
                 onClick={() => void handleSave()}
                 disabled={saving}
-                className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
+                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:opacity-60"
               >
                 {saving ? "Saving…" : "Save Testimonial"}
               </button>

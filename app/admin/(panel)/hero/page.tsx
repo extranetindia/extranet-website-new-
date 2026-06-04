@@ -236,7 +236,7 @@ export default function AdminHeroPage() {
             type="button"
             onClick={() => void handleSave()}
             disabled={!hasPendingChanges || saving}
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <Upload size={16} />
             {saving ? "Saving..." : "Save"}

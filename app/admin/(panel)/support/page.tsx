@@ -153,7 +153,7 @@ export default function AdminSupportPage() {
             type="button"
             onClick={handleSave}
             disabled={saving || loading}
-            className="inline-flex items-center justify-center rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-xl bg-[#134799] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {saving ? "Saving..." : "Save Support Settings"}
           </button>

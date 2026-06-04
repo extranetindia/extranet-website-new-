@@ -123,7 +123,7 @@ export default function AdminSettingsPage() {
         <div className="md:col-span-2">
           <button
             type="submit"
-            className="rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
+            className="rounded-xl bg-[#134799] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799]"
           >
             Save Settings
           </button>

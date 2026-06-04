@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check, Zap } from "lucide-react";
+import { Check, Star } from "lucide-react";
 import MobileCarousel from "@/components/ui/MobileCarousel";
 import type { PlanDefinition } from "@/lib/plans";
 
@@ -44,6 +44,10 @@ function PlanCard({
   const c = colorMap[plan.color ?? "blue"] ?? colorMap.blue;
   const isPopular = plan.popular ?? plan.tag === "Most Popular";
   const showBadge = Boolean(plan.tag || isPopular);
+  const displayLabel = formatPlanLabel(plan.speed);
+  const displayTitle = formatPlanTitle(plan.name, displayLabel);
+  const displayPrice = plan.price.replace(/\s*\*+$/, "");
+  const benefits = plan.features?.filter(isDisplayBenefit) ?? [];
 
   return (
     <motion.div
@@ -51,31 +55,46 @@ function PlanCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay: index * 0.08 }}
-      className={`relative flex h-full flex-col justify-between gap-5 overflow-visible rounded-[16px] border bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-slate-200/70 ${
+      className={`relative flex h-full flex-col overflow-visible rounded-[14px] border bg-white p-5 transition-all duration-300 hover:-translate-y-0.5 sm:p-6 ${
         isPopular
-          ? "border-[#d2190d] ring-2 ring-[rgba(210,25,13,0.1)] shadow-lg shadow-[rgba(210,25,13,0.4)] hover:border-[#b8160c]"
-          : c.card
+          ? "border-2 border-[#d2190d] shadow-[0_14px_34px_rgba(210,25,13,0.12)] hover:border-[#b8160c] hover:shadow-[0_18px_38px_rgba(210,25,13,0.15)]"
+          : `${c.card} shadow-[0_10px_28px_rgba(15,23,42,0.06)] hover:shadow-[0_18px_34px_rgba(15,23,42,0.1)]`
       }`}
     >
       {showBadge && (
         <div
-          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] ${isPopular ? "border-[#d2190d] bg-[rgba(210,25,13,0.1)] text-[#d2190d]" : "border-slate-200 bg-white text-slate-600"}`}
+          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-[60%] whitespace-nowrap rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] shadow-sm ${isPopular ? "bg-[#d2190d] text-white" : "border border-slate-200 bg-white text-slate-600"}`}
         >
-          {plan.tag ?? "Most Popular"}
+          {isPopular ? (
+            <span className="inline-flex items-center gap-1.5">
+              <Star className="h-3 w-3 fill-current" aria-hidden="true" />
+              Most Popular
+            </span>
+          ) : (
+            plan.tag
+          )}
         </div>
       )}
-      <div className="space-y-4 pt-3">
-        <div className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
-          {plan.speed}
+      <div className="space-y-1 pt-3">
+          <div className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#d2190d]">
+          {/* <div className="text-sm sm:text-base font-extrabold uppercase tracking-[0.22em] text-[#d2190d]"> */}
+        {displayLabel}
         </div>
-        <h3 className="text-xl font-bold text-slate-900">{plan.name}</h3>
+        {displayTitle ? (
+          <h3 className="text-2xl font-bold leading-tight text-slate-900">
+            {displayTitle}
+          </h3>
+        ) : null}
       </div>
-      <div className="space-y-3">
+      <div className="mt-5 space-y-2">
         <div className="flex items-end gap-2">
-          <span className="text-4xl font-black text-slate-900 sm:text-5xl">
-            {plan.price}
+          <span className="text-4xl font-black leading-none text-slate-900 sm:text-5xl">
+            ₹{displayPrice}
           </span>
           <span className="pb-1 text-sm font-semibold text-slate-500">/mo</span>
+        </div>
+        <div className="text-xs font-semibold text-slate-500">
+          +18% GST · ₹1000 refundable deposit
         </div>
         {plan.originalPrice ? (
           <div className="text-sm font-medium text-slate-400 line-through">
@@ -83,17 +102,18 @@ function PlanCard({
           </div>
         ) : null}
       </div>
-      <ul className="flex flex-1 flex-col gap-2">
-        {plan.features?.map((feat) => (
+      <div className="my-5 border-t border-slate-300" />
+      <ul className="flex flex-1 flex-col gap-2.5">
+        {benefits.map((feat) => (
           <li key={feat} className="flex items-start gap-3 text-sm text-slate-600">
-            <Check className={`mt-1 h-4 w-4 shrink-0 ${isPopular ? "text-[#d2190d]" : "text-[#134799]"}`} />
-            <span>{feat}</span>
+            <Check className={`mt-0.5 h-5 w-5 shrink-0 ${isPopular ? "text-[#d2190d]" : "text-[#134799]"}`} />
+            <span className="leading-6">{feat}</span>
           </li>
         ))}
       </ul>
       <Link
         href={ctaHref}
-        className={`w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white transition duration-200 ${
+        className={`mt-6 w-full rounded-xl py-4 text-center text-sm font-bold text-white transition duration-200 ${
           isPopular
             ? "bg-[#d2190d] hover:bg-[#b8160c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2190d] focus-visible:ring-offset-2"
             : "bg-[#134799] hover:bg-[#0f3b7f]"
@@ -102,6 +122,37 @@ function PlanCard({
         {ctaLabel}
       </Link>
     </motion.div>
+  );
+}
+
+function formatPlanLabel(speed: string) {
+  const cleaned = speed.replace(/[_-]+/g, " ").trim();
+  const speedMatch = cleaned.match(/(\d+(?:\.\d+)?)\s*(M|G)?\s*BPS/i);
+
+  if (speedMatch) {
+    const unit = speedMatch[2]?.toUpperCase() === "G" ? "GBPS" : "MBPS";
+    return `${speedMatch[1]} ${unit}`;
+  }
+
+  return cleaned.toUpperCase();
+}
+
+function formatPlanTitle(name: string, displayLabel: string) {
+  if (looksLikePlanSlug(name)) return "";
+  if (formatPlanLabel(name) === displayLabel) return "";
+  return name;
+}
+
+function looksLikePlanSlug(name: string) {
+  return /[_-]/.test(name) && /\d/.test(name) && /mbps|gbps/i.test(name);
+}
+
+function isDisplayBenefit(feature: string) {
+  const normalized = feature.toLowerCase();
+  return !(
+    normalized.includes("refundable") ||
+    normalized.includes("security deposit") ||
+    normalized.includes("gst")
   );
 }
 
@@ -114,7 +165,7 @@ export default function PlanCards({
   const gridClass =
     columns === 2
       ? "hidden gap-6 overflow-visible pt-6 md:grid md:grid-cols-2 lg:gap-8"
-      : "hidden items-start gap-8 overflow-visible pt-6 md:grid md:grid-cols-3 lg:gap-10";
+      : "hidden gap-8 overflow-visible pt-6 md:grid md:grid-cols-3 lg:gap-10";
 
   return (
     <>

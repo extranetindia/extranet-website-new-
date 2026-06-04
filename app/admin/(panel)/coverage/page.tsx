@@ -133,7 +133,7 @@ export default function AdminCoveragePage() {
           <button
             type="button"
             onClick={startAdd}
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799]"
           >
             <Plus size={16} />
             Add City
@@ -241,7 +241,7 @@ export default function AdminCoveragePage() {
                   onChange={(event) =>
                     setDraft((previous) => ({ ...previous, active: event.target.checked }))
                   }
-                  className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  className="h-4 w-4 rounded border-slate-300 text-[#134799] focus:ring-text-[#134799]0"
                 />
                 Active
               </label>
@@ -258,7 +258,7 @@ export default function AdminCoveragePage() {
               <button
                 type="button"
                 onClick={saveCity}
-                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
+                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#134799]"
               >
                 Save City
               </button>

@@ -55,12 +55,12 @@ function FeatureCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.05 }}
-      className="group h-full rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-blue-200 hover:shadow-md"
+      className="group h-full rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-[#134799]/20 hover:shadow-md"
     >
       <div
         className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${
           feat.accent === "blue"
-            ? "bg-blue-50 text-blue-700"
+            ? "bg-text-[#134799] text-blue-700"
             : "bg-red-50 text-red-600"
         }`}
       >
@@ -101,17 +101,17 @@ export default function Features() {
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mt-8 flex flex-col items-stretch justify-between gap-5 rounded-2xl bg-gradient-to-r from-blue-700 to-blue-800 p-6 text-white sm:mt-12 sm:flex-row sm:items-center sm:gap-6 sm:p-8"
+        className="mt-8 flex flex-col items-stretch justify-between gap-5 rounded-2xl bg-gradient-to-r from-[#134799] to-[#0f3b7f] p-6 text-white sm:mt-12 sm:flex-row sm:items-center sm:gap-6 sm:p-8"
       >
         <div>
           <h3 className="mb-1 text-lg font-bold sm:text-xl">
             Ready for real internet speed?
           </h3>
-          <p className="text-sm text-blue-100">Join 50,000+ customers on Extranet.</p>
+          <p className="text-sm text-white/80">Join 50,000+ customers on Extranet.</p>
         </div>
         <Link
           href="/plans"
-          className="min-h-[44px] shrink-0 rounded-xl bg-white px-7 py-3.5 text-center text-sm font-bold text-blue-800 transition-colors hover:bg-blue-50"
+          className="min-h-[44px] shrink-0 rounded-xl bg-white px-7 py-3.5 text-center text-sm font-bold text-[#134799] transition-colors hover:bg-text-[#134799]"
         >
           See all plans
         </Link>

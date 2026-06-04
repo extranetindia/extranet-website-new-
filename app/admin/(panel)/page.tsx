@@ -150,7 +150,7 @@ export default function AdminDashboardPage() {
             </div>
             <Link
               href="/admin/leads"
-              className="text-sm font-semibold text-blue-700 hover:text-blue-800"
+              className="text-sm font-semibold text-blue-700 hover:text-[#134799]"
             >
               View all →
             </Link>
@@ -252,7 +252,7 @@ export default function AdminDashboardPage() {
                 <li key={action}>
                   <button
                     type="button"
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-left text-sm font-medium text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-left text-sm font-medium text-slate-700 transition hover:border-[#134799]/20 hover:bg-text-[#134799] hover:text-blue-700"
                   >
                     {action}
                   </button>
