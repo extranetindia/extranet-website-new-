@@ -8,11 +8,11 @@ import type { PlanDefinition } from "@/lib/plans";
 
 const colorMap = {
   blue: {
-    badge: "bg-blue-50 text-blue-700 border-blue-200",
-    icon: "bg-blue-50 text-blue-700",
-    card: "border-slate-200 hover:border-blue-300 hover:shadow-blue-100/50",
-    btn: "bg-blue-700 hover:bg-blue-800 shadow-blue-900/20",
-    check: "text-blue-600",
+    badge: "border-[#134799] bg-[rgba(19,71,153,0.1)] text-[#134799]",
+    icon: "bg-[rgba(19,71,153,0.1)] text-[#134799]",
+    card: "border-slate-200 hover:border-[#134799] hover:shadow-[0_18px_40px_rgba(19,71,153,0.1)]",
+    btn: "bg-[#134799] hover:bg-[#0f3b7f] shadow-[rgba(19,71,153,0.2)]",
+    check: "text-[#134799]",
   },
   red: {
     badge: "bg-red-50 text-red-700 border-red-200",
@@ -82,14 +82,14 @@ function PlanCard({
       <ul className="flex flex-1 flex-col gap-2">
         {plan.features?.map((feat) => (
           <li key={feat} className="flex items-start gap-3 text-sm text-slate-600">
-            <Check className={`mt-1 h-4 w-4 shrink-0 ${isPopular ? "text-red-600" : "text-blue-600"}`} />
+            <Check className="mt-1 h-4 w-4 shrink-0 text-[#134799]" />
             <span>{feat}</span>
           </li>
         ))}
       </ul>
       <Link
         href={ctaHref}
-        className={`w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white transition duration-200 ${isPopular ? "bg-red-600 hover:bg-red-700" : "bg-blue-700 hover:bg-blue-800"}`}
+        className={`w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white transition duration-200 ${isPopular ? "bg-red-600 hover:bg-red-700" : "bg-[#134799] hover:bg-[#0f3b7f]"}`}
       >
         {ctaLabel}
       </Link>

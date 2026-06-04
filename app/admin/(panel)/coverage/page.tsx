@@ -258,7 +258,7 @@ export default function AdminCoveragePage() {
               <button
                 type="button"
                 onClick={saveCity}
-                className="rounded-xl bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
+                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
               >
                 Save City
               </button>

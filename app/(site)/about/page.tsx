@@ -92,7 +92,7 @@ export default function AboutPage() {
           <div className="mt-12 text-center">
             <Link
               href="/plans"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-blue-700 px-8 py-4 font-bold text-white transition-colors hover:bg-blue-800"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#134799] px-8 py-4 font-bold text-white transition-colors hover:bg-blue-800"
             >
               Explore our plans
             </Link>
