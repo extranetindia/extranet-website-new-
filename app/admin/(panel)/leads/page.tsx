@@ -84,7 +84,7 @@ export default function AdminLeadsPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">Leads</h2>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm hover:text-[#134799]">
               Contact form submissions from the public website.
             </p>
           </div>
@@ -103,7 +103,7 @@ export default function AdminLeadsPage() {
 
         <div className="mt-5 overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-slate-200 text-slate-500">
+            <thead className="border-b border-slate-200 hover:text-[#134799]">
               <tr>
                 <th className="px-3 py-2 font-medium">Name</th>
                 <th className="px-3 py-2 font-medium">Phone</th>
@@ -116,13 +116,13 @@ export default function AdminLeadsPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-3 py-8 text-center text-slate-500">
+                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#134799]">
                     Loading leads...
                   </td>
                 </tr>
               ) : leads.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-3 py-8 text-center text-slate-500">
+                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#134799]">
                     No leads yet. Submissions from the contact page will appear here.
                   </td>
                 </tr>
@@ -132,7 +132,7 @@ export default function AdminLeadsPage() {
                     <td className="px-3 py-3 font-medium text-slate-900">
                       {lead.full_name}
                       {lead.email && (
-                        <span className="mt-0.5 block text-xs font-normal text-slate-500">
+                        <span className="mt-0.5 block text-xs font-normal hover:text-[#134799]">
                           {lead.email}
                         </span>
                       )}
@@ -151,7 +151,7 @@ export default function AdminLeadsPage() {
                             event.target.value as LeadStatus,
                           )
                         }
-                        className="min-h-[36px] rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-medium text-slate-700 outline-none focus:border-blue-400 disabled:opacity-60"
+                        className="min-h-[36px] rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-medium text-slate-700 outline-none transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-blue-400 disabled:opacity-60"
                       >
                         {LEAD_STATUSES.map((status) => (
                           <option key={status} value={status}>
@@ -168,7 +168,7 @@ export default function AdminLeadsPage() {
                         type="button"
                         onClick={() => void handleDelete(lead.id)}
                         disabled={deletingId === lead.id}
-                        className="rounded-lg border border-red-200 p-1.5 text-red-600 transition hover:bg-red-50 disabled:opacity-60"
+                        className="rounded-lg border border-red-200 p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#D2190D]/40 hover:bg-red-50 hover:text-[#b8160c] disabled:opacity-60"
                         aria-label={`Delete lead ${lead.full_name}`}
                       >
                         <Trash2 size={14} />

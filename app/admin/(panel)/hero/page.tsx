@@ -195,7 +195,7 @@ export default function AdminHeroPage() {
     <div className="space-y-6">
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <h2 className="text-lg font-semibold text-slate-900">Hero Banner</h2>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm hover:text-[#134799]">
           Upload separate banners for desktop (1600×600) and mobile (1080×720).
           Visitors are sent to /plans when they click the banner.
         </p>
@@ -219,7 +219,7 @@ export default function AdminHeroPage() {
           <button
             type="button"
             onClick={() => desktopInputRef.current?.click()}
-            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-50 hover:text-[#134799]"
           >
             <Monitor size={16} />
             Desktop Banner Upload
@@ -227,7 +227,7 @@ export default function AdminHeroPage() {
           <button
             type="button"
             onClick={() => mobileInputRef.current?.click()}
-            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-50 hover:text-[#134799]"
           >
             <Smartphone size={16} />
             Mobile Banner Upload
@@ -236,7 +236,7 @@ export default function AdminHeroPage() {
             type="button"
             onClick={() => void handleSave()}
             disabled={!hasPendingChanges || saving}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60"
           >
             <Upload size={16} />
             {saving ? "Saving..." : "Save"}
@@ -244,7 +244,7 @@ export default function AdminHeroPage() {
         </div>
 
         {(pendingDesktop || pendingMobile) && (
-          <p className="mt-3 text-xs text-slate-500">
+          <p className="mt-3 text-xs hover:text-[#134799]">
             {pendingDesktop && `Desktop: ${pendingDesktop.file.name}. `}
             {pendingMobile && `Mobile: ${pendingMobile.file.name}. `}
             Click Save to publish.
@@ -254,13 +254,13 @@ export default function AdminHeroPage() {
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div>
             <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
-              <Monitor size={16} className="text-blue-700" />
+              <Monitor size={16} className="text-[#134799]" />
               Desktop Preview
               <span className="font-normal text-slate-400">1600×600</span>
             </h3>
             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
               {loading ? (
-                <div className="flex aspect-[8/3] items-center justify-center text-sm text-slate-500">
+                <div className="flex aspect-[8/3] items-center justify-center text-sm hover:text-[#134799]">
                   Loading...
                 </div>
               ) : desktopPreview ? (
@@ -273,7 +273,7 @@ export default function AdminHeroPage() {
                   />
                 </div>
               ) : (
-                <div className="flex aspect-[8/3] items-center justify-center text-sm text-slate-500">
+                <div className="flex aspect-[8/3] items-center justify-center text-sm hover:text-[#134799]">
                   No desktop banner uploaded
                 </div>
               )}
@@ -282,13 +282,13 @@ export default function AdminHeroPage() {
 
           <div>
             <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
-              <Smartphone size={16} className="text-blue-700" />
+              <Smartphone size={16} className="text-[#134799]" />
               Mobile Preview
               <span className="font-normal text-slate-400">1080×720</span>
             </h3>
             <div className="mx-auto max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
               {loading ? (
-                <div className="flex aspect-[3/2] items-center justify-center text-sm text-slate-500">
+                <div className="flex aspect-[3/2] items-center justify-center text-sm hover:text-[#134799]">
                   Loading...
                 </div>
               ) : mobilePreview ? (
@@ -301,7 +301,7 @@ export default function AdminHeroPage() {
                   />
                 </div>
               ) : (
-                <div className="flex aspect-[3/2] items-center justify-center text-sm text-slate-500">
+                <div className="flex aspect-[3/2] items-center justify-center text-sm hover:text-[#134799]">
                   No mobile banner — falls back to desktop
                 </div>
               )}

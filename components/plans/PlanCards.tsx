@@ -18,7 +18,7 @@ const colorMap = {
     badge: "bg-red-50 text-red-700 border-red-200",
     icon: "bg-red-50 text-red-600",
     card: "border-red-200 hover:border-red-300 ring-2 ring-red-100 shadow-lg shadow-red-100/40",
-    btn: "bg-red-600 hover:bg-red-700 shadow-red-900/20",
+    btn: "bg-[#D2190D] hover:bg-[#b8160c] shadow-red-900/20",
     check: "text-red-600",
   },
 };
@@ -55,7 +55,7 @@ function PlanCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay: index * 0.08 }}
-      className={`relative flex h-full flex-col overflow-visible rounded-[14px] border bg-white p-5 transition-all duration-300 hover:-translate-y-0.5 sm:p-6 ${
+      className={`relative flex h-full flex-col overflow-visible rounded-[14px] border bg-white p-5 transition-all duration-300 ease-in-out hover:-translate-y-1 sm:p-6 ${
         isPopular
           ? "border-2 border-[#d2190d] shadow-[0_14px_34px_rgba(210,25,13,0.12)] hover:border-[#b8160c] hover:shadow-[0_18px_38px_rgba(210,25,13,0.15)]"
           : `${c.card} shadow-[0_10px_28px_rgba(15,23,42,0.06)] hover:shadow-[0_18px_34px_rgba(15,23,42,0.1)]`
@@ -91,9 +91,9 @@ function PlanCard({
           <span className="text-4xl font-black leading-none text-slate-900 sm:text-5xl">
             ₹{displayPrice}
           </span>
-          <span className="pb-1 text-sm font-semibold text-slate-500">/mo</span>
+          <span className="pb-1 text-sm font-semibold hover:text-[#134799]">/mo</span>
         </div>
-        <div className="text-xs font-semibold text-slate-500">
+        <div className="text-xs font-semibold hover:text-[#134799]">
           +18% GST · ₹1000 refundable deposit
         </div>
         {plan.originalPrice ? (
@@ -113,7 +113,7 @@ function PlanCard({
       </ul>
       <Link
         href={ctaHref}
-        className={`mt-6 w-full rounded-xl py-4 text-center text-sm font-bold text-white transition duration-200 ${
+        className={`mt-6 w-full rounded-xl py-4 text-center text-sm font-bold text-white transition-all duration-200 ease-in-out ${
           isPopular
             ? "bg-[#d2190d] hover:bg-[#b8160c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2190d] focus-visible:ring-offset-2"
             : "bg-[#134799] hover:bg-[#0f3b7f]"

@@ -18,7 +18,7 @@ export default function PlansPage() {
         title={
           <>
             Internet plans built for{" "}
-            <span className="text-blue-700">homes</span> and{" "}
+            <span className="text-[#134799]">homes</span> and{" "}
             <span className="text-red-600">enterprises</span>
           </>
         }

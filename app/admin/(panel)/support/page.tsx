@@ -66,7 +66,7 @@ export default function AdminSupportPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-lg font-semibold text-slate-900">Support Settings</h2>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm hover:text-[#134799]">
             Configure customer care details shown across the public website.
           </p>
         </div>
@@ -153,7 +153,7 @@ export default function AdminSupportPage() {
             type="button"
             onClick={handleSave}
             disabled={saving || loading}
-            className="inline-flex items-center justify-center rounded-xl bg-[#134799] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center justify-center rounded-xl bg-[#134799] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {saving ? "Saving..." : "Save Support Settings"}
           </button>

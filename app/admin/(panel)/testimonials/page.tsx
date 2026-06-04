@@ -65,7 +65,7 @@ function RatingSelector({
           key={rating}
           type="button"
           onClick={() => onChange(rating)}
-          className="rounded-lg p-1 transition hover:bg-amber-50"
+          className="rounded-lg p-1 transition-all duration-200 ease-in-out hover:bg-amber-50"
           aria-label={`${rating} star${rating === 1 ? "" : "s"}`}
         >
           <Star
@@ -217,7 +217,7 @@ export default function AdminTestimonialsPage() {
             <h2 className="text-lg font-semibold text-slate-900">
               Testimonials Management
             </h2>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm hover:text-[#134799]">
               Manage customer testimonials shown on the homepage.
             </p>
           </div>
@@ -232,7 +232,7 @@ export default function AdminTestimonialsPage() {
               type="button"
               onClick={startAdd}
               disabled={loading}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-60"
             >
               <Plus size={16} />
               Add Testimonial
@@ -256,7 +256,7 @@ export default function AdminTestimonialsPage() {
             ))}
           </div>
         ) : items.length === 0 ? (
-          <p className="mt-5 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-10 text-center text-sm text-slate-500">
+          <p className="mt-5 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-10 text-center text-sm hover:text-[#134799]">
             No testimonials yet. Add your first customer story to show on the
             homepage.
           </p>
@@ -282,7 +282,7 @@ export default function AdminTestimonialsPage() {
                       )}
                     </div>
                     {item.city && (
-                      <p className="text-xs text-slate-500">{item.city}</p>
+                      <p className="text-xs hover:text-[#134799]">{item.city}</p>
                     )}
                   </div>
                   <div className="flex gap-0.5 text-amber-500">
@@ -304,7 +304,7 @@ export default function AdminTestimonialsPage() {
                     type="button"
                     disabled={togglingId === item.id}
                     onClick={() => void handleToggleActive(item)}
-                    className={`rounded-lg border px-2.5 py-1 text-xs font-semibold transition ${
+                    className={`rounded-lg border px-2.5 py-1 text-xs font-semibold transition-all duration-200 ease-in-out ${
                       item.active
                         ? "border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
                         : "border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
@@ -319,7 +319,7 @@ export default function AdminTestimonialsPage() {
                   <button
                     type="button"
                     onClick={() => startEdit(item)}
-                    className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-600 transition hover:bg-slate-100"
+                    className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
                   >
                     <Pencil size={14} />
                   </button>
@@ -327,7 +327,7 @@ export default function AdminTestimonialsPage() {
                     type="button"
                     disabled={deletingId === item.id}
                     onClick={() => void handleDelete(item.id)}
-                    className="rounded-lg border border-red-200 bg-white p-1.5 text-red-600 transition hover:bg-red-50 disabled:opacity-60"
+                    className="rounded-lg border border-red-200 bg-white p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#D2190D]/40 hover:bg-red-50 hover:text-[#b8160c] disabled:opacity-60"
                   >
                     <Trash2 size={14} />
                   </button>
@@ -348,7 +348,7 @@ export default function AdminTestimonialsPage() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-lg p-1 text-slate-500 transition hover:bg-slate-100"
+                className="rounded-lg p-1 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799]"
               >
                 <X size={16} />
               </button>
@@ -439,7 +439,7 @@ export default function AdminTestimonialsPage() {
                       active: event.target.checked,
                     }))
                   }
-                  className="h-4 w-4 rounded border-slate-300 text-blue-700 focus:ring-text-[#134799]0"
+                  className="h-4 w-4 rounded border-slate-300 text-[#134799] focus:ring-text-[#134799]0"
                 />
                 <span className="text-sm font-medium text-slate-700">
                   Active (visible on homepage)
@@ -451,7 +451,7 @@ export default function AdminTestimonialsPage() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
               >
                 Cancel
               </button>
@@ -459,7 +459,7 @@ export default function AdminTestimonialsPage() {
                 type="button"
                 onClick={() => void handleSave()}
                 disabled={saving}
-                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:opacity-60"
+                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-60"
               >
                 {saving ? "Saving…" : "Save Testimonial"}
               </button>

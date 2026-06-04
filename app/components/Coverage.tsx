@@ -51,9 +51,9 @@ export default function Coverage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="p-6 rounded-2xl bg-slate-50 border border-slate-200"
+            className="p-6 rounded-2xl bg-slate-50 border border-slate-200 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10"
           >
-            <div className="w-11 h-11 rounded-xl bg-text-[#134799] text-blue-700 flex items-center justify-center mb-4">
+            <div className="w-11 h-11 rounded-xl bg-text-[#134799] text-[#134799] flex items-center justify-center mb-4">
               <type.icon className="w-5 h-5" />
             </div>
             <div className="text-2xl font-black text-slate-900 mb-1">{type.count}</div>
@@ -78,10 +78,10 @@ export default function Coverage() {
             </span>
           ))}
         </div>
-        <p className="text-sm text-slate-500 mb-4">+ 10 more metros on the full coverage page</p>
+        <p className="text-sm hover:text-[#134799] mb-4">+ 10 more metros on the full coverage page</p>
         <Link
           href="/coverage"
-          className="text-sm font-semibold text-blue-700 hover:text-[#134799]"
+          className="text-sm font-semibold text-[#134799] hover:text-[#134799]"
         >
           Check availability by pincode →
         </Link>

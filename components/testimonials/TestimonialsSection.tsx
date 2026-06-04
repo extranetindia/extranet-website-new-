@@ -55,7 +55,7 @@ function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.08 }}
-      className="flex h-full flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6"
+      className="flex h-full flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10"
     >
       <Quote className="h-7 w-7 shrink-0 text-blue-200" />
       <StarRating rating={testimonial.rating} />
@@ -67,7 +67,7 @@ function TestimonialCard({
         <div>
           <div className="text-sm font-semibold text-slate-900">{testimonial.name}</div>
           {testimonial.city && (
-            <div className="text-xs text-slate-500">{testimonial.city}</div>
+            <div className="text-xs hover:text-[#134799]">{testimonial.city}</div>
           )}
         </div>
       </div>
@@ -102,7 +102,7 @@ export default function TestimonialsSection({
       )}
 
       {!fetchError && !hasTestimonials && (
-        <p className="rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-sm text-slate-500">
+        <p className="rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-sm hover:text-[#134799]">
           Customer stories will appear here soon.
         </p>
       )}

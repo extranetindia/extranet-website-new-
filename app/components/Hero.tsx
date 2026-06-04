@@ -37,7 +37,7 @@ export default async function Hero() {
       <div className="w-full">
         <Link
           href="/plans"
-          className="group relative block w-full cursor-pointer overflow-hidden shadow-lg shadow-slate-200/70 ring-1 ring-slate-200/80 transition-shadow hover:shadow-xl hover:shadow-slate-300/60"
+          className="group relative block w-full cursor-pointer overflow-hidden shadow-lg shadow-slate-200/70 ring-1 ring-slate-200/80 transition-all duration-300 ease-in-out hover:shadow-xl hover:shadow-slate-300/60"
           aria-label="View broadband plans"
         >
           {/* Mobile banner — 1080×720 (3:2) */}

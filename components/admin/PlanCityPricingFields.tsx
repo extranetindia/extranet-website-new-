@@ -27,7 +27,7 @@ export default function PlanCityPricingFields({
     <div className="md:col-span-2">
       <div className="mb-3">
         <h4 className="text-sm font-semibold text-slate-900">City Pricing</h4>
-        <p className="mt-1 text-xs text-slate-500">
+        <p className="mt-1 text-xs hover:text-[#134799]">
           Optional per-city pricing overrides. Leave empty to use the default plan price
           {fallbackPrice ? (
             <>
@@ -48,9 +48,9 @@ export default function PlanCityPricingFields({
       )}
 
       {loading ? (
-        <p className="text-sm text-slate-500">Loading city pricing...</p>
+        <p className="text-sm hover:text-[#134799]">Loading city pricing...</p>
       ) : rows.length === 0 ? (
-        <p className="text-sm text-slate-500">
+        <p className="text-sm hover:text-[#134799]">
           No cities found. Create cities in Coverage Management first.
         </p>
       ) : (
@@ -76,7 +76,7 @@ export default function PlanCityPricingFields({
                     onChange={(event) =>
                       onChange(row.cityId, "price", event.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:text-slate-500"
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
                   />
                 </label>
                 <label className="block">
@@ -91,7 +91,7 @@ export default function PlanCityPricingFields({
                     onChange={(event) =>
                       onChange(row.cityId, "originalPrice", event.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:text-slate-500"
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
                   />
                 </label>
 

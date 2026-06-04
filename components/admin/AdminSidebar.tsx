@@ -47,7 +47,7 @@ function NavContent({
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4">
-        <Link href="/admin" className="min-w-0 shrink-0" onClick={onCloseMobile}>
+        <Link href="/admin" className="min-w-0 shrink-0 transition-all duration-200 ease-in-out hover:opacity-90" onClick={onCloseMobile}>
           <NextImage
             src="/logo.png"
             alt="Extranet"
@@ -60,7 +60,7 @@ function NavContent({
         <button
           type="button"
           onClick={onToggle}
-          className="hidden rounded-lg border border-slate-200 p-1.5 text-slate-600 transition hover:bg-slate-100 lg:block"
+          className="hidden rounded-lg border border-slate-200 p-1.5 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799] lg:block"
           aria-label="Toggle sidebar"
         >
           {collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
@@ -75,10 +75,10 @@ function NavContent({
               key={item.href}
               href={item.href}
               onClick={onCloseMobile}
-              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
+              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ease-in-out ${
                 active
-                  ? "bg-text-[#134799] text-blue-700"
-                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                  ? "bg-text-[#134799] text-[#134799]"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-[#134799]"
               }`}
             >
               <item.icon size={18} />
@@ -91,7 +91,7 @@ function NavContent({
       <div className="border-t border-slate-200 p-3">
         <Link
           href="/admin/login"
-          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799]"
         >
           <LogOut size={18} />
           {!collapsed && <span>Logout</span>}

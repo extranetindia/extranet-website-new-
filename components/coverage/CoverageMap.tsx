@@ -45,9 +45,9 @@ export default function CoverageMap() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm"
+            className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10"
           >
-            <div className="w-11 h-11 rounded-xl bg-text-[#134799] text-blue-700 flex items-center justify-center mb-4">
+            <div className="w-11 h-11 rounded-xl bg-text-[#134799] text-[#134799] flex items-center justify-center mb-4">
               <type.icon className="w-5 h-5" />
             </div>
             <div className="text-2xl font-black text-slate-900 mb-1">{type.count}</div>
@@ -95,11 +95,11 @@ export default function CoverageMap() {
             <input
               type="text"
               placeholder="Enter your pincode"
-              className="min-h-[44px] flex-1 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-blue-200 focus:border-white/40 focus:outline-none"
+              className="min-h-[44px] flex-1 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-blue-200 transition-all duration-200 ease-in-out hover:border-white/35 focus:border-white/40 focus:outline-none"
             />
             <button
               type="button"
-              className="min-h-[44px] shrink-0 rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold transition-colors hover:bg-red-700"
+              className="min-h-[44px] shrink-0 rounded-xl bg-[#D2190D] px-6 py-3 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-[#b8160c] hover:shadow-lg hover:shadow-red-950/20"
             >
               Check availability
             </button>

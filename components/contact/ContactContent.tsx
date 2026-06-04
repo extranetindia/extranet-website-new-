@@ -130,7 +130,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                       fullName: event.target.value,
                     }))
                   }
-                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
                   placeholder="Your name"
                 />
               </div>
@@ -154,7 +154,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                       phone: event.target.value,
                     }))
                   }
-                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
                   placeholder="+91"
                 />
               </div>
@@ -178,7 +178,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     email: event.target.value,
                   }))
                 }
-                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
                 placeholder="you@company.com"
               />
             </div>
@@ -201,7 +201,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     inquiryType: event.target.value,
                   }))
                 }
-                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
               >
                 {INQUIRY_TYPES.map((type) => (
                   <option key={type} value={type}>
@@ -229,14 +229,14 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     message: event.target.value,
                   }))
                 }
-                className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 focus:border-text-[#134799]0 focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
                 placeholder="Tell us about your requirements..."
               />
             </div>
             <button
               type="submit"
               disabled={submitting}
-              className="w-full min-h-[44px] rounded-xl bg-[#134799] px-8 py-3.5 font-bold text-white transition-colors hover:bg-[#134799] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="w-full min-h-[44px] rounded-xl bg-[#134799] px-8 py-3.5 font-bold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {submitting ? "Submitting..." : "Submit inquiry"}
             </button>
@@ -255,10 +255,10 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
             className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5"
           >
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-text-[#134799]">
-              <item.icon className="h-5 w-5 text-blue-700" />
+              <item.icon className="h-5 w-5 text-[#134799]" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <div className="text-xs font-semibold uppercase tracking-wider hover:text-[#134799]">
                 {item.label}
               </div>
               <div className="font-semibold text-slate-900">{item.value}</div>
@@ -267,7 +267,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
         ))}
 
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-          <MapPin className="mb-3 h-5 w-5 text-blue-700" />
+          <MapPin className="mb-3 h-5 w-5 text-[#134799]" />
           <h3 className="mb-3 font-bold text-slate-900">Office locations</h3>
           <ul className="space-y-3">
             <li>
@@ -285,13 +285,13 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
           <div className="flex flex-col gap-2">
             <Link
               href="/plans"
-              className="rounded-lg bg-white py-2.5 text-center text-sm font-semibold text-[#134799] hover:bg-text-[#134799]"
+              className="rounded-lg bg-white py-2.5 text-center text-sm font-semibold text-[#134799] transition-all duration-200 ease-in-out hover:bg-slate-50 hover:text-[#0f3b7f]"
             >
               View plans
             </Link>
             <Link
               href="/coverage"
-              className="rounded-lg border border-white/30 py-2.5 text-center text-sm font-semibold hover:bg-white/10"
+              className="rounded-lg border border-white/30 py-2.5 text-center text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-white/10 hover:border-white/50"
             >
               Check coverage
             </Link>

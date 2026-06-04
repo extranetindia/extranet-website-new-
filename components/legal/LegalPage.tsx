@@ -36,7 +36,7 @@ export default function LegalPage({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <article className="mx-auto w-full max-w-[900px] rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
           <header className="mb-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-blue-700">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#134799]">
               Legal
             </p>
             <h1 className="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
@@ -45,7 +45,7 @@ export default function LegalPage({
             <p className="mt-5 text-base leading-8 text-slate-600">
               {summary}
             </p>
-            <p className="mt-5 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
+            <p className="mt-5 text-sm font-medium uppercase tracking-[0.2em] hover:text-[#134799]">
               Last Updated: {formatLastUpdated(lastUpdated)}
             </p>
           </header>

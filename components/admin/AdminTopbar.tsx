@@ -38,7 +38,7 @@ export default function AdminTopbar({ onOpenMobile }: AdminTopbarProps) {
           <button
             type="button"
             onClick={onOpenMobile}
-            className="rounded-lg border border-slate-200 p-2 text-slate-600 transition hover:bg-slate-100 lg:hidden"
+            className="rounded-lg border border-slate-200 p-2 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799] lg:hidden"
             aria-label="Open sidebar"
           >
             <Menu size={18} />
@@ -54,17 +54,17 @@ export default function AdminTopbar({ onOpenMobile }: AdminTopbarProps) {
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
-            className="relative rounded-xl border border-slate-200 p-2 text-slate-600 transition hover:bg-slate-100"
+            className="relative rounded-xl border border-slate-200 p-2 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
             aria-label="Notifications"
           >
             <Bell size={18} />
             <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-red-500" />
           </button>
           <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5">
-            <UserCircle2 className="text-blue-700" size={20} />
+            <UserCircle2 className="text-[#134799]" size={20} />
             <div className="hidden sm:block">
               <p className="text-xs font-medium text-slate-900">Admin User</p>
-              <p className="text-[11px] text-slate-500">extranet.in</p>
+              <p className="text-[11px] hover:text-[#134799]">extranet.in</p>
             </div>
           </div>
           <div className="relative">
@@ -72,7 +72,7 @@ export default function AdminTopbar({ onOpenMobile }: AdminTopbarProps) {
               type="button"
               onClick={() => setShowLogoutConfirm(!showLogoutConfirm)}
               disabled={loading}
-              className="rounded-lg border border-slate-200 p-2 text-slate-600 transition hover:bg-slate-100 disabled:opacity-50"
+              className="rounded-lg border border-slate-200 p-2 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799] disabled:opacity-50"
               aria-label="Logout"
             >
               <LogOut size={18} />
@@ -85,7 +85,7 @@ export default function AdminTopbar({ onOpenMobile }: AdminTopbarProps) {
                 <div className="flex gap-2 border-t border-slate-200 p-2">
                   <button
                     onClick={() => setShowLogoutConfirm(false)}
-                    className="flex-1 rounded-lg border border-slate-200 px-2 py-1.5 text-sm font-medium text-slate-900 transition hover:bg-slate-50"
+                    className="flex-1 rounded-lg border border-slate-200 px-2 py-1.5 text-sm font-medium text-slate-900 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-50 hover:text-[#134799]"
                     type="button"
                   >
                     Cancel
@@ -93,7 +93,7 @@ export default function AdminTopbar({ onOpenMobile }: AdminTopbarProps) {
                   <button
                     onClick={handleLogout}
                     disabled={loading}
-                    className="flex-1 rounded-lg bg-red-600 px-2 py-1.5 text-sm font-medium text-white transition hover:bg-red-700 disabled:opacity-50"
+                    className="flex-1 rounded-lg bg-[#D2190D] px-2 py-1.5 text-sm font-medium text-white transition-all duration-200 ease-in-out hover:bg-[#b8160c] disabled:opacity-50"
                     type="button"
                   >
                     {loading ? "Logging out..." : "Sign out"}

@@ -57,7 +57,7 @@ export default function SectionPreview({
           </div>
           <Link
             href={href}
-            className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[#134799] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition-colors hover:bg-[#134799] sm:w-auto shrink-0"
+            className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[#134799] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-xl hover:shadow-blue-900/20 sm:w-auto shrink-0"
           >
             {linkLabel}
             <ArrowRight className="w-4 h-4" />

@@ -26,7 +26,7 @@ export default function AdminSettingsPage() {
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <h2 className="text-lg font-semibold text-slate-900">General Settings</h2>
-      <p className="mt-1 text-sm text-slate-500">
+      <p className="mt-1 text-sm hover:text-[#134799]">
         Configure company profile, branding, and social placeholders.
       </p>
 
@@ -123,7 +123,7 @@ export default function AdminSettingsPage() {
         <div className="md:col-span-2">
           <button
             type="submit"
-            className="rounded-xl bg-[#134799] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799]"
+            className="rounded-xl bg-[#134799] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20"
           >
             Save Settings
           </button>

@@ -126,14 +126,14 @@ export default function AdminCoveragePage() {
             <h2 className="text-lg font-semibold text-slate-900">
               Coverage Management
             </h2>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm hover:text-[#134799]">
               Manage coverage cities, status, and the order of service regions.
             </p>
           </div>
           <button
             type="button"
             onClick={startAdd}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#134799]"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20"
           >
             <Plus size={16} />
             Add City
@@ -142,7 +142,7 @@ export default function AdminCoveragePage() {
 
 <div className="mt-5 overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="border-b border-slate-200 text-left text-slate-500">
+              <thead className="border-b border-slate-200 text-left hover:text-[#134799]">
                 <tr>
                   <th className="px-3 py-2 font-medium">City</th>
                   <th className="px-3 py-2 font-medium">Status</th>
@@ -152,13 +152,13 @@ export default function AdminCoveragePage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={3} className="px-3 py-8 text-center text-slate-500">
+                    <td colSpan={3} className="px-3 py-8 text-center hover:text-[#134799]">
                       Loading cities...
                     </td>
                   </tr>
                 ) : sortedCities.length === 0 ? (
                   <tr>
-                    <td colSpan={3} className="px-3 py-8 text-center text-slate-500">
+                    <td colSpan={3} className="px-3 py-8 text-center hover:text-[#134799]">
                       No cities found.
                     </td>
                   </tr>
@@ -173,7 +173,7 @@ export default function AdminCoveragePage() {
                           className={`rounded-full px-3 py-1 text-xs font-semibold ${
                             city.active
                               ? "bg-emerald-100 text-emerald-700"
-                              : "bg-slate-100 text-slate-500"
+                              : "bg-slate-100 hover:text-[#134799]"
                           }`}
                         >
                           {city.active ? "Active" : "Inactive"}
@@ -184,14 +184,14 @@ export default function AdminCoveragePage() {
                           <button
                             type="button"
                             onClick={() => startEdit(city)}
-                            className="rounded-lg border border-slate-200 p-1.5 text-slate-600 transition hover:bg-slate-100"
+                            className="rounded-lg border border-slate-200 p-1.5 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
                           >
                             <Pencil size={14} />
                           </button>
                           <button
                             type="button"
                             onClick={() => void removeCity(city.id)}
-                            className="rounded-lg border border-red-200 p-1.5 text-red-600 transition hover:bg-red-50"
+                            className="rounded-lg border border-red-200 p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#D2190D]/40 hover:bg-red-50 hover:text-[#b8160c]"
                           >
                             <Trash2 size={14} />
                           </button>
@@ -215,7 +215,7 @@ export default function AdminCoveragePage() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-lg p-1 text-slate-500 transition hover:bg-slate-100"
+                className="rounded-lg p-1 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799]"
               >
                 <X size={16} />
               </button>
@@ -251,14 +251,14 @@ export default function AdminCoveragePage() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={saveCity}
-                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#134799]"
+                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20"
               >
                 Save City
               </button>

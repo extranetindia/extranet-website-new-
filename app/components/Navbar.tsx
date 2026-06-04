@@ -58,7 +58,7 @@ export default function Navbar() {
         <div className="flex h-14 items-center justify-between sm:h-16">
           <Link
             href="/"
-            className="relative flex h-9 items-center sm:h-10"
+            className="relative flex h-9 items-center transition-all duration-200 ease-in-out hover:opacity-90 sm:h-10"
           >
             <Image
               src="/logo.png"
@@ -75,11 +75,11 @@ export default function Navbar() {
               <div key={link.label} className="relative">
                 <Link
                   href={link.href}
-                  className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out ${
                     isActive(link.href)
                       ? "text-slate-600 font-medium"
                       : "text-slate-600 font-medium"
-                  } hover:text-blue-700 hover:bg-text-[#134799]`}
+                  } hover:text-[#134799]`}
                 >
                   {link.label}
                 </Link>
@@ -90,20 +90,20 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-2">
             <a
               href="tel:+919540901195"
-              className="hidden xl:flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors mr-1"
+              className="hidden xl:flex items-center gap-2 text-sm text-slate-600 hover:text-[#134799] transition-all duration-200 ease-in-out mr-1"
             >
               <Phone className="w-4 h-4 text-[#134799]" />
               <span className="font-medium">+91 9540901195</span>
             </a>
             <Link
               href="https://user.extranetindia.com/Customer/Default.aspx"
-              className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:border-[#134799]/30 hover:text-blue-700 text-sm font-semibold transition-all bg-white"
+              className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-[#D2190D] hover:text-white hover:border-[#D2190D] hover:shadow-md hover:shadow-red-900/15"
             >
               My Account
             </Link>
             <Link
               href="/contact"
-              className="px-5 py-2.5 rounded-xl bg-[#134799] hover:bg-[#134799] text-white text-sm font-semibold transition-all shadow-md shadow-blue-900/20"
+              className="px-5 py-2.5 rounded-xl bg-[#134799] hover:bg-[#0f3b7f] text-white text-sm font-semibold transition-all duration-200 ease-in-out shadow-md shadow-blue-900/20 hover:shadow-lg hover:shadow-blue-900/25"
             >
               Get Connected
             </Link>
@@ -111,7 +111,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 lg:hidden"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 text-slate-600 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799] lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -135,10 +135,10 @@ export default function Navbar() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`min-h-[44px] rounded-lg px-4 py-3 font-medium transition-colors ${
+                  className={`min-h-[44px] rounded-lg px-4 py-3 font-medium transition-all duration-200 ease-in-out ${
                     isActive(link.href)
-                      ? "bg-text-[#134799] text-blue-700"
-                      : "text-slate-700 hover:bg-slate-100"
+                      ? "bg-text-[#134799] text-[#134799]"
+                      : "text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
                   }`}
                 >
                   {link.label}
@@ -147,20 +147,20 @@ export default function Navbar() {
               <div className="mt-3 flex flex-col gap-2 border-t border-slate-200 pt-3">
                 <a
                   href="tel:+919540901195"
-                  className="flex min-h-[44px] items-center gap-2 px-4 py-3 text-slate-600"
+                  className="flex min-h-[44px] items-center gap-2 px-4 py-3 text-slate-600 transition-all duration-200 ease-in-out hover:text-[#134799]"
                 >
                   <Phone className="w-4 h-4 text-[#134799]" />
                   +91 95409 01195
                 </a>
                 <Link
                   href="https://user.extranetindia.com/Customer/Default.aspx"
-                  className="mx-0 min-h-[44px] rounded-xl border border-slate-200 py-3.5 text-center text-sm font-semibold text-slate-700"
+                  className="mx-0 min-h-[44px] rounded-xl border border-slate-200 bg-white py-3.5 text-center text-sm font-semibold text-slate-700 transition-all duration-200 ease-in-out hover:bg-[#D2190D] hover:text-white hover:border-[#D2190D] hover:shadow-md hover:shadow-red-900/15"
                 >
                   My Account
                 </Link>
                 <Link
                   href="/contact"
-                  className="mx-0 min-h-[44px] rounded-xl bg-[#134799] py-3.5 text-center text-sm font-semibold text-white"
+                  className="mx-0 min-h-[44px] rounded-xl bg-[#134799] py-3.5 text-center text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f]"
                 >
                   Get Connected
                 </Link>

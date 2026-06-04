@@ -103,7 +103,7 @@ export default function AdminLegalPage() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-slate-900">Legal Policies</h1>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm hover:text-[#134799]">
               Edit your published Terms, Privacy, Refund, Acceptable Use, and Cancellation content from one place.
             </p>
           </div>
@@ -135,10 +135,10 @@ export default function AdminLegalPage() {
                       key={page.slug}
                       type="button"
                       onClick={() => setActiveSlug(page.slug)}
-                      className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-medium transition ${
+                      className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-medium transition-all duration-200 ease-in-out ${
                         active
                           ? "bg-[#134799] text-white"
-                          : "bg-white text-slate-700 hover:bg-slate-100"
+                          : "bg-white text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
                       }`}
                     >
                       {PAGE_LABELS[page.slug] ?? page.title}
@@ -153,7 +153,7 @@ export default function AdminLegalPage() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900">Edit policy</h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm hover:text-[#134799]">
                   Update the page title and content for the selected legal policy.
                 </p>
               </div>
@@ -195,7 +195,7 @@ export default function AdminLegalPage() {
               <label className="block">
                 <div className="mb-2 flex items-center justify-between gap-2">
                   <span className="block text-sm font-medium text-slate-700">Page Content</span>
-                  <span className="text-xs text-slate-500">Use headings, paragraphs, and lists.</span>
+                  <span className="text-xs hover:text-[#134799]">Use headings, paragraphs, and lists.</span>
                 </div>
                 <textarea
                   rows={18}
@@ -213,7 +213,7 @@ export default function AdminLegalPage() {
                 <button
                   type="submit"
                   disabled={saving || loading}
-                  className="inline-flex items-center justify-center rounded-xl bg-[#134799] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex items-center justify-center rounded-xl bg-[#134799] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {saving ? "Saving..." : "Save Policy"}
                 </button>

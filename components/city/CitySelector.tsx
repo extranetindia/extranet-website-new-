@@ -78,7 +78,7 @@ export default function CitySelector({
           id={id}
           disabled={isDisabled}
           onClick={() => !isDisabled && setIsOpen(!isOpen)}
-          className="max-w-full cursor-pointer bg-transparent py-1 pr-7 text-2xl font-bold text-[#d2190d] outline-none transition focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-blue-300 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-3xl"
+          className="max-w-full cursor-pointer bg-transparent py-1 pr-7 text-2xl font-bold text-[#d2190d] outline-none transition-all duration-200 ease-in-out hover:text-[#b8160c] focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-[#134799]/20 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-3xl"
           aria-label={ariaLabel}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
@@ -87,7 +87,7 @@ export default function CitySelector({
           {selectedCity?.name || "Select city"}
         </button>
         <ChevronDown
-          className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[#d2190d] transition-transform sm:h-5 sm:w-5"
+          className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[#d2190d] transition-all duration-200 ease-in-out sm:h-5 sm:w-5"
           style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
           aria-hidden
         />
@@ -101,10 +101,10 @@ export default function CitySelector({
               <li key={city.id} role="option" aria-selected={value === city.id}>
                 <button
                   onClick={() => handleCitySelect(city.id)}
-                  className={`block w-full px-4 py-2.5 text-base text-left font-medium transition-colors ${
+                  className={`block w-full px-4 py-2.5 text-base text-left font-medium transition-all duration-200 ease-in-out ${
                     value === city.id
-                      ? "bg-text-[#134799] text-blue-700"
-                      : "text-slate-900 hover:bg-slate-50"
+                      ? "bg-text-[#134799] text-[#134799]"
+                      : "text-slate-900 hover:bg-slate-50 hover:text-[#134799]"
                   }`}
                   type="button"
                 >
@@ -138,7 +138,7 @@ export default function CitySelector({
           value={value ?? ""}
           disabled={isDisabled}
           onChange={(event) => onChange(event.target.value)}
-          className="min-h-[44px] w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-10 text-sm font-semibold text-slate-900 shadow-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-[#134799]/10 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 sm:min-w-[220px]"
+          className="min-h-[44px] w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-10 text-sm font-semibold text-slate-900 shadow-sm outline-none transition-all duration-200 ease-in-out hover:border-[#134799]/40 focus:border-blue-400 focus:ring-2 focus:ring-[#134799]/10 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 sm:min-w-[220px]"
           aria-label={ariaLabel}
         >
           {selectOptions}

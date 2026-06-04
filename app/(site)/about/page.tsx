@@ -45,11 +45,11 @@ export default function AboutPage() {
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6"
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10 sm:p-6"
               >
-                <s.icon className="w-8 h-8 text-blue-700 mb-3" />
+                <s.icon className="w-8 h-8 text-[#134799] mb-3" />
                 <div className="text-2xl font-black text-slate-900">{s.value}</div>
-                <div className="text-sm text-slate-500 font-medium">{s.label}</div>
+                <div className="text-sm hover:text-[#134799] font-medium">{s.label}</div>
               </div>
             ))}
           </div>
@@ -82,7 +82,7 @@ export default function AboutPage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="p-8 rounded-2xl bg-white border border-slate-200 border-t-4 border-t-blue-700"
+                className="p-8 rounded-2xl bg-white border border-slate-200 border-t-4 border-t-blue-700 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:border-t-blue-700 hover:shadow-lg hover:shadow-blue-900/10"
               >
                 <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">{item.body}</p>
@@ -92,7 +92,7 @@ export default function AboutPage() {
           <div className="mt-12 text-center">
             <Link
               href="/plans"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#134799] px-8 py-4 font-bold text-white transition-colors hover:bg-[#134799]"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#134799] px-8 py-4 font-bold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20"
             >
               Explore our plans
             </Link>

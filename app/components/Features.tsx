@@ -55,12 +55,12 @@ function FeatureCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.05 }}
-      className="group h-full rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-[#134799]/20 hover:shadow-md"
+      className="group h-full rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10"
     >
       <div
         className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${
           feat.accent === "blue"
-            ? "bg-text-[#134799] text-blue-700"
+            ? "bg-text-[#134799] text-[#134799]"
             : "bg-red-50 text-red-600"
         }`}
       >
@@ -111,7 +111,7 @@ export default function Features() {
         </div>
         <Link
           href="/plans"
-          className="min-h-[44px] shrink-0 rounded-xl bg-white px-7 py-3.5 text-center text-sm font-bold text-[#134799] transition-colors hover:bg-text-[#134799]"
+          className="min-h-[44px] shrink-0 rounded-xl bg-white px-7 py-3.5 text-center text-sm font-bold text-[#134799] transition-all duration-200 ease-in-out hover:bg-slate-50 hover:text-[#0f3b7f] hover:shadow-lg hover:shadow-blue-950/20"
         >
           See all plans
         </Link>

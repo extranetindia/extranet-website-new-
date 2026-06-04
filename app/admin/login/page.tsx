@@ -51,7 +51,7 @@ export default function AdminLoginPage() {
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center">
         <div className="grid w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-blue-900/10 lg:grid-cols-2">
           <div className="hidden bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 p-10 text-white lg:block">
-            <Link href="/" className="relative inline-block rounded-lg bg-white px-3 py-2">
+            <Link href="/" className="relative inline-block rounded-lg bg-white px-3 py-2 transition-all duration-200 ease-in-out hover:opacity-90">
               <Image
                 src="/logo.png"
                 alt="Extranet"
@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
 
           <section className="p-6 sm:p-10">
             <div className="mb-8 lg:hidden">
-              <Link href="/" className="relative block h-10 shrink-0">
+              <Link href="/" className="relative block h-10 shrink-0 transition-all duration-200 ease-in-out hover:opacity-90">
                 <Image
                   src="/logo.png"
                   alt="Extranet"
@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
             </div>
 
             <h2 className="text-2xl font-bold text-slate-900">Sign in</h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm hover:text-[#134799]">
               Access your dashboard to manage website content.
             </p>
 
@@ -133,7 +133,7 @@ export default function AdminLoginPage() {
                     type="button"
                     onClick={() => setShowPassword((value) => !value)}
                     disabled={loading}
-                    className="text-slate-500 transition hover:text-slate-700 disabled:opacity-50"
+                    className="transition-all duration-200 ease-in-out hover:text-[#134799] disabled:opacity-50"
                     aria-label="Toggle password visibility"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -144,7 +144,7 @@ export default function AdminLoginPage() {
               <button
                 type="submit"
                 disabled={loading || !email || !password}
-                className="w-full rounded-xl bg-[#134799] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#134799] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-xl bg-[#134799] px-4 py-3 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Signing in..." : "Login to Dashboard"}
               </button>

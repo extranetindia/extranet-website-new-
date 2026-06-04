@@ -78,7 +78,7 @@ export default function CmsHeroBanner({ banner }: CmsHeroBannerProps) {
             <Link
               href={banner.ctaLink}
               onClick={(event) => event.stopPropagation()}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-7 py-3.5 text-sm sm:text-base font-bold text-white transition-all hover:bg-[#134799] hover:shadow-lg hover:shadow-blue-900/30"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#134799] px-7 py-3.5 text-sm sm:text-base font-bold text-white transition-all hover:bg-[#134799] hover:shadow-lg hover:shadow-blue-900/30"
             >
               {banner.primaryCtaText}
               <ArrowRight className="h-4 w-4" />

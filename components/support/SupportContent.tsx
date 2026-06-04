@@ -75,12 +75,12 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.06 }}
-            className="block p-6 rounded-2xl bg-white border border-slate-200 hover:border-[#134799]/30 hover:shadow-md transition-all"
+            className="block p-6 rounded-2xl bg-white border border-slate-200 hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10 transition-all duration-300 ease-in-out"
           >
-            <card.icon className="w-8 h-8 text-blue-700 mb-4" />
+            <card.icon className="w-8 h-8 text-[#134799] mb-4" />
             <h3 className="font-bold text-slate-900 mb-2">{card.title}</h3>
             <p className="text-slate-600 text-sm mb-4">{card.description}</p>
-            <span className="text-sm font-semibold text-blue-700">{card.action}</span>
+            <span className="text-sm font-semibold text-[#134799]">{card.action}</span>
           </motion.a>
         ))}
       </div>
@@ -99,11 +99,11 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
                     type="button"
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     // className="flex min-h-[44px] w-full items-center justify-center gap-3 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 sm:px-5"
-                  className="flex min-h-[44px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50"
+                  className="flex min-h-[44px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 transition-all duration-200 ease-in-out hover:bg-slate-50 hover:text-[#134799]"
                   >
                     {faq.q}
                     <ChevronDown
-                      className={`w-5 h-5 shrink-0 text-slate-400 transition-transform ${
+                      className={`w-5 h-5 shrink-0 text-slate-400 transition-all duration-200 ease-in-out ${
                         openFaq === i ? "rotate-180" : ""
                       }`}
                     />
@@ -132,7 +132,7 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
         {/* <div className="rounded-2xl border border-slate-200 bg-white p-6">
           <h3 className="text-lg font-semibold text-slate-900">Office and support hours</h3>
           <p className="mt-4 text-sm text-slate-600">{supportSettings.officeAddress}</p>
-          <p className="mt-4 text-sm text-slate-500">{supportSettings.supportTimings}</p>
+          <p className="mt-4 text-sm hover:text-[#134799]">{supportSettings.supportTimings}</p>
         </div> */}
       </div>
     </div>
