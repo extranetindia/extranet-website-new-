@@ -51,11 +51,15 @@ function PlanCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay: index * 0.08 }}
-      className={`relative flex h-full flex-col justify-between gap-5 overflow-visible rounded-[16px] border bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-slate-200/70 ${c.card} ${isPopular ? "border-red-300" : ""}`}
+      className={`relative flex h-full flex-col justify-between gap-5 overflow-visible rounded-[16px] border bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-slate-200/70 ${
+        isPopular
+          ? "border-[#d2190d] ring-2 ring-[rgba(210,25,13,0.1)] shadow-lg shadow-[rgba(210,25,13,0.4)] hover:border-[#b8160c]"
+          : c.card
+      }`}
     >
       {showBadge && (
         <div
-          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] ${isPopular ? "border-red-200 bg-red-50 text-red-700" : "border-slate-200 bg-white text-slate-600"}`}
+          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] ${isPopular ? "border-[#d2190d] bg-[rgba(210,25,13,0.1)] text-[#d2190d]" : "border-slate-200 bg-white text-slate-600"}`}
         >
           {plan.tag ?? "Most Popular"}
         </div>
@@ -82,14 +86,18 @@ function PlanCard({
       <ul className="flex flex-1 flex-col gap-2">
         {plan.features?.map((feat) => (
           <li key={feat} className="flex items-start gap-3 text-sm text-slate-600">
-            <Check className="mt-1 h-4 w-4 shrink-0 text-[#134799]" />
+            <Check className={`mt-1 h-4 w-4 shrink-0 ${isPopular ? "text-[#d2190d]" : "text-[#134799]"}`} />
             <span>{feat}</span>
           </li>
         ))}
       </ul>
       <Link
         href={ctaHref}
-        className={`w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white transition duration-200 ${isPopular ? "bg-red-600 hover:bg-red-700" : "bg-[#134799] hover:bg-[#0f3b7f]"}`}
+        className={`w-full rounded-xl py-3.5 text-center text-sm font-semibold text-white transition duration-200 ${
+          isPopular
+            ? "bg-[#d2190d] hover:bg-[#b8160c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2190d] focus-visible:ring-offset-2"
+            : "bg-[#134799] hover:bg-[#0f3b7f]"
+        }`}
       >
         {ctaLabel}
       </Link>
