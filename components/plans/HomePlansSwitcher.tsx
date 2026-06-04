@@ -18,7 +18,7 @@ export default function HomePlansSwitcher({
 }: HomePlansSwitcherProps) {
   return (
     <div className="mx-auto flex justify-center">
-      <div className="inline-flex overflow-hidden rounded-full border border-slate-200 bg-slate-100 p-1.5 shadow-sm">
+      <div className="inline-flex gap-1 rounded-xl border border-slate-300 bg-white p-1 shadow-sm">
         {tabs.map((tab) => {
           const active = tab.value === selectedType;
           return (
@@ -26,10 +26,10 @@ export default function HomePlansSwitcher({
               key={tab.value}
               type="button"
               onClick={() => onSelectType(tab.value)}
-              className={`px-4 py-1.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 ${
+              className={`rounded-lg px-8 py-3 text-base font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 ${
                 active
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-600 hover:bg-slate-200"
+                  ? "bg-blue-700 text-white shadow-sm"
+                  : "text-slate-700 hover:text-slate-900"
               }`}
             >
               {tab.label}
