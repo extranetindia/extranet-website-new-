@@ -1,16 +1,21 @@
 "use client";
 
-type PlanType = "home" | "business";
+import {
+  PLAN_CATEGORY_LABELS,
+  PLAN_CATEGORY_VALUES,
+  type PlanCategoryValue,
+} from "@/lib/plans/categories";
 
 interface HomePlansSwitcherProps {
-  selectedType: PlanType;
-  onSelectType: (value: PlanType) => void;
+  selectedType: PlanCategoryValue;
+  onSelectType: (value: PlanCategoryValue) => void;
 }
 
-const tabs: Array<{ label: string; value: PlanType }> = [
-  { label: "WIFI Only", value: "home" },
-  { label: "WIFI + OTT", value: "business" },
-];
+const tabs: Array<{ label: string; value: PlanCategoryValue }> =
+  PLAN_CATEGORY_VALUES.map((value) => ({
+    label: PLAN_CATEGORY_LABELS[value],
+    value,
+  }));
 
 export default function HomePlansSwitcher({
   selectedType,

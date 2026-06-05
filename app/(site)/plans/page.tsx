@@ -7,7 +7,7 @@ import PlansPageSections from "@/components/plans/PlansPageSections";
 export const metadata: Metadata = {
   title: "Broadband Plans",
   description:
-    "Home broadband and enterprise fiber plans with transparent pricing, unlimited data, and SLA-backed performance.",
+    "WiFi Only and WiFi + OTT Bundle plans with transparent pricing, unlimited data, and SLA-backed performance.",
 };
 
 export default function PlansPage() {

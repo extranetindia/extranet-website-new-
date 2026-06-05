@@ -1,6 +1,6 @@
 import type { HeroBannerConfig } from "@/lib/cms/hero-banner";
 
-export type PlanCategory = "Home Broadband" | "Business" | "Enterprise";
+export type PlanCategory = "WiFi Only" | "WiFi + OTT Bundle";
 
 export interface AdminPlan {
   id: string;
@@ -39,7 +39,7 @@ export const initialPlans: AdminPlan[] = [
   {
     id: "plan-1",
     name: "Starter 50",
-    category: "Home Broadband",
+    category: "WiFi Only",
     speed: "50 Mbps",
     price: "INR 499/mo",
     buttonText: "Subscribe",
@@ -49,7 +49,7 @@ export const initialPlans: AdminPlan[] = [
   {
     id: "plan-2",
     name: "Power 200",
-    category: "Home Broadband",
+    category: "WiFi + OTT Bundle",
     speed: "200 Mbps",
     price: "INR 999/mo",
     buttonText: "Get Started",
@@ -59,7 +59,7 @@ export const initialPlans: AdminPlan[] = [
   {
     id: "plan-3",
     name: "Enterprise Fiber 1G",
-    category: "Enterprise",
+    category: "WiFi + OTT Bundle",
     speed: "1 Gbps",
     price: "Custom Quote",
     buttonText: "Contact Sales",

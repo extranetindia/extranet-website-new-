@@ -4,8 +4,8 @@ import { Phone, Mail, MapPin, Globe, Link as LinkIcon, Camera, Play } from "luci
 
 const footerLinks = {
   Plans: [
-    { label: "Home Broadband", href: "/plans#home-broadband" },
-    { label: "Business", href: "/plans#enterprise" },
+    { label: "WiFi Only", href: "/plans#wifi-only" },
+    { label: "WiFi + OTT Bundle", href: "/plans#wifi-ott" },
     // { label: "Enterprise Leased Line", href: "/plans#enterprise" },
     // { label: "Compare Plans", href: "/plans" },
   ],

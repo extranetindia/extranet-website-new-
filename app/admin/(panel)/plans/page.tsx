@@ -5,14 +5,18 @@ import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import PlanCityPricingFields from "@/components/admin/PlanCityPricingFields";
 import {
+  getPlanCategoryLabel,
+  normalizePlanCategory,
+  PLAN_CATEGORY_VALUES,
+  type PlanCategoryValue,
+} from "@/lib/plans/categories";
+import {
   buildCityPricingFormRows,
   fetchCities,
   fetchPlanPricingForPlan,
   savePlanCityPricing,
   type CityPricingFormRow,
 } from "@/lib/database/plan-pricing";
-
-type PlanCategory = "home" | "business";
 
 interface PlanRow {
   id: string;
@@ -25,13 +29,13 @@ interface PlanRow {
   popular: boolean;
   category: string;
   button_text: string;
-  plan_type?: "home" | "business";
+  plan_type?: "wifi_only" | "wifi_ott";
 }
 
 interface AdminPlan {
   id: string;
   name: string;
-  planType: PlanCategory;
+  planType: PlanCategoryValue;
   speed: string;
   price: string;
   buttonText: string;
@@ -43,7 +47,7 @@ interface AdminPlan {
 const defaultPlan: AdminPlan = {
   id: "",
   name: "",
-  planType: "home",
+  planType: "wifi_only",
   speed: "",
   price: "",
   buttonText: "Get Started",
@@ -76,7 +80,7 @@ function rowToAdminPlan(row: PlanRow): AdminPlan {
   return {
     id: row.id,
     name: row.name,
-    planType: (row.plan_type ?? "home") as PlanCategory,
+    planType: normalizePlanCategory(row.plan_type),
     speed: row.speed,
     price: row.price,
     buttonText: row.button_text,
@@ -94,8 +98,8 @@ function planToPayload(plan: AdminPlan, features: string[]) {
     description: plan.description || null,
     features,
     popular: plan.popular,
-    category: plan.planType === "business" ? "Business" : "Home Broadband",
-    plan_type: plan.planType,
+    category: getPlanCategoryLabel(plan.planType),
+    plan_type: normalizePlanCategory(plan.planType),
     button_text: plan.buttonText,
   };
 }
@@ -319,7 +323,7 @@ export default function AdminPlansPage() {
           <div>
             <h2 className="text-lg font-semibold text-slate-900">Plans Management</h2>
             <p className="text-sm hover:text-[#134799]">
-              Add, edit, and publish home and enterprise plans.
+              Add, edit, and publish WiFi plans with OTT bundle options.
             </p>
           </div>
           <button
@@ -362,7 +366,7 @@ export default function AdminPlansPage() {
                   <tr key={plan.id} className="border-b border-slate-100">
                     <td className="px-3 py-3 font-medium text-slate-900">{plan.name}</td>
                     <td className="px-3 py-3 text-slate-700">
-                      {plan.planType === "business" ? "Business" : "Home"}
+                      {getPlanCategoryLabel(plan.planType)}
                     </td>
                     <td className="px-3 py-3 text-slate-700">{plan.speed}</td>
                     <td className="px-3 py-3 text-slate-700">{plan.price}</td>
@@ -450,13 +454,16 @@ export default function AdminPlansPage() {
                     onChange={(event) =>
                       setDraft((previous) => ({
                         ...previous,
-                        planType: event.target.value as PlanCategory,
+                        planType: normalizePlanCategory(event.target.value),
                       }))
                     }
                     className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
                   >
-                    <option value="home">Home</option>
-                    <option value="business">Business</option>
+                    {PLAN_CATEGORY_VALUES.map((value) => (
+                      <option key={value} value={value}>
+                        {getPlanCategoryLabel(value)}
+                      </option>
+                    ))}
                   </select>
                 </label>
                 <label className="block">

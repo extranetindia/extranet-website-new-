@@ -19,7 +19,7 @@ export interface PlanDefinition {
   id?: string;
 }
 
-export const homeBroadbandPlans: PlanDefinition[] = [
+export const wifiOnlyPlans: PlanDefinition[] = [
   {
     name: "Starter",
     icon: Zap,
@@ -78,7 +78,7 @@ export const homeBroadbandPlans: PlanDefinition[] = [
   },
 ];
 
-export const businessEnterprisePlans: PlanDefinition[] = [
+export const wifiOttPlans: PlanDefinition[] = [
   {
     name: "Business Fiber",
     icon: Network,

@@ -3,14 +3,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 import type { PlanRow } from "@/lib/database/schema";
+import {
+  normalizePlanCategory,
+  type PlanCategoryValue,
+} from "@/lib/plans/categories";
 import HomePlansSwitcher from "./HomePlansSwitcher";
 import CityPricedPlans from "./CityPricedPlans";
 
-type PlanType = "home" | "business";
-
 export default function HomePlansPreview() {
   const [plans, setPlans] = useState<PlanRow[]>([]);
-  const [selectedType, setSelectedType] = useState<PlanType>("home");
+  const [selectedType, setSelectedType] = useState<PlanCategoryValue>("wifi_only");
 
   useEffect(() => {
     let isMounted = true;
@@ -34,7 +36,10 @@ export default function HomePlansPreview() {
   }, []);
 
   const filteredPlans = useMemo(
-    () => plans.filter((plan) => plan.plan_type === selectedType),
+    () =>
+      plans.filter(
+        (plan) => normalizePlanCategory(plan.plan_type) === selectedType,
+      ),
     [plans, selectedType],
   );
 
@@ -51,7 +56,7 @@ export default function HomePlansPreview() {
           renderControls={
             <HomePlansSwitcher
               selectedType={selectedType}
-              onSelectType={setSelectedType}
+              onSelectType={(value) => setSelectedType(normalizePlanCategory(value))}
             />
           }
         />

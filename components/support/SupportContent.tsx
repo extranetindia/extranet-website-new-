@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "What is included in unlimited data plans?",
-    a: "All listed residential and business plans include unlimited data with no speed throttling under fair usage policy.",
+    a: "All listed WiFi Only and WiFi + OTT Bundle plans include unlimited data with no speed throttling under fair usage policy.",
   },
   {
     q: "How long does installation take?",
@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: "Do you offer static IP addresses?",
-    a: "Yes. Residential Power plans include 2 static IPs; enterprise plans include larger pools and BGP options.",
+    a: "Yes. WiFi Only Power plans include 2 static IPs; WiFi + OTT Bundle plans include larger pools and BGP options where applicable.",
   },
 ];
 
