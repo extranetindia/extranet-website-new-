@@ -86,7 +86,7 @@ function PlanCard({
           </h3>
         ) : null}
       </div>
-      <div className="mt-5 space-y-2">
+      <div className="mt-3 space-y-1">
         <div className="flex items-end gap-2">
           <span className="text-3xl font-black leading-none text-slate-900 sm:text-5xl">
             ₹{displayPrice}

@@ -139,7 +139,7 @@ export default function CityPricedPlans({
           </div>
         )}
       </div>
-      {renderControls ? <div className="mt-8 flex justify-center">{renderControls}</div> : null}
+      {renderControls ? <div className="mt-8 mb-4.5 flex justify-center">{renderControls}</div> : null}
       {pricingLoading ? (
         <PlanCardsSkeleton />
       ) : (
