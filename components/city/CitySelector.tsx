@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown, MapPin } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CityRow } from "@/lib/database/schema";
 
 interface CitySelectorProps {
@@ -52,15 +52,18 @@ export default function CitySelector({
       ? `Selected city: ${selectedCity.name}. Change city`
       : "Select city");
 
-  // Handle outside clicks for dropdown
-  const handleOutsideClick = (event: React.MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [isOpen]);
 
   const handleCitySelect = (cityId: string) => {
     onChange(cityId);
@@ -69,16 +72,12 @@ export default function CitySelector({
 
   if (variant === "inline") {
     return (
-      <div
-        ref={dropdownRef}
-        className={`relative inline-flex max-w-full items-center align-baseline ${className}`}
-        onClick={handleOutsideClick}
-      >
+      <div ref={dropdownRef} className={`relative inline-flex max-w-full items-center align-baseline ${className}`}>
         <button
           id={id}
           disabled={isDisabled}
           onClick={() => !isDisabled && setIsOpen(!isOpen)}
-          className="max-w-full cursor-pointer bg-transparent py-1 pr-7 text-2xl font-bold text-[#d2190d] outline-none transition-all duration-200 ease-in-out hover:text-[#b8160c] focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-[#134799]/20 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-3xl"
+          className="min-h-[44px] max-w-[calc(100vw-2rem)] cursor-pointer truncate bg-transparent py-1 pr-7 text-left text-2xl font-bold text-[#d2190d] outline-none transition-all duration-200 ease-in-out hover:text-[#b8160c] focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-[#134799]/20 disabled:cursor-not-allowed disabled:text-slate-400 sm:max-w-full sm:text-3xl"
           aria-label={ariaLabel}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
@@ -93,7 +92,7 @@ export default function CitySelector({
         />
         {isOpen && !isDisabled && (
           <ul
-            className="absolute left-0 top-full z-50 mt-2 w-max rounded-lg border border-slate-200 bg-white shadow-lg"
+            className="absolute left-0 top-full z-[60] mt-2 w-[min(18rem,calc(100vw-1rem))] rounded-xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10"
             role="listbox"
             aria-label="Available cities"
           >
@@ -101,9 +100,9 @@ export default function CitySelector({
               <li key={city.id} role="option" aria-selected={value === city.id}>
                 <button
                   onClick={() => handleCitySelect(city.id)}
-                  className={`block w-full px-4 py-2.5 text-base text-left font-medium transition-all duration-200 ease-in-out ${
+                  className={`block w-full min-h-[44px] px-4 py-2.5 text-left text-sm font-semibold transition-all duration-200 ease-in-out sm:text-base ${
                     value === city.id
-                      ? "bg-text-[#134799] text-[#134799]"
+                      ? "bg-[#134799]/10 text-[#134799]"
                       : "text-slate-900 hover:bg-slate-50 hover:text-[#134799]"
                   }`}
                   type="button"

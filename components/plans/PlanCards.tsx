@@ -55,7 +55,7 @@ function PlanCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay: index * 0.08 }}
-      className={`relative flex h-full flex-col overflow-visible rounded-[14px] border bg-white p-5 transition-all duration-300 ease-in-out hover:-translate-y-1 sm:p-6 ${
+      className={`relative flex h-full min-w-0 flex-col overflow-visible rounded-[16px] border bg-white p-4 transition-all duration-300 ease-in-out hover:-translate-y-1 sm:p-6 ${
         isPopular
           ? "border-2 border-[#d2190d] shadow-[0_14px_34px_rgba(210,25,13,0.12)] hover:border-[#b8160c] hover:shadow-[0_18px_38px_rgba(210,25,13,0.15)]"
           : `${c.card} shadow-[0_10px_28px_rgba(15,23,42,0.06)] hover:shadow-[0_18px_34px_rgba(15,23,42,0.1)]`
@@ -63,7 +63,7 @@ function PlanCard({
     >
       {showBadge && (
         <div
-          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-[60%] whitespace-nowrap rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] shadow-sm ${isPopular ? "bg-[#d2190d] text-white" : "border border-slate-200 bg-white text-slate-600"}`}
+          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] shadow-sm sm:px-4 sm:text-[11px] ${isPopular ? "bg-[#d2190d] text-white" : "border border-slate-200 bg-white text-slate-600"}`}
         >
           {isPopular ? (
             <span className="inline-flex items-center gap-1.5">
@@ -75,7 +75,7 @@ function PlanCard({
           )}
         </div>
       )}
-      <div className="space-y-1 pt-3">
+      <div className="space-y-1 pt-4">
           <div className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#d2190d]">
           {/* <div className="text-sm sm:text-base font-extrabold uppercase tracking-[0.22em] text-[#d2190d]"> */}
         {displayLabel}
@@ -88,7 +88,7 @@ function PlanCard({
       </div>
       <div className="mt-5 space-y-2">
         <div className="flex items-end gap-2">
-          <span className="text-4xl font-black leading-none text-slate-900 sm:text-5xl">
+          <span className="text-3xl font-black leading-none text-slate-900 sm:text-5xl">
             ₹{displayPrice}
           </span>
           <span className="pb-1 text-sm font-semibold hover:text-[#134799]">/mo</span>
@@ -113,7 +113,7 @@ function PlanCard({
       </ul>
       <Link
         href={ctaHref}
-        className={`mt-6 w-full rounded-xl py-4 text-center text-sm font-bold text-white transition-all duration-200 ease-in-out ${
+        className={`mt-6 min-h-[48px] w-full rounded-xl py-3.5 text-center text-sm font-bold text-white transition-all duration-200 ease-in-out ${
           isPopular
             ? "bg-[#d2190d] hover:bg-[#b8160c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2190d] focus-visible:ring-offset-2"
             : "bg-[#134799] hover:bg-[#0f3b7f]"

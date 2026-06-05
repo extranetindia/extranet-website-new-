@@ -24,7 +24,7 @@ export default function SectionPreview({
   className = "bg-slate-50",
 }: SectionPreviewProps) {
   return (
-    <section className={`relative py-12 sm:py-16 md:py-20 ${className}`}>
+    <section className={`relative overflow-x-clip py-12 sm:py-16 md:py-20 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col gap-5 sm:mb-10 md:mb-12 lg:flex-row lg:items-end lg:justify-between lg:gap-6">
           <div className="max-w-2xl">

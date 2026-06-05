@@ -34,10 +34,10 @@ export default async function Hero() {
       aria-label="Promotional banner"
       className="pt-[calc(3.5rem+1rem)] sm:pt-[calc(4rem+1.5rem)]"
     >
-      <div className="w-full">
+      <div className="w-full px-0">
         <Link
           href="/plans"
-          className="group relative block w-full cursor-pointer overflow-hidden shadow-lg shadow-slate-200/70 ring-1 ring-slate-200/80 transition-all duration-300 ease-in-out hover:shadow-xl hover:shadow-slate-300/60"
+          className="group relative block w-full cursor-pointer rounded-[18px] border border-slate-200 shadow-lg shadow-slate-200/70 transition-all duration-300 ease-in-out hover:shadow-xl hover:shadow-slate-300/60 sm:rounded-[24px]"
           aria-label="View broadband plans"
         >
           {/* Mobile banner — 1080×720 (3:2) */}
@@ -49,7 +49,7 @@ export default async function Hero() {
               alt="Extranet broadband plans"
               fill
               priority
-              className="object-cover object-center"
+              className="h-full w-full object-cover object-center"
               sizes="(max-width: 767px) 100vw, 0px"
             />
           </div>
@@ -63,6 +63,7 @@ export default async function Hero() {
               alt="Extranet broadband plans"
               fill
               priority
+              // className="h-full w-full object-cover object-center"
               className="object-cover object-center"
               sizes="(min-width: 768px) min(1280px, 100vw)"
             />

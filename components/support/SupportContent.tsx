@@ -75,7 +75,7 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.06 }}
-            className="block p-6 rounded-2xl bg-white border border-slate-200 hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10 transition-all duration-300 ease-in-out"
+            className="block rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10 sm:p-6"
           >
             <card.icon className="w-8 h-8 text-[#134799] mb-4" />
             <h3 className="font-bold text-slate-900 mb-2">{card.title}</h3>
@@ -98,8 +98,8 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
                   <button
                     type="button"
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    // className="flex min-h-[44px] w-full items-center justify-center gap-3 px-4 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 sm:px-5"
-                  className="flex min-h-[44px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 transition-all duration-200 ease-in-out hover:bg-slate-50 hover:text-[#134799]"
+                    aria-expanded={openFaq === i}
+                    className="flex min-h-[48px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 transition-all duration-200 ease-in-out hover:bg-slate-50 hover:text-[#134799] sm:px-5"
                   >
                     {faq.q}
                     <ChevronDown

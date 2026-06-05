@@ -111,7 +111,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 text-slate-600 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799] lg:hidden"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-transparent p-2 text-slate-600 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#134799]/20 lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -128,14 +128,15 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-slate-200 bg-white lg:hidden"
+            className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-slate-200 bg-white/95 shadow-[0_18px_40px_rgba(15,23,42,0.14)] backdrop-blur-xl lg:hidden"
           >
-            <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4">
+            <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`min-h-[44px] rounded-lg px-4 py-3 font-medium transition-all duration-200 ease-in-out ${
+                  onClick={() => setMobileOpen(false)}
+                  className={`min-h-[48px] rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 ease-in-out ${
                     isActive(link.href)
                       ? "bg-text-[#134799] text-[#134799]"
                       : "text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
@@ -154,13 +155,15 @@ export default function Navbar() {
                 </a>
                 <Link
                   href="https://user.extranetindia.com/Customer/Default.aspx"
-                  className="mx-0 min-h-[44px] rounded-xl border border-slate-200 bg-white py-3.5 text-center text-sm font-semibold text-slate-700 transition-all duration-200 ease-in-out hover:bg-[#D2190D] hover:text-white hover:border-[#D2190D] hover:shadow-md hover:shadow-red-900/15"
+                  onClick={() => setMobileOpen(false)}
+                  className="mx-0 min-h-[48px] rounded-xl border border-slate-200 bg-white py-3.5 text-center text-sm font-semibold text-slate-700 transition-all duration-200 ease-in-out hover:bg-[#D2190D] hover:text-white hover:border-[#D2190D] hover:shadow-md hover:shadow-red-900/15"
                 >
                   My Account
                 </Link>
                 <Link
                   href="/contact"
-                  className="mx-0 min-h-[44px] rounded-xl bg-[#134799] py-3.5 text-center text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f]"
+                  onClick={() => setMobileOpen(false)}
+                  className="mx-0 min-h-[48px] rounded-xl bg-[#134799] py-3.5 text-center text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f]"
                 >
                   Get Connected
                 </Link>

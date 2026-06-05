@@ -32,9 +32,9 @@ export default function LegalPage({
   children,
 }: LegalPageProps) {
   return (
-    <main className="bg-slate-50 py-16 sm:py-20">
+    <main className="bg-slate-50 py-12 sm:py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <article className="mx-auto w-full max-w-[900px] rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+        <article className="mx-auto w-full max-w-[900px] rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm sm:rounded-[2rem] sm:p-8 md:p-10">
           <header className="mb-10">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#134799]">
               Legal

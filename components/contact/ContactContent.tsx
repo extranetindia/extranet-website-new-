@@ -236,7 +236,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
             <button
               type="submit"
               disabled={submitting}
-              className="w-full min-h-[44px] rounded-xl bg-[#134799] px-8 py-3.5 font-bold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="w-full min-h-[48px] rounded-xl bg-[#134799] px-8 py-3.5 font-bold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {submitting ? "Submitting..." : "Submit inquiry"}
             </button>
