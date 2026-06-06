@@ -15,9 +15,21 @@ export interface PlanRow {
   features: string[] | string | null;
   popular: boolean;
   /** Canonical internal plan category used for filtering and admin management. */
-  plan_type?: "wifi_only" | "wifi_ott";
+  plan_type?: "wifi_only" | "wifi_ott" | "business";
   category: string;
   button_text: string;
+  tagline?: string | null;
+  ott_apps?: string[] | string | null;
+  setup_fee?: string | null;
+  security_deposit?: string | null;
+  monthly_price?: string | null;
+  quarterly_price?: string | null;
+  half_yearly_price?: string | null;
+  annual_price?: string | null;
+  savings_badge?: string | null;
+  router_included?: boolean | null;
+  landline_included?: boolean | null;
+  installation_free?: boolean | null;
 }
 
 export interface CityRow {

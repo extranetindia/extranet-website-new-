@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check, Star } from "lucide-react";
+import { Check, Sparkles, Star } from "lucide-react";
 import MobileCarousel from "@/components/ui/MobileCarousel";
 import type { PlanDefinition } from "@/lib/plans";
 
@@ -46,8 +46,10 @@ function PlanCard({
   const showBadge = Boolean(plan.tag || isPopular);
   const displayLabel = formatPlanLabel(plan.speed);
   const displayTitle = formatPlanTitle(plan.name, displayLabel);
-  const displayPrice = plan.price.replace(/\s*\*+$/, "");
+  const displayPrice = String(plan.price ?? "").replace(/\s*\*+$/, "");
   const benefits = plan.features?.filter(isDisplayBenefit) ?? [];
+  const hasOttApps = (plan.ottApps ?? []).length > 0;
+  const pricingTone = isPopular ? "text-[#d2190d]" : "text-[#134799]";
 
   return (
     <motion.div
@@ -76,33 +78,46 @@ function PlanCard({
         </div>
       )}
       <div className="space-y-1 pt-4">
-          <div className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#d2190d]">
-          {/* <div className="text-sm sm:text-base font-extrabold uppercase tracking-[0.22em] text-[#d2190d]"> */}
-        {displayLabel}
-        </div>
+        <div className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#d2190d]">{displayLabel}</div>
         {displayTitle ? (
-          <h3 className="text-2xl font-bold leading-tight text-slate-900">
-            {displayTitle}
-          </h3>
+          <h3 className="text-2xl font-bold leading-tight text-slate-900">{displayTitle}</h3>
+        ) : null}
+        {plan.tagline ? (
+          <p className="mt-2 text-sm text-slate-600">{plan.tagline}</p>
         ) : null}
       </div>
-      <div className="mt-3 space-y-1">
-        <div className="flex items-end gap-2">
-          <span className="text-3xl font-black leading-none text-slate-900 sm:text-5xl">
-            ₹{displayPrice}
-          </span>
-          <span className="pb-1 text-sm font-semibold hover:text-[#134799]">/mo</span>
+
+      <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-inner shadow-slate-100">
+        <div className="flex items-center justify-between gap-2 text-xs uppercase tracking-[0.2em] text-slate-500">
+          <span>Plan Charges (Excl. GST)</span>
+          {plan.savingsBadge ? (
+            <span className="rounded-full bg-[#d2190d] px-2.5 py-1 text-[10px] font-bold text-white">{plan.savingsBadge}</span>
+          ) : null}
         </div>
-        <div className="text-xs font-semibold hover:text-[#134799]">
-          +18% GST · ₹1000 refundable deposit
+        <div className="mt-3 flex items-end gap-2">
+          <span className={`text-3xl font-black leading-none sm:text-5xl ${pricingTone}`}>₹{displayPrice}</span>
+          <span className="pb-1 text-sm font-semibold text-slate-500">/month</span>
         </div>
-        {plan.originalPrice ? (
-          <div className="text-sm font-medium text-slate-400 line-through">
-            {plan.originalPrice}
+        <div className="mt-3 space-y-1 text-sm text-slate-600">
+          {plan.setupFee ? <p>One-Time Setup Fee {plan.setupFee}</p> : null}
+          {plan.securityDeposit ? <p>Security Deposit {plan.securityDeposit} Refundable</p> : null}
+        </div>
+      </div>
+
+      {hasOttApps ? (
+        <div className="mt-5 rounded-2xl border border-[#134799]/10 bg-blue-50/60 p-4">
+          <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-[#134799]">
+            <Sparkles className="h-4 w-4" /> OTT Bundle
           </div>
-        ) : null}
-      </div>
-      <div className="my-5 border-t border-slate-300" />
+          <div className="mt-3 flex flex-wrap gap-2">
+            {plan.ottApps?.map((app) => (
+              <span key={app} className="rounded-full border border-[#134799]/20 bg-white px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">{app}</span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      <div className="my-5 border-t border-slate-200" />
       <ul className="flex flex-1 flex-col gap-2.5">
         {benefits.map((feat) => (
           <li key={feat} className="flex items-start gap-3 text-sm text-slate-600">

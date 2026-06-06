@@ -17,6 +17,19 @@ export interface PlanDefinition {
   /** City-specific compare-at price (strikethrough). */
   originalPrice?: string | null;
   id?: string;
+  tagline?: string | null;
+  setupFee?: string | null;
+  securityDeposit?: string | null;
+  ottApps?: string[];
+  savingsBadge?: string | null;
+  planType?: "wifi_only" | "wifi_ott" | "business";
+  monthlyPrice?: string | null;
+  quarterlyPrice?: string | null;
+  halfYearlyPrice?: string | null;
+  annualPrice?: string | null;
+  routerIncluded?: boolean;
+  landlineIncluded?: boolean;
+  installationFree?: boolean;
 }
 
 export const wifiOnlyPlans: PlanDefinition[] = [

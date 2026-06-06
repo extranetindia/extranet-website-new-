@@ -29,7 +29,15 @@ interface PlanRow {
   popular: boolean;
   category: string;
   button_text: string;
-  plan_type?: "wifi_only" | "wifi_ott";
+  tagline?: string | null;
+  setup_fee?: string | null;
+  security_deposit?: string | null;
+  ott_apps?: string[] | string | null;
+  monthly_price?: string | null;
+  quarterly_price?: string | null;
+  half_yearly_price?: string | null;
+  annual_price?: string | null;
+  plan_type?: "wifi_only" | "wifi_ott" | "business";
 }
 
 interface AdminPlan {

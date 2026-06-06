@@ -14,7 +14,7 @@ const CITY_COLUMNS =
 const PLAN_PRICING_COLUMNS =
   "id, plan_id, city_id, price, original_price, created_at, updated_at";
 const PLAN_COLUMNS =
-  "id, created_at, name, speed, price, description, features, popular, category, plan_type, button_text";
+  "id, created_at, name, speed, price, description, features, popular, category, plan_type, button_text, tagline, ott_apps, setup_fee, security_deposit, monthly_price, quarterly_price, half_yearly_price, annual_price, savings_badge, router_included, landline_included, installation_free";
 
 // ---------------------------------------------------------------------------
 // Cities

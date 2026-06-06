@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import CitySelector from "@/components/city/CitySelector";
+import BillingCycleSwitcher, { type BillingCycleValue } from "@/components/plans/BillingCycleSwitcher";
 import PlanCards from "@/components/plans/PlanCards";
 import type { PlanRow } from "@/lib/database/schema";
 import {
@@ -53,6 +54,7 @@ export default function CityPricedPlans({
   const { cities, cityId, setCityId, loading: citiesLoading, ready } =
     useSelectedCity();
   const [pricingLoading, setPricingLoading] = useState(false);
+  const [billingCycle, setBillingCycle] = useState<BillingCycleValue>("monthly");
   const [displayPlans, setDisplayPlans] = useState<SupabasePlanCard[]>(() =>
     basePlans.map((plan) => formatSupabasePlanForCards(plan)),
   );
@@ -99,6 +101,12 @@ export default function CityPricedPlans({
   const headingTitle =
     variant === "home" ? "Best Popular Plans In" : "Choose Your City";
 
+  const cyclePlans = displayPlans.map((plan) => ({
+    ...plan,
+    price: getCyclePrice(plan, billingCycle),
+    period: getCyclePeriodLabel(billingCycle),
+  }));
+
   return (
     <div>
       <div className="mb-10 w-full">
@@ -140,11 +148,15 @@ export default function CityPricedPlans({
         )}
       </div>
       {renderControls ? <div className="mt-8 mb-4.5 flex justify-center">{renderControls}</div> : null}
+      <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <p className="text-sm text-slate-600">Switch between billing cycles to compare current pricing and savings badges.</p>
+        <BillingCycleSwitcher selectedCycle={billingCycle} onSelectCycle={setBillingCycle} />
+      </div>
       {pricingLoading ? (
         <PlanCardsSkeleton />
       ) : (
         <PlanCards
-          plans={displayPlans}
+          plans={cyclePlans}
           ctaHref={ctaHref}
           ctaLabel={ctaLabel}
           columns={columns}
@@ -152,4 +164,18 @@ export default function CityPricedPlans({
       )}
     </div>
   );
+}
+
+function getCyclePrice(plan: SupabasePlanCard, cycle: BillingCycleValue) {
+  if (cycle === "quarterly") return plan.quarterlyPrice ?? plan.monthlyPrice ?? plan.price;
+  if (cycle === "half_yearly") return plan.halfYearlyPrice ?? plan.monthlyPrice ?? plan.price;
+  if (cycle === "annual") return plan.annualPrice ?? plan.monthlyPrice ?? plan.price;
+  return plan.monthlyPrice ?? plan.price;
+}
+
+function getCyclePeriodLabel(cycle: BillingCycleValue) {
+  if (cycle === "quarterly") return "/quarter";
+  if (cycle === "half_yearly") return "/half-year";
+  if (cycle === "annual") return "/year";
+  return "/month";
 }
