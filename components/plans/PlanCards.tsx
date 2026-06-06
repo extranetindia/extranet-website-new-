@@ -57,7 +57,7 @@ function PlanCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay: index * 0.08 }}
-      className={`relative flex h-full min-w-0 flex-col overflow-visible rounded-[16px] border bg-white p-4 transition-all duration-300 ease-in-out hover:-translate-y-1 sm:p-6 ${
+      className={`relative flex h-full min-w-0 flex-col overflow-visible rounded-[18px] border bg-white p-4 transition-all duration-300 ease-in-out hover:-translate-y-1 sm:p-5 ${
         isPopular
           ? "border-2 border-[#d2190d] shadow-[0_14px_34px_rgba(210,25,13,0.12)] hover:border-[#b8160c] hover:shadow-[0_18px_38px_rgba(210,25,13,0.15)]"
           : `${c.card} shadow-[0_10px_28px_rgba(15,23,42,0.06)] hover:shadow-[0_18px_34px_rgba(15,23,42,0.1)]`
@@ -77,10 +77,10 @@ function PlanCard({
           )}
         </div>
       )}
-      <div className="space-y-1 pt-4">
-        <div className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#d2190d]">{displayLabel}</div>
+      <div className="space-y-1 pt-3">
+        <div className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#d2190d]">{displayLabel}</div>
         {displayTitle ? (
-          <h3 className="text-2xl font-bold leading-tight text-slate-900">{displayTitle}</h3>
+          <h3 className="text-xl font-black leading-tight text-slate-900 sm:text-2xl">{displayTitle}</h3>
         ) : null}
         {plan.tagline ? (
           <p className="mt-2 text-sm text-slate-600">{plan.tagline}</p>
@@ -95,17 +95,17 @@ function PlanCard({
           ) : null}
         </div>
         <div className="mt-3 flex items-end gap-2">
-          <span className={`text-3xl font-black leading-none sm:text-5xl ${pricingTone}`}>₹{displayPrice}</span>
+          <span className={`text-3xl font-black leading-none sm:text-4xl ${pricingTone}`}>₹{displayPrice}</span>
           <span className="pb-1 text-sm font-semibold text-slate-500">/month</span>
         </div>
-        <div className="mt-3 space-y-1 text-sm text-slate-600">
+        <div className="mt-3 space-y-1 text-xs text-slate-600 sm:text-sm">
           {plan.setupFee ? <p>One-Time Setup Fee {plan.setupFee}</p> : null}
           {plan.securityDeposit ? <p>Security Deposit {plan.securityDeposit} Refundable</p> : null}
         </div>
       </div>
 
       {hasOttApps ? (
-        <div className="mt-5 rounded-2xl border border-[#134799]/10 bg-blue-50/60 p-4">
+        <div className="mt-4 rounded-2xl border border-[#134799]/10 bg-blue-50/60 p-3.5">
           <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-[#134799]">
             <Sparkles className="h-4 w-4" /> OTT Bundle
           </div>
@@ -117,18 +117,18 @@ function PlanCard({
         </div>
       ) : null}
 
-      <div className="my-5 border-t border-slate-200" />
-      <ul className="flex flex-1 flex-col gap-2.5">
+      <div className="my-4 border-t border-slate-200" />
+      <ul className="flex flex-1 flex-col gap-2">
         {benefits.map((feat) => (
           <li key={feat} className="flex items-start gap-3 text-sm text-slate-600">
-            <Check className={`mt-0.5 h-5 w-5 shrink-0 ${isPopular ? "text-[#d2190d]" : "text-[#134799]"}`} />
-            <span className="leading-6">{feat}</span>
+            <Check className={`mt-0.5 h-4 w-4 shrink-0 ${isPopular ? "text-[#d2190d]" : "text-[#134799]"}`} />
+            <span className="text-sm leading-5 text-slate-600">{feat}</span>
           </li>
         ))}
       </ul>
       <Link
         href={ctaHref}
-        className={`mt-6 min-h-[48px] w-full rounded-xl py-3.5 text-center text-sm font-bold text-white transition-all duration-200 ease-in-out ${
+        className={`mt-5 min-h-[46px] w-full rounded-xl py-3 text-center text-sm font-bold text-white transition-all duration-200 ease-in-out ${
           isPopular
             ? "bg-[#d2190d] hover:bg-[#b8160c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2190d] focus-visible:ring-offset-2"
             : "bg-[#134799] hover:bg-[#0f3b7f]"

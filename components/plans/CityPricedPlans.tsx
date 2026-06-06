@@ -98,8 +98,7 @@ export default function CityPricedPlans({
     void applyPricing(cityId);
   }, [ready, cityId, basePlans, applyPricing]);
 
-  const headingTitle =
-    variant === "home" ? "Best Popular Plans In" : "Choose Your City";
+  const headingTitle = "Choose Your City";
 
   const cyclePlans = displayPlans.map((plan) => ({
     ...plan,
@@ -109,49 +108,32 @@ export default function CityPricedPlans({
 
   return (
     <div>
-      <div className="mb-10 w-full">
-        {variant === "home" ? (
-          <div className="w-full text-center">
-            <div className="flex items-center justify-center gap-3 text-center">
-              <h2 className="text-3xl font-medium tracking-tight text-slate-900 sm:text-3xl">
-                Best Popular Plans In
-              </h2>
-              <CitySelector
-                id="home-city-selector"
-                variant="inline"
-                cities={cities}
-                value={cityId}
-                onChange={setCityId}
-                loading={citiesLoading}
-              />
-            </div>
-          </div>
-        ) : (
+      <div className="mb-8 w-full rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_12px_30px_rgba(15,23,42,0.06)] sm:p-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">
-              {headingTitle}
-            </h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#D2190D]">Choose Your City</p>
+            <h2 className="mt-2 text-2xl font-black text-slate-900 sm:text-3xl">{headingTitle}</h2>
             <p className="mt-2 text-sm text-slate-600 sm:text-base">
-              Select your city to see localized pricing. Plans without city pricing
-              use our standard rates.
+              Select your city to see localized pricing. Plans without city pricing use our standard rates.
             </p>
-            <div className="mt-4 w-full sm:max-w-xs">
-              <CitySelector
-                id="plans-city-selector"
-                cities={cities}
-                value={cityId}
-                onChange={setCityId}
-                loading={citiesLoading}
-              />
-            </div>
           </div>
-        )}
+          <div className="w-full lg:max-w-sm">
+            <CitySelector
+              id={variant === "home" ? "home-city-selector" : "plans-city-selector"}
+              cities={cities}
+              value={cityId}
+              onChange={setCityId}
+              loading={citiesLoading}
+            />
+          </div>
+        </div>
       </div>
-      {renderControls ? <div className="mt-8 mb-4.5 flex justify-center">{renderControls}</div> : null}
+
       <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <p className="text-sm text-slate-600">Switch between billing cycles to compare current pricing and savings badges.</p>
         <BillingCycleSwitcher selectedCycle={billingCycle} onSelectCycle={setBillingCycle} />
       </div>
+      {renderControls ? <div className="mb-4 flex justify-center">{renderControls}</div> : null}
       {pricingLoading ? (
         <PlanCardsSkeleton />
       ) : (

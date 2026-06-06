@@ -39,18 +39,13 @@ export default async function PlansPageSections({
       ) : null}
 
       {visibleBusinessPlans.length ? (
-        <div className="mt-14 rounded-3xl border border-red-100 bg-red-50/60 p-6 shadow-sm sm:p-8">
-          <p className="text-sm uppercase tracking-[0.24em] text-[#D2190D]">Business Internet</p>
-          <h3 className="mt-2 text-2xl font-black text-slate-900 sm:text-3xl">Dedicated plans for offices, retail, and multi-site operations</h3>
-          <p className="mt-3 max-w-2xl text-slate-600">Keep enterprise pricing and SLA-ready options separate from residential bundles while preserving city pricing and lead flow.</p>
-          <div className="mt-6">
-            <CityPricedPlans
-              basePlans={visibleBusinessPlans}
-              variant="plans"
-              ctaHref="/contact"
-              ctaLabel="Request Business Quote"
-            />
-          </div>
+        <div className="mt-8">
+          <CityPricedPlans
+            basePlans={visibleBusinessPlans}
+            variant="plans"
+            ctaHref="/contact"
+            ctaLabel="Request Business Quote"
+          />
         </div>
       ) : null}
     </section>
