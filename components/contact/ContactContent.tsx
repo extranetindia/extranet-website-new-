@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Mail, MapPin, Phone, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { createLead, INQUIRY_TYPES } from "@/lib/database/leads";
+import { useCompanySettings } from "@/lib/hooks/useCompanySettings";
 
 interface ContactContentProps {
   supportSettings: {
@@ -32,6 +33,7 @@ const initialForm: ContactFormState = {
 };
 
 export default function ContactContent({ supportSettings }: ContactContentProps) {
+  const { settings: companySettings } = useCompanySettings();
   const [form, setForm] = useState<ContactFormState>(initialForm);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -78,6 +80,11 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
     setSuccess(true);
     setForm(initialForm);
   };
+
+  // Use company settings with fallbacks to support settings
+  const displayPhone = companySettings?.company_phone || supportSettings.phone;
+  const displayEmail = companySettings?.support_email || supportSettings.email;
+  const displayAddress = companySettings?.company_address || supportSettings.officeAddress;
 
   return (
     <div className="grid gap-10 lg:grid-cols-5">
@@ -246,15 +253,15 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
 
       <div className="space-y-6 lg:col-span-2">
         {[
-          { icon: Phone, label: "Phone", value: supportSettings.phone },
-          { icon: Mail, label: "Email", value: supportSettings.email },
+          { icon: Phone, label: "Phone", value: displayPhone },
+          { icon: Mail, label: "Email", value: displayEmail },
           { icon: Clock, label: "Hours", value: supportSettings.supportTimings },
         ].map((item) => (
           <div
             key={item.label}
             className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5"
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-text-[#134799]">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100">
               <item.icon className="h-5 w-5 text-[#134799]" />
             </div>
             <div>
@@ -272,7 +279,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
           <ul className="space-y-3">
             <li>
               <div className="text-sm font-semibold text-slate-900">Corporate Office</div>
-              <div className="text-sm text-slate-600">{supportSettings.officeAddress}</div>
+              <div className="text-sm text-slate-600">{displayAddress}</div>
             </li>
           </ul>
         </div>
@@ -301,3 +308,4 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
     </div>
   );
 }
+

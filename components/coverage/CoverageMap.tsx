@@ -47,7 +47,7 @@ export default function CoverageMap() {
             transition={{ delay: i * 0.08 }}
             className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10"
           >
-            <div className="w-11 h-11 rounded-xl bg-text-[#134799] text-[#134799] flex items-center justify-center mb-4">
+            <div className="w-11 h-11 rounded-xl bg-blue-100 text-[#134799] flex items-center justify-center mb-4">
               <type.icon className="w-5 h-5" />
             </div>
             <div className="text-2xl font-black text-slate-900 mb-1">{type.count}</div>

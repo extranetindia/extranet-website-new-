@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Headphones, MessageCircle, ChevronDown, Phone } from "lucide-react";
+import { useCompanySettings } from "@/lib/hooks/useCompanySettings";
 
 interface SupportContentProps {
   supportSettings: {
@@ -38,30 +39,28 @@ const faqs = [
 ];
 
 export default function SupportContent({ supportSettings }: SupportContentProps) {
+  const { settings: companySettings } = useCompanySettings();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  // Use company settings with fallbacks to support settings
+  const displayPhone = companySettings?.company_phone || supportSettings.phone;
+  const displayEmail = companySettings?.support_email || supportSettings.email;
 
   const supportCards = [
     {
       icon: Headphones,
       title: "24/7 Customer Care",
       description: "Billing, plan changes, and general inquiries.",
-      action: `Call ${supportSettings.phone}`,
-      href: `tel:${supportSettings.phone.replace(/\s+/g, "")}`,
+      action: `Call ${displayPhone}`,
+      href: `tel:${displayPhone.replace(/\s+/g, "")}`,
     },
     {
       icon: MessageCircle,
       title: "Email Support",
       description: "Average response under 4 hours on business days.",
-      action: supportSettings.email,
-      href: `mailto:${supportSettings.email}`,
+      action: displayEmail,
+      href: `mailto:${displayEmail}`,
     },
-    // {
-    //   icon: Phone,
-    //   title: "WhatsApp Support",
-    //   description: "Chat with our support team instantly.",
-    //   action: `WhatsApp ${supportSettings.whatsapp}`,
-    //   href: `https://wa.me/${supportSettings.whatsapp.replace(/\D/g, "")}`,
-    // },
   ];
 
   return (
@@ -116,7 +115,6 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                       >
-                        {/* <p className="px-5 pb-4 text-slate-600 text-sm leading-relaxed"> */}
                         <p className="px-5 pb-4 text-slate-600 text-sm leading-relaxed">
                           {faq.a}
                         </p>
@@ -128,12 +126,6 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
             </div>
           </div>
         </div>
-
-        {/* <div className="rounded-2xl border border-slate-200 bg-white p-6">
-          <h3 className="text-lg font-semibold text-slate-900">Office and support hours</h3>
-          <p className="mt-4 text-sm text-slate-600">{supportSettings.officeAddress}</p>
-          <p className="mt-4 text-sm hover:text-[#134799]">{supportSettings.supportTimings}</p>
-        </div> */}
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import type { PlanRow } from "@/lib/database/schema";
 import type { PlanColor, PlanDefinition } from "@/lib/plans";
-import { normalizePlanCategory } from "@/lib/plans/categories";
 
 export function parsePlanFeatures(features: PlanRow["features"]): string[] {
   if (!features) return [];
@@ -59,6 +58,17 @@ export function formatSupabasePlanForCards(
   const halfYearlyPrice = plan.half_yearly_price ?? null;
   const annualPrice = plan.annual_price ?? null;
 
+  // Determine planType based on plan_type and home_plan_category
+  let planType: "wifi_only" | "wifi_ott" | "business" = "wifi_only";
+  if (plan.plan_type === "business") {
+    planType = "business";
+  } else if (plan.plan_type === "home") {
+    planType = plan.home_plan_category === "wifi_ott" ? "wifi_ott" : "wifi_only";
+  }
+
+  const isBusinessPlan = plan.plan_type === "business";
+  const color: PlanColor = isBusinessPlan ? "red" : "blue";
+
   return {
     id: plan.id,
     name: plan.name,
@@ -75,8 +85,8 @@ export function formatSupabasePlanForCards(
     securityDeposit: plan.security_deposit ?? null,
     ottApps: parseOttApps(plan.ott_apps ?? []),
     savingsBadge: plan.savings_badge ?? null,
-    planType: normalizePlanCategory(plan.plan_type),
-    color: normalizePlanCategory(plan.plan_type) === "business" ? "red" : "blue",
+    planType,
+    color,
     period: "/month",
     monthlyPrice,
     quarterlyPrice,

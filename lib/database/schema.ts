@@ -130,3 +130,32 @@ export type SupportSettingsUpdate = Partial<
     "phone" | "email" | "whatsapp" | "office_address" | "support_timings"
   >
 >;
+
+/** Company information settings - single row table */
+export interface SettingsRow {
+  id: string;
+  company_name: string;
+  company_address?: string | null;
+  company_phone?: string | null;
+  company_email?: string | null;
+  support_email?: string | null;
+  gst_number?: string | null;
+  website_url?: string | null;
+  logo_url?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export type SettingsUpdate = Partial<
+  Pick<
+    SettingsRow,
+    | "company_name"
+    | "company_address"
+    | "company_phone"
+    | "company_email"
+    | "support_email"
+    | "gst_number"
+    | "website_url"
+    | "logo_url"
+  >
+>;

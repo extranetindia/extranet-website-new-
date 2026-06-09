@@ -60,7 +60,7 @@ function FeatureCard({
       <div
         className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${
           feat.accent === "blue"
-            ? "bg-text-[#134799] text-[#134799]"
+            ? "bg-blue-100 text-[#134799]"
             : "bg-red-50 text-red-600"
         }`}
       >

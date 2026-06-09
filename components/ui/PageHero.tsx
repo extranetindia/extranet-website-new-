@@ -24,7 +24,7 @@ export default function PageHero({
           <motion.span
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-text-[#134799] border border-[#134799]/20 text-[#134799] text-sm font-semibold mb-5"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 border border-[#134799]/20 text-[#134799] text-sm font-semibold mb-5"
           >
             {badge}
           </motion.span>

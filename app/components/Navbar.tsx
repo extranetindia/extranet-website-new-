@@ -138,7 +138,7 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`min-h-[48px] rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 ease-in-out ${
                     isActive(link.href)
-                      ? "bg-text-[#134799] text-[#134799]"
+                      ? "bg-blue-100 text-[#134799]"
                       : "text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
                   }`}
                 >
