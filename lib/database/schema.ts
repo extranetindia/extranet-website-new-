@@ -36,6 +36,7 @@ export interface CityRow {
   id: string;
   name: string;
   active: boolean;
+  coverage_type: "home" | "business" | "both";
   created_at: string;
 }
 
@@ -77,9 +78,9 @@ export interface ResolvedPlanPrice {
 }
 
 export type CityInsert = Pick<CityRow, "name"> &
-  Partial<Pick<CityRow, "active">>;
+  Partial<Pick<CityRow, "active" | "coverage_type">>;
 
-export type CityUpdate = Partial<Pick<CityRow, "name" | "active">>;
+export type CityUpdate = Partial<Pick<CityRow, "name" | "active" | "coverage_type">>;
 
 export type PlanPricingInsert = Pick<
   PlanPricingRow,

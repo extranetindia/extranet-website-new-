@@ -96,7 +96,7 @@ export default function Navbar() {
               <span className="font-medium">+91 9540901195</span>
             </a>
             <Link
-              href="https://user.extranetindia.com/Customer/Default.aspx"
+              href="https://user.extranetindia.com/Selfcare/#/login"
               className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-[#D2190D] hover:text-white hover:border-[#D2190D] hover:shadow-md hover:shadow-red-900/15"
             >
               My Account
@@ -154,7 +154,7 @@ export default function Navbar() {
                   +91 95409 01195
                 </a>
                 <Link
-                  href="https://user.extranetindia.com/Customer/Default.aspx"
+                  href="https://user.extranetindia.com/Selfcare/#/login"
                   onClick={() => setMobileOpen(false)}
                   className="mx-0 min-h-[48px] rounded-xl border border-slate-200 bg-white py-3.5 text-center text-sm font-semibold text-slate-700 transition-all duration-200 ease-in-out hover:bg-[#D2190D] hover:text-white hover:border-[#D2190D] hover:shadow-md hover:shadow-red-900/15"
                 >

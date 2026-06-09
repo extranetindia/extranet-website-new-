@@ -13,6 +13,7 @@ import {
 const defaultCity: Omit<CityRow, "id" | "created_at"> = {
   name: "",
   active: true,
+  coverage_type: "both",
 };
 
 export default function AdminCoveragePage() {
@@ -65,6 +66,7 @@ export default function AdminCoveragePage() {
     setDraft({
       name: city.name,
       active: city.active,
+      coverage_type: city.coverage_type,
     });
     setOpen(true);
   };
@@ -145,20 +147,21 @@ export default function AdminCoveragePage() {
               <thead className="border-b border-slate-200 text-left hover:text-[#134799]">
                 <tr>
                   <th className="px-3 py-2 font-medium">City</th>
+                  <th className="px-3 py-2 font-medium">Coverage Type</th>
                   <th className="px-3 py-2 font-medium">Status</th>
                   <th className="px-3 py-2 font-medium">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {loading ? (
+              {loading ? (
                   <tr>
-                    <td colSpan={3} className="px-3 py-8 text-center hover:text-[#134799]">
+                    <td colSpan={4} className="px-3 py-8 text-center hover:text-[#134799]">
                       Loading cities...
                     </td>
                   </tr>
                 ) : sortedCities.length === 0 ? (
                   <tr>
-                    <td colSpan={3} className="px-3 py-8 text-center hover:text-[#134799]">
+                    <td colSpan={4} className="px-3 py-8 text-center hover:text-[#134799]">
                       No cities found.
                     </td>
                   </tr>
@@ -166,6 +169,11 @@ export default function AdminCoveragePage() {
                   sortedCities.map((city) => (
                     <tr key={city.id} className="border-b border-slate-100">
                       <td className="px-3 py-3 font-medium text-slate-900">{city.name}</td>
+                      <td className="px-3 py-3 text-sm">
+                        <span className="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold capitalize text-blue-700">
+                          {city.coverage_type}
+                        </span>
+                      </td>
                       <td className="px-3 py-3">
                         <button
                           type="button"
@@ -233,6 +241,25 @@ export default function AdminCoveragePage() {
                   }
                   className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
                 />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  Coverage Type
+                </span>
+                <select
+                  value={draft.coverage_type}
+                  onChange={(event) =>
+                    setDraft((previous) => ({
+                      ...previous,
+                      coverage_type: event.target.value as "home" | "business" | "both",
+                    }))
+                  }
+                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                >
+                  <option value="both">Both (Home & Business)</option>
+                  <option value="home">Home Plans Only</option>
+                  <option value="business">Business Plans Only</option>
+                </select>
               </label>
               <label className="flex items-center gap-3 text-sm font-medium text-slate-700">
                 <input

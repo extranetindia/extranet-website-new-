@@ -51,8 +51,12 @@ export default function CityPricedPlans({
   columns = 3,
   renderControls,
 }: CityPricedPlansProps) {
+  // Determine plan type for coverage filtering
+  const hasBusiness = basePlans.some((p) => p.plan_type === "business");
+  const planType = hasBusiness ? "business" : "home";
+
   const { cities, cityId, setCityId, loading: citiesLoading, ready } =
-    useSelectedCity();
+    useSelectedCity(planType);
   const [pricingLoading, setPricingLoading] = useState(false);
   const [billingCycle, setBillingCycle] = useState<BillingCycleValue>("monthly");
   const [displayPlans, setDisplayPlans] = useState<SupabasePlanCard[]>(() =>

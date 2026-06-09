@@ -26,7 +26,9 @@ function writeStoredCityId(id: string) {
   localStorage.setItem(SELECTED_CITY_STORAGE_KEY, id);
 }
 
-export function useSelectedCity(): UseSelectedCityResult {
+export function useSelectedCity(
+  planType?: "home" | "business",
+): UseSelectedCityResult {
   const [cities, setCities] = useState<CityRow[]>([]);
   const [cityId, setCityIdState] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,7 +39,10 @@ export function useSelectedCity(): UseSelectedCityResult {
 
     const load = async () => {
       setLoading(true);
-      const { data, error } = await fetchCities({ activeOnly: true });
+      const { data, error } = await fetchCities({
+        activeOnly: true,
+        coverageType: planType,
+      });
 
       if (cancelled) return;
 
@@ -69,7 +74,7 @@ export function useSelectedCity(): UseSelectedCityResult {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [planType]);
 
   useEffect(() => {
     const onCityChange = (event: Event) => {

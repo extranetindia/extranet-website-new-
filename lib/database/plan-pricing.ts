@@ -10,7 +10,7 @@ import type {
 } from "@/lib/database/schema";
 
 const CITY_COLUMNS =
-  "id, name, active, created_at";
+  "id, name, active, coverage_type, created_at";
 const PLAN_PRICING_COLUMNS =
   "id, plan_id, city_id, price, original_price, created_at, updated_at";
 const PLAN_COLUMNS =
@@ -22,11 +22,18 @@ const PLAN_COLUMNS =
 
 export async function fetchCities(options?: {
   activeOnly?: boolean;
+  coverageType?: "home" | "business" | "both";
 }): Promise<{ data: CityRow[]; error: Error | null }> {
   let query = supabase.from("cities").select(CITY_COLUMNS);
 
   if (options?.activeOnly) {
     query = query.eq("active", true);
+  }
+
+  if (options?.coverageType) {
+    query = query.or(
+      `coverage_type.eq.both,coverage_type.eq.${options.coverageType}`,
+    );
   }
 
   query = query.order("name", { ascending: true });
@@ -70,7 +77,8 @@ export async function fetchCityByName(
 }
 
 export async function createCity(
-  payload: Pick<CityRow, "name"> & Partial<Pick<CityRow, "active">>,
+  payload: Pick<CityRow, "name"> &
+    Partial<Pick<CityRow, "active" | "coverage_type">>,
 ): Promise<{ data: CityRow | null; error: Error | null }> {
   const { data, error } = await supabase
     .from("cities")
@@ -86,7 +94,7 @@ export async function createCity(
 
 export async function updateCity(
   cityId: string,
-  payload: Partial<Pick<CityRow, "name" | "active">>,
+  payload: Partial<Pick<CityRow, "name" | "active" | "coverage_type">>,
 ): Promise<{ data: CityRow | null; error: Error | null }> {
   const { data, error } = await supabase
     .from("cities")
