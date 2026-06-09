@@ -1,8 +1,15 @@
 export const dynamic = "force-dynamic";
 
+import { supabase } from "@/lib/supabase/client";
+import type { PlanRow } from "@/lib/database/schema";
 import PlansPageSections from "@/components/plans/PlansPageSections";
 
-export default function BusinessPlansRoutePage() {
+export default async function BusinessPlansRoutePage() {
+  const { data: plans } = await supabase
+    .from("plans")
+    .select("*")
+    .order("created_at", { ascending: false });
+
   return (
     <section className="pt-14 sm:pt-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -12,7 +19,7 @@ export default function BusinessPlansRoutePage() {
           <p className="mt-4 text-slate-600">Compare dedicated business plans with separate enterprise pricing, support, and GST-ready features.</p>
         </div>
       </div>
-      <PlansPageSections category="business" />
+      <PlansPageSections category="business" plans={plans as PlanRow[]} />
     </section>
   );
 }

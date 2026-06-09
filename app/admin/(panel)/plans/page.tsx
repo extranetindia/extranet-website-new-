@@ -5,10 +5,14 @@ import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import PlanCityPricingFields from "@/components/admin/PlanCityPricingFields";
 import {
-  getPlanCategoryLabel,
-  normalizePlanCategory,
-  PLAN_CATEGORY_VALUES,
-  type PlanCategoryValue,
+  normalizePlanType,
+  normalizeHomePlanCategory,
+  PLAN_TYPE_VALUES,
+  HOME_PLAN_CATEGORY_VALUES,
+  PLAN_TYPE_LABELS,
+  HOME_PLAN_CATEGORY_LABELS,
+  type PlanTypeValue,
+  type HomePlanCategoryValue,
 } from "@/lib/plans/categories";
 import {
   buildCityPricingFormRows,
@@ -37,13 +41,15 @@ interface PlanRow {
   quarterly_price?: string | null;
   half_yearly_price?: string | null;
   annual_price?: string | null;
-  plan_type?: "wifi_only" | "wifi_ott" | "business";
+  plan_type?: "home" | "business";
+  home_plan_category?: "wifi" | "wifi_ott" | null;
 }
 
 interface AdminPlan {
   id: string;
   name: string;
-  planType: PlanCategoryValue;
+  planType: PlanTypeValue;
+  homePlanCategory: HomePlanCategoryValue | null;
   speed: string;
   price: string;
   buttonText: string;
@@ -55,7 +61,8 @@ interface AdminPlan {
 const defaultPlan: AdminPlan = {
   id: "",
   name: "",
-  planType: "wifi_only",
+  planType: "home",
+  homePlanCategory: "wifi",
   speed: "",
   price: "",
   buttonText: "Get Started",
@@ -88,7 +95,8 @@ function rowToAdminPlan(row: PlanRow): AdminPlan {
   return {
     id: row.id,
     name: row.name,
-    planType: normalizePlanCategory(row.plan_type),
+    planType: normalizePlanType(row.plan_type),
+    homePlanCategory: row.home_plan_category ? normalizeHomePlanCategory(row.home_plan_category) : null,
     speed: row.speed,
     price: row.price,
     buttonText: row.button_text,
@@ -99,17 +107,25 @@ function rowToAdminPlan(row: PlanRow): AdminPlan {
 }
 
 function planToPayload(plan: AdminPlan, features: string[]) {
-  return {
+  const payload: Record<string, unknown> = {
     name: plan.name,
     speed: plan.speed,
     price: plan.price,
     description: plan.description || null,
     features,
     popular: plan.popular,
-    category: getPlanCategoryLabel(plan.planType),
-    plan_type: normalizePlanCategory(plan.planType),
+    category: plan.planType === "business" ? "Business Internet" : "Home Plans",
+    plan_type: plan.planType,
     button_text: plan.buttonText,
   };
+
+  if (plan.planType === "home") {
+    payload.home_plan_category = plan.homePlanCategory || "wifi";
+  } else {
+    payload.home_plan_category = null;
+  }
+
+  return payload;
 }
 
 export default function AdminPlansPage() {
@@ -250,21 +266,31 @@ export default function AdminPlansPage() {
       .filter(Boolean);
     const payload = planToPayload({ ...draft, features }, features);
 
+    console.log(
+      `[submitPlan] Starting submit for planId=${editingId || "NEW"}, payload:`,
+      payload,
+    );
+
     let planId = editingId;
 
     if (editingId) {
+      console.log(`[submitPlan] Updating existing plan: id=${editingId}`);
       const { error } = await supabase
         .from("plans")
         .update(payload)
         .eq("id", editingId);
 
       if (error) {
-        console.error("Failed to update plan:", error);
-        setSaveError(error.message);
+        const errorMsg = `Failed to update plan ${editingId}: code=${error.code}, message=${error.message}, hint=${error.hint}, details=${error.details}`;
+        console.error(errorMsg);
+        console.error("Full error object:", JSON.stringify(error, null, 2));
+        setSaveError(errorMsg);
         setSaving(false);
         return;
       }
+      console.log(`[submitPlan] Plan updated successfully: id=${editingId}`);
     } else {
+      console.log(`[submitPlan] Inserting new plan`);
       const { data: inserted, error } = await supabase
         .from("plans")
         .insert(payload)
@@ -272,26 +298,35 @@ export default function AdminPlansPage() {
         .single();
 
       if (error) {
-        console.error("Failed to insert plan:", error);
-        setSaveError(error.message);
+        const errorMsg = `Failed to insert plan: code=${error.code}, message=${error.message}, hint=${error.hint}, details=${error.details}`;
+        console.error(errorMsg);
+        console.error("Full error object:", JSON.stringify(error, null, 2));
+        setSaveError(errorMsg);
         setSaving(false);
         return;
       }
 
       planId = (inserted as { id: string }).id;
+      console.log(`[submitPlan] Plan inserted successfully: id=${planId}`);
     }
 
     if (planId) {
+      console.log(
+        `[submitPlan] Saving city pricing for plan: id=${planId}, rows count=${cityPricingRows.length}`,
+      );
       const { error: pricingSaveError } = await savePlanCityPricing(
         planId,
         cityPricingRows,
       );
 
       if (pricingSaveError) {
-        setCityPricingError(pricingSaveError.message);
+        const errorMsg = `City pricing save failed: ${pricingSaveError.message}`;
+        console.error(errorMsg);
+        setCityPricingError(errorMsg);
         setSaving(false);
         return;
       }
+      console.log(`[submitPlan] City pricing saved successfully for plan: id=${planId}`);
     }
 
     await fetchPlans();
@@ -300,27 +335,39 @@ export default function AdminPlansPage() {
   };
 
   const removePlan = async (id: string) => {
+    console.log(`[removePlan] Deleting plan: id=${id}`);
     const { error } = await supabase.from("plans").delete().eq("id", id);
 
     if (error) {
-      console.error("Failed to delete plan:", error);
+      const errorMsg = `Failed to delete plan ${id}: code=${error.code}, message=${error.message}, hint=${error.hint}, details=${error.details}`;
+      console.error(errorMsg);
+      console.error("Full error object:", JSON.stringify(error, null, 2));
       return;
     }
 
+    console.log(`[removePlan] Plan deleted successfully: id=${id}`);
     await fetchPlans();
   };
 
   const togglePopular = async (plan: AdminPlan) => {
+    console.log(
+      `[togglePopular] Toggling popular flag for plan: id=${plan.id}, current=${plan.popular}`,
+    );
     const { error } = await supabase
       .from("plans")
       .update({ popular: !plan.popular })
       .eq("id", plan.id);
 
     if (error) {
-      console.error("Failed to update popular flag:", error);
+      const errorMsg = `Failed to update popular flag for plan ${plan.id}: code=${error.code}, message=${error.message}, hint=${error.hint}, details=${error.details}`;
+      console.error(errorMsg);
+      console.error("Full error object:", JSON.stringify(error, null, 2));
       return;
     }
 
+    console.log(
+      `[togglePopular] Popular flag updated successfully for plan: id=${plan.id}, new=${!plan.popular}`,
+    );
     await fetchPlans();
   };
 
@@ -374,7 +421,11 @@ export default function AdminPlansPage() {
                   <tr key={plan.id} className="border-b border-slate-100">
                     <td className="px-3 py-3 font-medium text-slate-900">{plan.name}</td>
                     <td className="px-3 py-3 text-slate-700">
-                      {getPlanCategoryLabel(plan.planType)}
+                      {plan.planType === "business"
+                        ? "Business Internet"
+                        : plan.homePlanCategory === "wifi_ott"
+                          ? "WiFi + OTT"
+                          : "WiFi Only"}
                     </td>
                     <td className="px-3 py-3 text-slate-700">{plan.speed}</td>
                     <td className="px-3 py-3 text-slate-700">{plan.price}</td>
@@ -455,25 +506,50 @@ export default function AdminPlansPage() {
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-slate-700">
-                    Plan Category
+                    Plan Type
                   </span>
                   <select
                     value={draft.planType}
                     onChange={(event) =>
                       setDraft((previous) => ({
                         ...previous,
-                        planType: normalizePlanCategory(event.target.value),
+                        planType: event.target.value as PlanTypeValue,
+                        // Reset home plan category when switching to business
+                        homePlanCategory: event.target.value === "business" ? null : previous.homePlanCategory,
                       }))
                     }
                     className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
                   >
-                    {PLAN_CATEGORY_VALUES.map((value) => (
+                    {PLAN_TYPE_VALUES.map((value) => (
                       <option key={value} value={value}>
-                        {getPlanCategoryLabel(value)}
+                        {PLAN_TYPE_LABELS[value]}
                       </option>
                     ))}
                   </select>
                 </label>
+                {draft.planType === "home" && (
+                  <label className="block">
+                    <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                      Home Plan Category
+                    </span>
+                    <select
+                      value={draft.homePlanCategory || "wifi"}
+                      onChange={(event) =>
+                        setDraft((previous) => ({
+                          ...previous,
+                          homePlanCategory: event.target.value as HomePlanCategoryValue,
+                        }))
+                      }
+                      className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    >
+                      {HOME_PLAN_CATEGORY_VALUES.map((value) => (
+                        <option key={value} value={value}>
+                          {HOME_PLAN_CATEGORY_LABELS[value]}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                )}
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-medium text-slate-700">
                     Speed

@@ -3,16 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 import type { PlanRow } from "@/lib/database/schema";
-import {
-  normalizePlanCategory,
-  type PlanCategoryValue,
-} from "@/lib/plans/categories";
+import { type HomePlanCategoryValue } from "@/lib/plans/categories";
 import HomePlansSwitcher from "./HomePlansSwitcher";
 import CityPricedPlans from "./CityPricedPlans";
 
 export default function HomePlansPreview() {
   const [plans, setPlans] = useState<PlanRow[]>([]);
-  const [selectedType, setSelectedType] = useState<PlanCategoryValue>("wifi_only");
+  const [selectedCategory, setSelectedCategory] = useState<HomePlanCategoryValue>("wifi");
 
   useEffect(() => {
     let isMounted = true;
@@ -21,6 +18,7 @@ export default function HomePlansPreview() {
       const { data } = await supabase
         .from("plans")
         .select("*")
+        .eq("plan_type", "home")
         .order("created_at", { ascending: false });
 
       if (isMounted) {
@@ -38,9 +36,9 @@ export default function HomePlansPreview() {
   const filteredPlans = useMemo(
     () =>
       plans.filter(
-        (plan) => normalizePlanCategory(plan.plan_type) === selectedType,
+        (plan) => plan.plan_type === "home" && plan.home_plan_category === selectedCategory,
       ),
-    [plans, selectedType],
+    [plans, selectedCategory],
   );
 
   if (!plans.length) return null;
@@ -55,8 +53,8 @@ export default function HomePlansPreview() {
           ctaLabel="Get Started"
           renderControls={
             <HomePlansSwitcher
-              selectedType={selectedType}
-              onSelectType={(value) => setSelectedType(normalizePlanCategory(value))}
+              selectedCategory={selectedCategory}
+              onSelectCategory={(value) => setSelectedCategory(value)}
             />
           }
         />

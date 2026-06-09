@@ -222,19 +222,29 @@ export async function savePlanCityPricing(
 
     if (!price) {
       if (row.pricingId) {
+        console.log(
+          `[savePlanCityPricing] Deleting pricing row: id=${row.pricingId}, plan_id=${planId}, city_id=${row.cityId}`,
+        );
         const { error } = await supabase
           .from("plan_pricing")
           .delete()
           .eq("id", row.pricingId);
 
         if (error) {
-          return { error: new Error(error.message) };
+          const errorMsg = `DELETE failed for pricing id=${row.pricingId}: code=${error.code}, message=${error.message}, hint=${error.hint}, details=${error.details}`;
+          console.error(errorMsg);
+          console.error("Full error object:", JSON.stringify(error, null, 2));
+          return { error: new Error(errorMsg) };
         }
+        console.log(`[savePlanCityPricing] Delete succeeded for id=${row.pricingId}`);
       }
       continue;
     }
 
     if (row.pricingId) {
+      console.log(
+        `[savePlanCityPricing] Updating pricing row: id=${row.pricingId}, plan_id=${planId}, city_id=${row.cityId}, price=${price}`,
+      );
       const { error } = await supabase
         .from("plan_pricing")
         .update({
@@ -244,9 +254,16 @@ export async function savePlanCityPricing(
         .eq("id", row.pricingId);
 
       if (error) {
-        return { error: new Error(error.message) };
+        const errorMsg = `UPDATE failed for pricing id=${row.pricingId}: code=${error.code}, message=${error.message}, hint=${error.hint}, details=${error.details}`;
+        console.error(errorMsg);
+        console.error("Full error object:", JSON.stringify(error, null, 2));
+        return { error: new Error(errorMsg) };
       }
+      console.log(`[savePlanCityPricing] Update succeeded for id=${row.pricingId}`);
     } else {
+      console.log(
+        `[savePlanCityPricing] Inserting new pricing row: plan_id=${planId}, city_id=${row.cityId}, price=${price}`,
+      );
       const { error } = await supabase.from("plan_pricing").insert({
         plan_id: planId,
         city_id: row.cityId,
@@ -255,8 +272,14 @@ export async function savePlanCityPricing(
       });
 
       if (error) {
-        return { error: new Error(error.message) };
+        const errorMsg = `INSERT failed for plan_id=${planId}, city_id=${row.cityId}: code=${error.code}, message=${error.message}, hint=${error.hint}, details=${error.details}`;
+        console.error(errorMsg);
+        console.error("Full error object:", JSON.stringify(error, null, 2));
+        return { error: new Error(errorMsg) };
       }
+      console.log(
+        `[savePlanCityPricing] Insert succeeded for plan_id=${planId}, city_id=${row.cityId}`,
+      );
     }
   }
 

@@ -3,36 +3,36 @@ import { Home, Building2 } from "lucide-react";
 
 const cards = [
   {
-    eyebrow: "BROADBAND PLANS",
-    title: "Home Comfort",
+    eyebrow: "HOME PLANS",
+    title: "HOME BROADBAND",
     icon: Home,
     bullets: [
-      "Up to 500 Mbps",
-      "WiFi Router Included",
+      "Speed up to 300 MBPS",
+      "WiFi Router Included*",
       "Unlimited Data",
-      "Free Landline",
+      // "Free Landline",
       "OTT Bundles Available",
     ],
-    price: "₹450/month",
+    price: "₹399*/month",
     href: "/plans/home",
     accent: "from-[#134799] to-[#0f3b7f]",
     badgeTone: "bg-[#134799] text-white",
   },
   {
-    eyebrow: "CORPORATE PLANS",
-    title: "Premium Corporate",
+    eyebrow: "BUSINESS PLANS",
+    title: "BUSINESS BROADBAND",
     icon: Building2,
     bullets: [
-      "Up to 750 Mbps",
-      "WiFi Router Included",
+      "Speed up to 750 MBPS",
+      "WiFi Router Included*",
       "Unlimited Data",
-      "Static IP Available",
+      "Static IP Available*",
       "SLA-backed 24/7 Support",
     ],
-    price: "₹2500/month",
+    price: "₹999*/month",
     href: "/plans/business",
-    accent: "from-[#D2190D] to-[#b8160c]",
     badgeTone: "bg-[#D2190D] text-white",
+    accent: "from-[#D2190D] to-[#b8160c]",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function PlanCategorySelection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl text-center lg:text-left">
           <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#D2190D]">Choose Your Plan</p>
-          <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Home Comfort or Premium Corporate</h2>
+          <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Home Broadband or Business Broadband</h2>
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2">

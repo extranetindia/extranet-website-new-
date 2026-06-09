@@ -14,8 +14,10 @@ export interface PlanRow {
   description: string | null;
   features: string[] | string | null;
   popular: boolean;
-  /** Canonical internal plan category used for filtering and admin management. */
-  plan_type?: "wifi_only" | "wifi_ott" | "business";
+  /** Plan type: home or business. */
+  plan_type?: "home" | "business";
+  /** Home plan category: wifi or wifi_ott. Only used when plan_type = home. */
+  home_plan_category?: "wifi" | "wifi_ott" | null;
   category: string;
   button_text: string;
   tagline?: string | null;

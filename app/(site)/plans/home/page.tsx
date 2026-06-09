@@ -1,8 +1,15 @@
 export const dynamic = "force-dynamic";
 
+import { supabase } from "@/lib/supabase/client";
+import type { PlanRow } from "@/lib/database/schema";
 import PlansPageSections from "@/components/plans/PlansPageSections";
 
-export default function HomePlansRoutePage() {
+export default async function HomePlansRoutePage() {
+  const { data: plans } = await supabase
+    .from("plans")
+    .select("*")
+    .order("created_at", { ascending: false });
+
   return (
     <section className="pt-14 sm:pt-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -12,7 +19,7 @@ export default function HomePlansRoutePage() {
           <p className="mt-4 text-slate-600">Use the city selector, billing cycle switcher, and plan filters to compare your best-fit home broadband option.</p>
         </div>
       </div>
-      <PlansPageSections category="home" />
+      <PlansPageSections category="home" plans={plans as PlanRow[]} />
     </section>
   );
 }
