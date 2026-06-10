@@ -20,6 +20,16 @@ export interface PlanDefinition {
   tagline?: string | null;
   setupFee?: string | null;
   securityDeposit?: string | null;
+  /** Billing-cycle specific setup fees */
+  monthlySetupFee?: string | null;
+  quarterlySetupFee?: string | null;
+  halfYearlySetupFee?: string | null;
+  annualSetupFee?: string | null;
+  /** Billing-cycle specific security deposits */
+  monthlySecurityDeposit?: string | null;
+  quarterlySecurityDeposit?: string | null;
+  halfYearlySecurityDeposit?: string | null;
+  annualSecurityDeposit?: string | null;
   ottApps?: string[];
   savingsBadge?: string | null;
   planType?: "wifi_only" | "wifi_ott" | "business";

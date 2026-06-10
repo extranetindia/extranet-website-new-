@@ -28,6 +28,14 @@ export interface PlanRow {
   quarterly_price?: string | null;
   half_yearly_price?: string | null;
   annual_price?: string | null;
+  monthly_setup_fee?: string | null;
+  quarterly_setup_fee?: string | null;
+  half_yearly_setup_fee?: string | null;
+  annual_setup_fee?: string | null;
+  monthly_security_deposit?: string | null;
+  quarterly_security_deposit?: string | null;
+  half_yearly_security_deposit?: string | null;
+  annual_security_deposit?: string | null;
   savings_badge?: string | null;
   router_included?: boolean | null;
   landline_included?: boolean | null;

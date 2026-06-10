@@ -106,13 +106,15 @@ function PlanCard({
               {plan.setupFee && (
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-600 sm:text-sm">One-time Setup Fee</span>
-                  <span className="font-semibold text-slate-900">{plan.setupFee}</span>
+                  <span className="font-semibold text-slate-900">{formatFeeValue(plan.setupFee)}</span>
                 </div>
               )}
               {plan.securityDeposit && (
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-600 sm:text-sm">Security Deposit</span>
-                  <span className="font-semibold text-slate-900">{plan.securityDeposit} Refundable</span>
+                  <span className="font-semibold text-slate-900">
+                    {formatFeeValue(plan.securityDeposit) === "FREE" ? "FREE" : `${plan.securityDeposit} Refundable`}
+                  </span>
                 </div>
               )}
             </div>
@@ -185,6 +187,15 @@ function isDisplayBenefit(feature: string) {
     normalized.includes("security deposit") ||
     normalized.includes("gst")
   );
+}
+
+function formatFeeValue(value: string | null | undefined): string | null {
+  if (!value) return null;
+  const normalized = value.toLowerCase().trim();
+  if (normalized === "0" || normalized === "free" || normalized === "waived") {
+    return "FREE";
+  }
+  return value;
 }
 
 export default function PlanCards({

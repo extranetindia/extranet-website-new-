@@ -58,6 +58,21 @@ interface AdminPlan {
   description: string;
   setupFee?: string | null;
   securityDeposit?: string | null;
+  // Billing-cycle specific pricing
+  monthlyPrice?: string | null;
+  quarterlyPrice?: string | null;
+  halfYearlyPrice?: string | null;
+  annualPrice?: string | null;
+  // Billing-cycle specific setup fees
+  monthlySetupFee?: string | null;
+  quarterlySetupFee?: string | null;
+  halfYearlySetupFee?: string | null;
+  annualSetupFee?: string | null;
+  // Billing-cycle specific security deposits
+  monthlySecurityDeposit?: string | null;
+  quarterlySecurityDeposit?: string | null;
+  halfYearlySecurityDeposit?: string | null;
+  annualSecurityDeposit?: string | null;
 }
 
 const defaultPlan: AdminPlan = {
@@ -73,6 +88,21 @@ const defaultPlan: AdminPlan = {
   description: "",
   setupFee: null,
   securityDeposit: null,
+  // Billing-cycle specific pricing
+  monthlyPrice: null,
+  quarterlyPrice: null,
+  halfYearlyPrice: null,
+  annualPrice: null,
+  // Billing-cycle specific setup fees
+  monthlySetupFee: null,
+  quarterlySetupFee: null,
+  halfYearlySetupFee: null,
+  annualSetupFee: null,
+  // Billing-cycle specific security deposits
+  monthlySecurityDeposit: null,
+  quarterlySecurityDeposit: null,
+  halfYearlySecurityDeposit: null,
+  annualSecurityDeposit: null,
 };
 
 function parseFeatures(features: PlanRow["features"]): string[] {
@@ -109,6 +139,21 @@ function rowToAdminPlan(row: PlanRow): AdminPlan {
     description: row.description ?? "",
     setupFee: row.setup_fee ?? null,
     securityDeposit: row.security_deposit ?? null,
+    // Billing-cycle specific pricing
+    monthlyPrice: row.monthly_price ?? null,
+    quarterlyPrice: row.quarterly_price ?? null,
+    halfYearlyPrice: row.half_yearly_price ?? null,
+    annualPrice: row.annual_price ?? null,
+    // Billing-cycle specific setup fees
+    monthlySetupFee: (row as any).monthly_setup_fee ?? null,
+    quarterlySetupFee: (row as any).quarterly_setup_fee ?? null,
+    halfYearlySetupFee: (row as any).half_yearly_setup_fee ?? null,
+    annualSetupFee: (row as any).annual_setup_fee ?? null,
+    // Billing-cycle specific security deposits
+    monthlySecurityDeposit: (row as any).monthly_security_deposit ?? null,
+    quarterlySecurityDeposit: (row as any).quarterly_security_deposit ?? null,
+    halfYearlySecurityDeposit: (row as any).half_yearly_security_deposit ?? null,
+    annualSecurityDeposit: (row as any).annual_security_deposit ?? null,
   };
 }
 
@@ -125,6 +170,21 @@ function planToPayload(plan: AdminPlan, features: string[]) {
     button_text: plan.buttonText,
     setup_fee: plan.setupFee || null,
     security_deposit: plan.securityDeposit || null,
+    // Billing-cycle specific pricing
+    monthly_price: plan.monthlyPrice || null,
+    quarterly_price: plan.quarterlyPrice || null,
+    half_yearly_price: plan.halfYearlyPrice || null,
+    annual_price: plan.annualPrice || null,
+    // Billing-cycle specific setup fees
+    monthly_setup_fee: plan.monthlySetupFee || null,
+    quarterly_setup_fee: plan.quarterlySetupFee || null,
+    half_yearly_setup_fee: plan.halfYearlySetupFee || null,
+    annual_setup_fee: plan.annualSetupFee || null,
+    // Billing-cycle specific security deposits
+    monthly_security_deposit: plan.monthlySecurityDeposit || null,
+    quarterly_security_deposit: plan.quarterlySecurityDeposit || null,
+    half_yearly_security_deposit: plan.halfYearlySecurityDeposit || null,
+    annual_security_deposit: plan.annualSecurityDeposit || null,
   };
 
   if (plan.planType === "home") {
@@ -683,7 +743,212 @@ export default function AdminPlansPage() {
                     Optional. Will be marked as "Refundable". Leave empty to hide.
                   </span>
                 </label>
-                <label className="block">
+
+                {/* Billing-Cycle Specific Pricing */}
+                <div className="md:col-span-2">
+                  <h4 className="mb-3 text-sm font-semibold text-slate-800">Billing-Cycle Specific Pricing & Fees</h4>
+                  <p className="mb-4 text-xs text-slate-600">
+                    Set pricing and fees for each billing cycle. Leave empty to use default values.
+                  </p>
+                  
+                  {/* Monthly */}
+                  <div className="mb-4 rounded-lg border border-slate-200 p-3">
+                    <h5 className="mb-3 font-medium text-slate-700">Monthly</h5>
+                    <div className="grid gap-3 md:grid-cols-3">
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Monthly Price</span>
+                        <input
+                          value={draft.monthlyPrice ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              monthlyPrice: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹500"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Setup Fee</span>
+                        <input
+                          value={draft.monthlySetupFee ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              monthlySetupFee: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹500"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Security Deposit</span>
+                        <input
+                          value={draft.monthlySecurityDeposit ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              monthlySecurityDeposit: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹1,000"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Quarterly */}
+                  <div className="mb-4 rounded-lg border border-slate-200 p-3">
+                    <h5 className="mb-3 font-medium text-slate-700">Quarterly</h5>
+                    <div className="grid gap-3 md:grid-cols-3">
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Quarterly Price</span>
+                        <input
+                          value={draft.quarterlyPrice ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              quarterlyPrice: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹1,400"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Setup Fee</span>
+                        <input
+                          value={draft.quarterlySetupFee ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              quarterlySetupFee: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹500"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Security Deposit</span>
+                        <input
+                          value={draft.quarterlySecurityDeposit ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              quarterlySecurityDeposit: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹1,000"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Half-Yearly */}
+                  <div className="mb-4 rounded-lg border border-slate-200 p-3">
+                    <h5 className="mb-3 font-medium text-slate-700">Half-Yearly</h5>
+                    <div className="grid gap-3 md:grid-cols-3">
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Half-Yearly Price</span>
+                        <input
+                          value={draft.halfYearlyPrice ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              halfYearlyPrice: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹2,700"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Setup Fee</span>
+                        <input
+                          value={draft.halfYearlySetupFee ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              halfYearlySetupFee: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹500"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Security Deposit</span>
+                        <input
+                          value={draft.halfYearlySecurityDeposit ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              halfYearlySecurityDeposit: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹1,000"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Annual */}
+                  <div className="rounded-lg border border-slate-200 p-3">
+                    <h5 className="mb-3 font-medium text-slate-700">Annual</h5>
+                    <div className="grid gap-3 md:grid-cols-3">
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Annual Price</span>
+                        <input
+                          value={draft.annualPrice ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              annualPrice: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹5,400"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Setup Fee</span>
+                        <input
+                          value={draft.annualSetupFee ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              annualSetupFee: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹500"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Security Deposit</span>
+                        <input
+                          value={draft.annualSecurityDeposit ?? ""}
+                          onChange={(event) =>
+                            setDraft((previous) => ({
+                              ...previous,
+                              annualSecurityDeposit: event.target.value || null,
+                            }))
+                          }
+                          placeholder="e.g., ₹1,000"
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <label className="block md:col-span-2">
                   <span className="mb-1.5 block text-sm font-medium text-slate-700">
                     Button Text
                   </span>

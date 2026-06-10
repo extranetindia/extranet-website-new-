@@ -108,6 +108,8 @@ export default function CityPricedPlans({
     ...plan,
     price: getCyclePrice(plan, billingCycle),
     period: getCyclePeriodLabel(billingCycle),
+    setupFee: getCycleSetupFee(plan, billingCycle),
+    securityDeposit: getCycleSecurityDeposit(plan, billingCycle),
   }));
 
   return (
@@ -157,6 +159,20 @@ function getCyclePrice(plan: SupabasePlanCard, cycle: BillingCycleValue) {
   if (cycle === "half_yearly") return plan.halfYearlyPrice ?? plan.monthlyPrice ?? plan.price;
   if (cycle === "annual") return plan.annualPrice ?? plan.monthlyPrice ?? plan.price;
   return plan.monthlyPrice ?? plan.price;
+}
+
+function getCycleSetupFee(plan: SupabasePlanCard, cycle: BillingCycleValue) {
+  if (cycle === "quarterly") return plan.quarterlySetupFee ?? plan.monthlySetupFee ?? plan.setupFee;
+  if (cycle === "half_yearly") return plan.halfYearlySetupFee ?? plan.monthlySetupFee ?? plan.setupFee;
+  if (cycle === "annual") return plan.annualSetupFee ?? plan.monthlySetupFee ?? plan.setupFee;
+  return plan.monthlySetupFee ?? plan.setupFee;
+}
+
+function getCycleSecurityDeposit(plan: SupabasePlanCard, cycle: BillingCycleValue) {
+  if (cycle === "quarterly") return plan.quarterlySecurityDeposit ?? plan.monthlySecurityDeposit ?? plan.securityDeposit;
+  if (cycle === "half_yearly") return plan.halfYearlySecurityDeposit ?? plan.monthlySecurityDeposit ?? plan.securityDeposit;
+  if (cycle === "annual") return plan.annualSecurityDeposit ?? plan.monthlySecurityDeposit ?? plan.securityDeposit;
+  return plan.monthlySecurityDeposit ?? plan.securityDeposit;
 }
 
 function getCyclePeriodLabel(cycle: BillingCycleValue) {
