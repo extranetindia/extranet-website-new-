@@ -112,7 +112,7 @@ function PlanCard({
               {plan.securityDeposit && (
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-600 sm:text-sm">Security Deposit</span>
-                  <span className="font-semibold text-slate-900">{plan.securityDeposit} <span className="text-xs text-slate-600">Refundable</span></span>
+                  <span className="font-semibold text-slate-900">{plan.securityDeposit} Refundable</span>
                 </div>
               )}
             </div>
