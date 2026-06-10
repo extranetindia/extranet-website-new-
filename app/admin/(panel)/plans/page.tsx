@@ -56,6 +56,8 @@ interface AdminPlan {
   popular: boolean;
   features: string[];
   description: string;
+  setupFee?: string | null;
+  securityDeposit?: string | null;
 }
 
 const defaultPlan: AdminPlan = {
@@ -69,6 +71,8 @@ const defaultPlan: AdminPlan = {
   popular: false,
   features: [],
   description: "",
+  setupFee: null,
+  securityDeposit: null,
 };
 
 function parseFeatures(features: PlanRow["features"]): string[] {
@@ -103,6 +107,8 @@ function rowToAdminPlan(row: PlanRow): AdminPlan {
     popular: Boolean(row.popular),
     features: parseFeatures(row.features),
     description: row.description ?? "",
+    setupFee: row.setup_fee ?? null,
+    securityDeposit: row.security_deposit ?? null,
   };
 }
 
@@ -117,6 +123,8 @@ function planToPayload(plan: AdminPlan, features: string[]) {
     category: plan.planType === "business" ? "Business Internet" : "Home Plans",
     plan_type: plan.planType,
     button_text: plan.buttonText,
+    setup_fee: plan.setupFee || null,
+    security_deposit: plan.securityDeposit || null,
   };
 
   if (plan.planType === "home") {
@@ -209,6 +217,13 @@ export default function AdminPlansPage() {
     void load();
   }, [fetchPlans]);
 
+  // DEBUG: Log draft state changes
+  useEffect(() => {
+    if (open && (draft.setupFee || draft.securityDeposit)) {
+      console.log("[draft change] setupFee:", draft.setupFee, "securityDeposit:", draft.securityDeposit);
+    }
+  }, [draft, open]);
+
   useEffect(() => {
     if (!open) return;
     void loadCityPricing(editingId);
@@ -246,6 +261,12 @@ export default function AdminPlansPage() {
     setFeaturesInput(plan.features.join(", "));
     setSaveError(null);
     setCityPricingError(null);
+    console.log("[openEdit] Loaded plan for editing:", {
+      id: plan.id,
+      name: plan.name,
+      setupFee: plan.setupFee,
+      securityDeposit: plan.securityDeposit,
+    });
     setOpen(true);
   };
 
@@ -264,17 +285,38 @@ export default function AdminPlansPage() {
       .split(",")
       .map((item) => item.trim())
       .filter(Boolean);
+    
+    // DIAGNOSTIC: Log complete draft state
+    console.log("[submitPlan] ========== DIAGNOSTIC START ==========");
+    console.log("[submitPlan] Current draft state:");
+    console.log("  - id:", draft.id);
+    console.log("  - name:", draft.name);
+    console.log("  - speed:", draft.speed);
+    console.log("  - price:", draft.price);
+    console.log("  - setupFee:", draft.setupFee, `(type: ${typeof draft.setupFee})`);
+    console.log("  - securityDeposit:", draft.securityDeposit, `(type: ${typeof draft.securityDeposit})`);
+    console.log("  - buttonText:", draft.buttonText);
+    console.log("  - planType:", draft.planType);
+    console.log("[submitPlan] Full draft object:");
+    console.log(draft);
+    
     const payload = planToPayload({ ...draft, features }, features);
 
+    console.log("[submitPlan] Payload created:");
+    console.log(JSON.stringify(payload, null, 2));
+    console.log("[submitPlan] ========== DIAGNOSTIC END ==========");
     console.log(
-      `[submitPlan] Starting submit for planId=${editingId || "NEW"}, payload:`,
-      payload,
+      `[submitPlan] Starting submit for planId=${editingId || "NEW"}`
     );
 
     let planId = editingId;
 
     if (editingId) {
       console.log(`[submitPlan] Updating existing plan: id=${editingId}`);
+      console.log("[submitPlan] Update payload fields:", {
+        setup_fee: payload.setup_fee,
+        security_deposit: payload.security_deposit,
+      });
       const { error } = await supabase
         .from("plans")
         .update(payload)
@@ -289,8 +331,23 @@ export default function AdminPlansPage() {
         return;
       }
       console.log(`[submitPlan] Plan updated successfully: id=${editingId}`);
+      
+      // Verify update by fetching the updated record
+      const { data: updated, error: fetchError } = await supabase
+        .from("plans")
+        .select("id, name, setup_fee, security_deposit")
+        .eq("id", editingId)
+        .single();
+      
+      if (!fetchError && updated) {
+        console.log("[submitPlan] Verification - updated record:", updated);
+      }
     } else {
       console.log(`[submitPlan] Inserting new plan`);
+      console.log("[submitPlan] Insert payload fields:", {
+        setup_fee: payload.setup_fee,
+        security_deposit: payload.security_deposit,
+      });
       const { data: inserted, error } = await supabase
         .from("plans")
         .insert(payload)
@@ -308,6 +365,17 @@ export default function AdminPlansPage() {
 
       planId = (inserted as { id: string }).id;
       console.log(`[submitPlan] Plan inserted successfully: id=${planId}`);
+      
+      // Verify insert by fetching the inserted record
+      const { data: verifyInsert, error: fetchError } = await supabase
+        .from("plans")
+        .select("id, name, setup_fee, security_deposit")
+        .eq("id", planId)
+        .single();
+      
+      if (!fetchError && verifyInsert) {
+        console.log("[submitPlan] Verification - inserted record:", verifyInsert);
+      }
     }
 
     if (planId) {
@@ -575,6 +643,44 @@ export default function AdminPlansPage() {
                   />
                   <span className="mt-1 block text-xs hover:text-[#134799]">
                     Used when no city-specific price is set.
+                  </span>
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    One-time Setup Fee
+                  </span>
+                  <input
+                    value={draft.setupFee ?? ""}
+                    onChange={(event) =>
+                      setDraft((previous) => ({
+                        ...previous,
+                        setupFee: event.target.value || null,
+                      }))
+                    }
+                    placeholder="e.g., ₹1,000"
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  />
+                  <span className="mt-1 block text-xs hover:text-[#134799]">
+                    Optional. Leave empty to hide.
+                  </span>
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    Security Deposit
+                  </span>
+                  <input
+                    value={draft.securityDeposit ?? ""}
+                    onChange={(event) =>
+                      setDraft((previous) => ({
+                        ...previous,
+                        securityDeposit: event.target.value || null,
+                      }))
+                    }
+                    placeholder="e.g., ₹1,000"
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  />
+                  <span className="mt-1 block text-xs hover:text-[#134799]">
+                    Optional. Will be marked as "Refundable". Leave empty to hide.
                   </span>
                 </label>
                 <label className="block">

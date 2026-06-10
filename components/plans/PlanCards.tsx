@@ -98,10 +98,26 @@ function PlanCard({
           <span className={`text-3xl font-black leading-none sm:text-4xl ${pricingTone}`}>₹{displayPrice}</span>
           <span className="pb-1 text-sm font-semibold text-slate-500">/month</span>
         </div>
-        <div className="mt-3 space-y-1 text-xs text-slate-600 sm:text-sm">
-          {plan.setupFee ? <p>One-Time Setup Fee {plan.setupFee}</p> : null}
-          {plan.securityDeposit ? <p>Security Deposit {plan.securityDeposit} Refundable</p> : null}
-        </div>
+
+        {(plan.setupFee || plan.securityDeposit) && (
+          <>
+            <div className="my-3 border-t border-slate-300" />
+            <div className="space-y-2.5">
+              {plan.setupFee && (
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-600 sm:text-sm">One-time Setup Fee</span>
+                  <span className="font-semibold text-slate-900">{plan.setupFee}</span>
+                </div>
+              )}
+              {plan.securityDeposit && (
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-600 sm:text-sm">Security Deposit</span>
+                  <span className="font-semibold text-slate-900">{plan.securityDeposit} <span className="text-xs text-slate-600">Refundable</span></span>
+                </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
 
       {hasOttApps ? (
