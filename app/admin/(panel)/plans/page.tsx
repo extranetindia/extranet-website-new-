@@ -246,8 +246,10 @@ export default function AdminPlansPage() {
           cityId: city.id,
           cityName: city.name,
           pricingId: null,
-          price: "",
-          originalPrice: "",
+          monthlyPrice: "",
+          quarterlyPrice: "",
+          halfYearlyPrice: "",
+          annualPrice: "",
         })),
       );
       setCityPricingLoading(false);
@@ -296,7 +298,7 @@ export default function AdminPlansPage() {
 
   const handleCityPricingChange = (
     cityId: string,
-    field: "price" | "originalPrice",
+    field: "monthlyPrice" | "quarterlyPrice" | "halfYearlyPrice" | "annualPrice",
     value: string,
   ) => {
     setCityPricingRows((previous) =>

@@ -10,7 +10,7 @@ interface PlanCityPricingFieldsProps {
   fallbackPrice?: string;
   onChange: (
     cityId: string,
-    field: "price" | "originalPrice",
+    field: "monthlyPrice" | "quarterlyPrice" | "halfYearlyPrice" | "annualPrice",
     value: string,
   ) => void;
 }
@@ -28,16 +28,7 @@ export default function PlanCityPricingFields({
       <div className="mb-3">
         <h4 className="text-sm font-semibold text-slate-900">City Pricing</h4>
         <p className="mt-1 text-xs hover:text-[#134799]">
-          Optional per-city pricing overrides. Leave empty to use the default plan price
-          {fallbackPrice ? (
-            <>
-              {" "}
-              (<span className="font-medium text-slate-700">{fallbackPrice}</span>)
-            </>
-          ) : (
-            " above"
-          )}
-          .
+          Optional per-city billing cycle pricing overrides. Leave empty to use the default plan prices.
         </p>
       </div>
 
@@ -66,30 +57,60 @@ export default function PlanCityPricingFields({
               <div className="grid gap-3 sm:grid-cols-2">
                 <label className="block">
                   <span className="mb-1 block text-xs font-medium text-slate-600">
-                    Price
+                    Monthly Price
                   </span>
                   <input
                     type="text"
-                    value={row.price}
+                    value={row.monthlyPrice}
                     disabled={disabled}
                     placeholder="e.g. ₹349"
                     onChange={(event) =>
-                      onChange(row.cityId, "price", event.target.value)
+                      onChange(row.cityId, "monthlyPrice", event.target.value)
                     }
                     className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
                   />
                 </label>
                 <label className="block">
                   <span className="mb-1 block text-xs font-medium text-slate-600">
-                    Original Price
+                    Quarterly Price
                   </span>
                   <input
                     type="text"
-                    value={row.originalPrice}
+                    value={row.quarterlyPrice}
                     disabled={disabled}
-                    placeholder="e.g. ₹699"
+                    placeholder="e.g. ₹999"
                     onChange={(event) =>
-                      onChange(row.cityId, "originalPrice", event.target.value)
+                      onChange(row.cityId, "quarterlyPrice", event.target.value)
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-1 block text-xs font-medium text-slate-600">
+                    Half-Yearly Price
+                  </span>
+                  <input
+                    type="text"
+                    value={row.halfYearlyPrice}
+                    disabled={disabled}
+                    placeholder="e.g. ₹1799"
+                    onChange={(event) =>
+                      onChange(row.cityId, "halfYearlyPrice", event.target.value)
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-1 block text-xs font-medium text-slate-600">
+                    Annual Price
+                  </span>
+                  <input
+                    type="text"
+                    value={row.annualPrice}
+                    disabled={disabled}
+                    placeholder="e.g. ₹3499"
+                    onChange={(event) =>
+                      onChange(row.cityId, "annualPrice", event.target.value)
                     }
                     className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
                   />

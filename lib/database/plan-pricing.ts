@@ -12,7 +12,7 @@ import type {
 const CITY_COLUMNS =
   "id, name, active, coverage_type, created_at";
 const PLAN_PRICING_COLUMNS =
-  "id, plan_id, city_id, price, original_price, created_at, updated_at";
+  "id, plan_id, city_id, monthly_price, quarterly_price, half_yearly_price, annual_price, created_at, updated_at";
 const PLAN_COLUMNS =
   "id, created_at, name, speed, price, description, features, popular, category, plan_type, button_text, tagline, ott_apps, setup_fee, security_deposit, monthly_price, quarterly_price, half_yearly_price, annual_price, monthly_setup_fee, quarterly_setup_fee, half_yearly_setup_fee, annual_setup_fee, monthly_security_deposit, quarterly_security_deposit, half_yearly_security_deposit, annual_security_deposit, savings_badge, router_included, landline_included, installation_free";
 
@@ -186,8 +186,10 @@ export interface CityPricingFormRow {
   cityId: string;
   cityName: string;
   pricingId: string | null;
-  price: string;
-  originalPrice: string;
+  monthlyPrice: string;
+  quarterlyPrice: string;
+  halfYearlyPrice: string;
+  annualPrice: string;
 }
 
 export function buildCityPricingFormRows(
@@ -202,25 +204,32 @@ export function buildCityPricingFormRows(
       cityId: city.id,
       cityName: city.name,
       pricingId: row?.id ?? null,
-      price: row?.price ?? "",
-      originalPrice: row?.original_price ?? "",
+      monthlyPrice: row?.monthly_price ?? "",
+      quarterlyPrice: row?.quarterly_price ?? "",
+      halfYearlyPrice: row?.half_yearly_price ?? "",
+      annualPrice: row?.annual_price ?? "",
     };
   });
 }
 
 /**
  * Persist city pricing for a plan. Inserts new rows, updates existing,
- * deletes rows when price is cleared. Skips rows with empty price and no existing row.
+ * deletes rows when all prices are cleared. Skips rows with all empty prices and no existing row.
  */
 export async function savePlanCityPricing(
   planId: string,
   rows: CityPricingFormRow[],
 ): Promise<{ error: Error | null }> {
   for (const row of rows) {
-    const price = row.price.trim();
-    const originalPrice = row.originalPrice.trim() || null;
+    const monthlyPrice = row.monthlyPrice.trim() || null;
+    const quarterlyPrice = row.quarterlyPrice.trim() || null;
+    const halfYearlyPrice = row.halfYearlyPrice.trim() || null;
+    const annualPrice = row.annualPrice.trim() || null;
 
-    if (!price) {
+    // Check if all prices are empty
+    const allEmpty = !monthlyPrice && !quarterlyPrice && !halfYearlyPrice && !annualPrice;
+
+    if (allEmpty) {
       if (row.pricingId) {
         console.log(
           `[savePlanCityPricing] Deleting pricing row: id=${row.pricingId}, plan_id=${planId}, city_id=${row.cityId}`,
@@ -243,13 +252,15 @@ export async function savePlanCityPricing(
 
     if (row.pricingId) {
       console.log(
-        `[savePlanCityPricing] Updating pricing row: id=${row.pricingId}, plan_id=${planId}, city_id=${row.cityId}, price=${price}`,
+        `[savePlanCityPricing] Updating pricing row: id=${row.pricingId}, plan_id=${planId}, city_id=${row.cityId}`,
       );
       const { error } = await supabase
         .from("plan_pricing")
         .update({
-          price,
-          original_price: originalPrice,
+          monthly_price: monthlyPrice,
+          quarterly_price: quarterlyPrice,
+          half_yearly_price: halfYearlyPrice,
+          annual_price: annualPrice,
         })
         .eq("id", row.pricingId);
 
@@ -262,13 +273,15 @@ export async function savePlanCityPricing(
       console.log(`[savePlanCityPricing] Update succeeded for id=${row.pricingId}`);
     } else {
       console.log(
-        `[savePlanCityPricing] Inserting new pricing row: plan_id=${planId}, city_id=${row.cityId}, price=${price}`,
+        `[savePlanCityPricing] Inserting new pricing row: plan_id=${planId}, city_id=${row.cityId}`,
       );
       const { error } = await supabase.from("plan_pricing").insert({
         plan_id: planId,
         city_id: row.cityId,
-        price,
-        original_price: originalPrice,
+        monthly_price: monthlyPrice,
+        quarterly_price: quarterlyPrice,
+        half_yearly_price: halfYearlyPrice,
+        annual_price: annualPrice,
       });
 
       if (error) {
@@ -293,6 +306,7 @@ export async function savePlanCityPricing(
 /**
  * Returns city-specific price when a plan_pricing row exists;
  * otherwise falls back to plans.price (unchanged legacy behavior).
+ * For new billing-cycle pricing, uses monthly_price as the display price.
  */
 export function resolvePlanPrice(
   plan: Pick<PlanRow, "id" | "price">,
@@ -300,11 +314,13 @@ export function resolvePlanPrice(
   pricingRow: PlanPricingRow | null | undefined,
 ): ResolvedPlanPrice {
   if (pricingRow && pricingRow.plan_id === plan.id) {
+    // Use monthly_price as the primary display price
+    const displayPrice = pricingRow.monthly_price || pricingRow.quarterly_price || pricingRow.half_yearly_price || pricingRow.annual_price || plan.price;
     return {
       planId: plan.id,
       cityId,
-      price: pricingRow.price,
-      originalPrice: pricingRow.original_price,
+      price: displayPrice,
+      originalPrice: null,
       source: "plan_pricing",
     };
   }
@@ -369,6 +385,34 @@ export function mergeResolvedPricesIntoPlans<T extends PlanRow>(
       price: match?.price ?? plan.price,
       originalPrice: match?.originalPrice ?? null,
       priceSource: match?.source ?? "plans_fallback",
+    };
+  });
+}
+
+/**
+ * Merge city-specific billing-cycle pricing from plan_pricing into plans.
+ * For each plan, updates monthly_price, quarterly_price, half_yearly_price, annual_price
+ * with values from plan_pricing if available, otherwise keeps the plans table values.
+ */
+export function mergeBillingCyclePricingIntoPlans<T extends PlanRow>(
+  plans: T[],
+  pricingRows: PlanPricingRow[],
+): T[] {
+  const byPlanId = new Map(pricingRows.map((row) => [row.plan_id, row]));
+
+  return plans.map((plan) => {
+    const pricing = byPlanId.get(plan.id);
+    if (!pricing) {
+      return plan;
+    }
+
+    // Merge billing-cycle pricing from plan_pricing, preserving plans table values as fallback
+    return {
+      ...plan,
+      monthly_price: pricing.monthly_price ?? plan.monthly_price,
+      quarterly_price: pricing.quarterly_price ?? plan.quarterly_price,
+      half_yearly_price: pricing.half_yearly_price ?? plan.half_yearly_price,
+      annual_price: pricing.annual_price ?? plan.annual_price,
     };
   });
 }

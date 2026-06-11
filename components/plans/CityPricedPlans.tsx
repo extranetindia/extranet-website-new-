@@ -6,6 +6,8 @@ import BillingCycleSwitcher, { type BillingCycleValue } from "@/components/plans
 import PlanCards from "@/components/plans/PlanCards";
 import type { PlanRow } from "@/lib/database/schema";
 import {
+  fetchPlanPricingRowsForCity,
+  mergeBillingCyclePricingIntoPlans,
   mergeResolvedPricesIntoPlans,
   resolvePlansPricesForCity,
 } from "@/lib/database/plan-pricing";
@@ -86,7 +88,15 @@ export default function CityPricedPlans({
         pricingCache.set(cacheKey, resolved);
       }
 
-      const merged = mergeResolvedPricesIntoPlans(basePlans, resolved);
+      // Merge standard pricing overrides
+      let merged = mergeResolvedPricesIntoPlans(basePlans, resolved);
+
+      // Also fetch and merge billing-cycle pricing from plan_pricing
+      const { data: pricingRows, error: pricingError } = await fetchPlanPricingRowsForCity(targetCityId);
+      if (!pricingError && pricingRows) {
+        merged = mergeBillingCyclePricingIntoPlans(merged, pricingRows);
+      }
+
       setDisplayPlans(merged.map((plan) => formatSupabasePlanForCards(plan)));
       setPricingLoading(false);
     },

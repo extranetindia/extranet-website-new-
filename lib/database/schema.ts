@@ -54,8 +54,10 @@ export interface PlanPricingRow {
   id: string;
   plan_id: string;
   city_id: string;
-  price: string;
-  original_price: string | null;
+  monthly_price: string | null;
+  quarterly_price: string | null;
+  half_yearly_price: string | null;
+  annual_price: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -94,12 +96,12 @@ export type CityUpdate = Partial<Pick<CityRow, "name" | "active" | "coverage_typ
 
 export type PlanPricingInsert = Pick<
   PlanPricingRow,
-  "plan_id" | "city_id" | "price"
+  "plan_id" | "city_id"
 > &
-  Partial<Pick<PlanPricingRow, "original_price">>;
+  Partial<Pick<PlanPricingRow, "monthly_price" | "quarterly_price" | "half_yearly_price" | "annual_price">>;
 
 export type PlanPricingUpdate = Partial<
-  Pick<PlanPricingRow, "price" | "original_price">
+  Pick<PlanPricingRow, "monthly_price" | "quarterly_price" | "half_yearly_price" | "annual_price">
 >;
 
 export interface SupportSettingsRow {
