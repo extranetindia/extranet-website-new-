@@ -32,7 +32,6 @@ export default async function Hero() {
   return (
     <section
       aria-label="Promotional banner"
-      className="pt-[calc(3.5rem+1rem)] sm:pt-[calc(4rem+1.5rem)]"
     >
       <div className="w-full px-0">
         <Link
