@@ -9,7 +9,14 @@ import { Menu, X, Phone, ChevronDown } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "https://www.extranetindia.com/" },
-  { label: "Plans", href: "/plans" },
+  {
+    label: "Plans",
+    href: "/plans",
+    submenu: [
+      { label: "Home Plans", href: "/plans/home" },
+      { label: "Business Plans", href: "/plans/business" },
+    ],
+  },
   { label: "For ILL", href: "/contact" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
@@ -20,7 +27,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [plansDropdownOpen, setPlansDropdownOpen] = useState(false);
+  const [mobilePlansOpen, setMobilePlansOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -30,7 +38,8 @@ export default function Navbar() {
 
   useEffect(() => {
     setMobileOpen(false);
-    setOpenDropdown(null);
+    setMobilePlansOpen(false);
+    setPlansDropdownOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -73,17 +82,66 @@ export default function Navbar() {
 
           <nav className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => (
-              <div key={link.label} className="relative">
-                <Link
-                  href={link.href}
-                  className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out ${
-                    isActive(link.href)
-                      ? "text-slate-600 font-medium"
-                      : "text-slate-600 font-medium"
-                  } hover:text-[#134799]`}
-                >
-                  {link.label}
-                </Link>
+              <div key={link.label} className="relative group">
+                {link.submenu ? (
+                  <>
+                    {/* Plans dropdown trigger */}
+                    <button
+                      onClick={() => setPlansDropdownOpen(!plansDropdownOpen)}
+                      onMouseEnter={() => setPlansDropdownOpen(true)}
+                      onMouseLeave={() => setPlansDropdownOpen(false)}
+                      className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out ${
+                        isActive(link.href)
+                          ? "text-slate-600 font-medium"
+                          : "text-slate-600 font-medium"
+                      } hover:text-[#134799]`}
+                    >
+                      {link.label}
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          plansDropdownOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {/* Dropdown menu */}
+                    <AnimatePresence>
+                      {plansDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.15, ease: "easeOut" }}
+                          onMouseEnter={() => setPlansDropdownOpen(true)}
+                          onMouseLeave={() => setPlansDropdownOpen(false)}
+                          className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg border border-slate-200 shadow-lg shadow-slate-900/10 py-1 z-50"
+                        >
+                          {link.submenu.map((item) => (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              onClick={() => setPlansDropdownOpen(false)}
+                              className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-[#134799] hover:bg-slate-50 transition-all duration-150 ease-in-out first:rounded-t-md last:rounded-b-md"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out ${
+                      isActive(link.href)
+                        ? "text-slate-600 font-medium"
+                        : "text-slate-600 font-medium"
+                    } hover:text-[#134799]`}
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </div>
             ))}
           </nav>
@@ -133,18 +191,66 @@ export default function Navbar() {
           >
             <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
               {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`min-h-[48px] rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 ease-in-out ${
-                    isActive(link.href)
-                      ? "bg-blue-100 text-[#134799]"
-                      : "text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
-                  }`}
-                >
-                  {link.label}
-                </Link>
+                <div key={link.label}>
+                  {link.submenu ? (
+                    <>
+                      <button
+                        onClick={() => setMobilePlansOpen(!mobilePlansOpen)}
+                        className={`w-full min-h-[48px] rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 ease-in-out flex items-center justify-between ${
+                          isActive(link.href)
+                            ? "bg-blue-100 text-[#134799]"
+                            : "text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
+                        }`}
+                      >
+                        {link.label}
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform duration-200 ${
+                            mobilePlansOpen ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                      <AnimatePresence>
+                        {mobilePlansOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="flex flex-col gap-1 pl-4 mt-1">
+                              {link.submenu.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  onClick={() => {
+                                    setMobileOpen(false);
+                                    setMobilePlansOpen(false);
+                                  }}
+                                  className="min-h-[44px] rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-[#134799] transition-all duration-200 ease-in-out"
+                                >
+                                  {item.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`min-h-[48px] rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 ease-in-out block ${
+                        isActive(link.href)
+                          ? "bg-blue-100 text-[#134799]"
+                          : "text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </div>
               ))}
               <div className="mt-3 flex flex-col gap-2 border-t border-slate-200 pt-3">
                 <a
