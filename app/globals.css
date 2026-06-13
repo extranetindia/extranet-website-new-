@@ -8,6 +8,14 @@
   --blue-light: #3b82f6;
   --red-primary: #dc2626;
   --red-bright: #ef4444;
+  /* Navbar height (responsive) */
+  --navbar-height: 3.5rem; /* 56px on mobile (h-14) */
+}
+
+@media (min-width: 640px) {
+  :root {
+    --navbar-height: 4rem; /* 64px on sm+ (h-16) */
+  }
 }
 
 @theme inline {
