@@ -4,13 +4,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import CitySelector from "@/components/city/CitySelector";
 import BillingCycleSwitcher, { type BillingCycleValue } from "@/components/plans/BillingCycleSwitcher";
 import PlanCards from "@/components/plans/PlanCards";
-import type { PlanRow } from "@/lib/database/schema";
+import type { PlanRow, OttPackageRow } from "@/lib/database/schema";
 import {
   fetchPlanPricingRowsForCity,
   mergeBillingCyclePricingIntoPlans,
   mergeResolvedPricesIntoPlans,
   resolvePlansPricesForCity,
 } from "@/lib/database/plan-pricing";
+import { getOttPackagesByIds } from "@/lib/database/ott-packages";
 import { useSelectedCity } from "@/lib/hooks/useSelectedCity";
 import {
   formatSupabasePlanForCards,
@@ -64,6 +65,7 @@ export default function CityPricedPlans({
   const [displayPlans, setDisplayPlans] = useState<SupabasePlanCard[]>(() =>
     basePlans.map((plan) => formatSupabasePlanForCards(plan)),
   );
+  const [ottPackages, setOttPackages] = useState<Map<string, OttPackageRow>>(new Map());
   const requestIdRef = useRef(0);
 
   const applyPricing = useCallback(
@@ -112,6 +114,36 @@ export default function CityPricedPlans({
     void applyPricing(cityId);
   }, [ready, cityId, basePlans, applyPricing]);
 
+  // Load OTT packages for plans that have ott_package_id
+  useEffect(() => {
+    const loadOttPackages = async () => {
+      const ottPackageIds = basePlans
+        .filter((plan) => plan.ott_package_id)
+        .map((plan) => plan.ott_package_id as string);
+
+      if (ottPackageIds.length === 0) {
+        setOttPackages(new Map());
+        return;
+      }
+
+      const { data, error } = await getOttPackagesByIds(ottPackageIds);
+      if (error) {
+        console.error("Failed to load OTT packages:", error);
+        return;
+      }
+
+      if (data) {
+        const packageMap = new Map<string, OttPackageRow>();
+        data.forEach((pkg) => {
+          packageMap.set(pkg.id, pkg);
+        });
+        setOttPackages(packageMap);
+      }
+    };
+
+    void loadOttPackages();
+  }, [basePlans]);
+
   const headingTitle = "Choose Your City";
 
   const cyclePlans = displayPlans.map((plan) => ({
@@ -158,6 +190,7 @@ export default function CityPricedPlans({
           ctaHref={ctaHref}
           ctaLabel={ctaLabel}
           columns={columns}
+          ottPackages={ottPackages}
         />
       )}
     </div>

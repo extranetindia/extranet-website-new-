@@ -16,6 +16,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Inbox,
+  Disc3,
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -29,6 +30,7 @@ const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Hero Banner", href: "/admin/hero", icon: ImageIcon },
   { label: "Plans", href: "/admin/plans", icon: Boxes },
+  { label: "OTT Packages", href: "/admin/ott-packages", icon: Disc3 },
   { label: "Leads", href: "/admin/leads", icon: Inbox },
   { label: "Coverage", href: "/admin/coverage", icon: MapPin },
   { label: "Testimonials", href: "/admin/testimonials", icon: MessageSquare },

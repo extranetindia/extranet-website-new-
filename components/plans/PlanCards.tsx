@@ -4,7 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check, Sparkles, Star } from "lucide-react";
 import MobileCarousel from "@/components/ui/MobileCarousel";
+import OttAppsAccordion from "@/components/OttAppsAccordion";
 import type { PlanDefinition } from "@/lib/plans";
+import type { OttPackageRow } from "@/lib/database/schema";
+import type { SupabasePlanCard } from "@/lib/plans/format-plan";
 
 const colorMap = {
   blue: {
@@ -24,10 +27,11 @@ const colorMap = {
 };
 
 interface PlanCardsProps {
-  plans: PlanDefinition[];
+  plans: SupabasePlanCard[];
   ctaHref?: string;
   ctaLabel?: string;
   columns?: 2 | 3;
+  ottPackages?: Map<string, OttPackageRow>;
 }
 
 function PlanCard({
@@ -35,11 +39,13 @@ function PlanCard({
   index,
   ctaHref,
   ctaLabel,
+  ottPackage,
 }: {
-  plan: PlanDefinition;
+  plan: SupabasePlanCard;
   index: number;
   ctaHref: string;
   ctaLabel: string;
+  ottPackage?: OttPackageRow | null;
 }) {
   const c = colorMap[plan.color ?? "blue"] ?? colorMap.blue;
   const isPopular = plan.popular ?? plan.tag === "Most Popular";
@@ -135,6 +141,16 @@ function PlanCard({
         </div>
       ) : null}
 
+      {plan.planType === "wifi_ott" && plan.ottPackageId && ottPackage && (
+        <div className="mt-4">
+          <OttAppsAccordion
+            packageName={ottPackage.name}
+            description={ottPackage.description}
+            apps={ottPackage.apps}
+          />
+        </div>
+      )}
+
       <div className="my-4 border-t border-slate-200" />
       <ul className="flex flex-1 flex-col gap-2">
         {benefits.map((feat) => (
@@ -203,6 +219,7 @@ export default function PlanCards({
   ctaHref = "/contact",
   ctaLabel = "Get Started",
   columns = 3,
+  ottPackages = new Map(),
 }: PlanCardsProps) {
   const gridClass =
     columns === 2
@@ -223,6 +240,7 @@ export default function PlanCards({
             index={i}
             ctaHref={ctaHref}
             ctaLabel={ctaLabel}
+            ottPackage={plan.ottPackageId ? ottPackages.get(plan.ottPackageId) : null}
           />
         ))}
       </MobileCarousel>
@@ -235,6 +253,7 @@ export default function PlanCards({
             index={i}
             ctaHref={ctaHref}
             ctaLabel={ctaLabel}
+            ottPackage={plan.ottPackageId ? ottPackages.get(plan.ottPackageId) : null}
           />
         ))}
       </div>

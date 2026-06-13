@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import PlanCityPricingFields from "@/components/admin/PlanCityPricingFields";
+import { getOttPackages, type OttPackageRow } from "@/lib/database/ott-packages";
 import {
   normalizePlanType,
   normalizeHomePlanCategory,
@@ -37,6 +38,7 @@ interface PlanRow {
   setup_fee?: string | null;
   security_deposit?: string | null;
   ott_apps?: string[] | string | null;
+  ott_package_id?: string | null;
   monthly_price?: string | null;
   quarterly_price?: string | null;
   half_yearly_price?: string | null;
@@ -58,6 +60,7 @@ interface AdminPlan {
   description: string;
   setupFee?: string | null;
   securityDeposit?: string | null;
+  ottPackageId?: string | null;
   // Billing-cycle specific pricing
   monthlyPrice?: string | null;
   quarterlyPrice?: string | null;
@@ -88,6 +91,7 @@ const defaultPlan: AdminPlan = {
   description: "",
   setupFee: null,
   securityDeposit: null,
+  ottPackageId: null,
   // Billing-cycle specific pricing
   monthlyPrice: null,
   quarterlyPrice: null,
@@ -139,6 +143,7 @@ function rowToAdminPlan(row: PlanRow): AdminPlan {
     description: row.description ?? "",
     setupFee: row.setup_fee ?? null,
     securityDeposit: row.security_deposit ?? null,
+    ottPackageId: row.ott_package_id ?? null,
     // Billing-cycle specific pricing
     monthlyPrice: row.monthly_price ?? null,
     quarterlyPrice: row.quarterly_price ?? null,
@@ -170,6 +175,7 @@ function planToPayload(plan: AdminPlan, features: string[]) {
     button_text: plan.buttonText,
     setup_fee: plan.setupFee || null,
     security_deposit: plan.securityDeposit || null,
+    ott_package_id: plan.ottPackageId || null,
     // Billing-cycle specific pricing
     monthly_price: plan.monthlyPrice || null,
     quarterly_price: plan.quarterlyPrice || null,
@@ -211,6 +217,8 @@ export default function AdminPlansPage() {
   );
   const [cityPricingLoading, setCityPricingLoading] = useState(false);
   const [cityPricingError, setCityPricingError] = useState<string | null>(null);
+
+  const [ottPackages, setOttPackages] = useState<OttPackageRow[]>([]);
 
   const fetchPlans = useCallback(async () => {
     const { data, error } = await supabase
@@ -278,6 +286,17 @@ export default function AdminPlansPage() {
     };
     void load();
   }, [fetchPlans]);
+
+  // Load OTT packages on mount
+  useEffect(() => {
+    const loadOttPackages = async () => {
+      const { data } = await getOttPackages();
+      if (data) {
+        setOttPackages(data);
+      }
+    };
+    void loadOttPackages();
+  }, []);
 
   // DEBUG: Log draft state changes
   useEffect(() => {
@@ -989,6 +1008,29 @@ export default function AdminPlansPage() {
                     onChange={(event) => setFeaturesInput(event.target.value)}
                     className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
                   />
+                </label>
+
+                <label className="block md:col-span-2">
+                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    OTT Package
+                  </span>
+                  <select
+                    value={draft.ottPackageId || ""}
+                    onChange={(event) =>
+                      setDraft((previous) => ({
+                        ...previous,
+                        ottPackageId: event.target.value || null,
+                      }))
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  >
+                    <option value="">None</option>
+                    {ottPackages.map((pkg) => (
+                      <option key={pkg.id} value={pkg.id}>
+                        {pkg.name}
+                      </option>
+                    ))}
+                  </select>
                 </label>
 
                 <PlanCityPricingFields

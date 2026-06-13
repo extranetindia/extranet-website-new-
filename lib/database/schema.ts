@@ -22,6 +22,7 @@ export interface PlanRow {
   button_text: string;
   tagline?: string | null;
   ott_apps?: string[] | string | null;
+  ott_package_id?: string | null;
   setup_fee?: string | null;
   security_deposit?: string | null;
   monthly_price?: string | null;
@@ -172,4 +173,23 @@ export type SettingsUpdate = Partial<
     | "announcement_enabled"
     | "announcement_text"
   >
+>;
+
+/** OTT Packages table */
+export interface OttPackageRow {
+  id: string;
+  name: string;
+  description: string | null;
+  apps: string[];
+  display_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export type OttPackageInsert = Pick<OttPackageRow, "name" | "apps"> &
+  Partial<Pick<OttPackageRow, "description" | "display_order" | "is_active">>;
+
+export type OttPackageUpdate = Partial<
+  Pick<OttPackageRow, "name" | "description" | "apps" | "display_order" | "is_active">
 >;

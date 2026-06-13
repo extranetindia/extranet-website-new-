@@ -48,6 +48,7 @@ export type SupabasePlanCard = PlanDefinition & {
   id: string;
   originalPrice: string | null;
   priceSource: "plan_pricing" | "plans_fallback";
+  ottPackageId?: string | null;
 };
 
 export function formatSupabasePlanForCards(
@@ -92,6 +93,7 @@ export function formatSupabasePlanForCards(
     halfYearlySecurityDeposit: plan.half_yearly_security_deposit ?? null,
     annualSecurityDeposit: plan.annual_security_deposit ?? null,
     ottApps: parseOttApps(plan.ott_apps ?? []),
+    ottPackageId: plan.ott_package_id ?? null,
     savingsBadge: plan.savings_badge ?? null,
     planType,
     color,
