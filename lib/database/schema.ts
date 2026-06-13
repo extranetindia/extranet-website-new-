@@ -152,6 +152,8 @@ export interface SettingsRow {
   gst_number?: string | null;
   website_url?: string | null;
   logo_url?: string | null;
+  announcement_enabled?: boolean | null;
+  announcement_text?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -167,5 +169,7 @@ export type SettingsUpdate = Partial<
     | "gst_number"
     | "website_url"
     | "logo_url"
+    | "announcement_enabled"
+    | "announcement_text"
   >
 >;

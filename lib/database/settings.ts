@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase/client";
 import type { SettingsRow, SettingsUpdate } from "@/lib/database/schema";
 
 const SETTINGS_COLUMNS =
-  "id, company_name, company_address, company_phone, company_email, support_email, gst_number, website_url, logo_url, created_at, updated_at";
+  "id, company_name, company_address, company_phone, company_email, support_email, gst_number, website_url, logo_url, announcement_enabled, announcement_text, created_at, updated_at";
 
 export const DEFAULT_SETTINGS: Partial<SettingsRow> = {
   company_name: "Extranet",

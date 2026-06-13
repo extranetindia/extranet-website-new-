@@ -23,6 +23,8 @@ interface CompanyInfoForm {
   gstNumber: string;
   websiteUrl: string;
   logoUrl: string;
+  announcementEnabled: boolean;
+  announcementText: string;
 }
 
 const initialSettingsForm: SettingsForm = {
@@ -43,6 +45,8 @@ const initialCompanyInfoForm: CompanyInfoForm = {
   gstNumber: "29AABCE0000Z1",
   websiteUrl: "https://extranet.in",
   logoUrl: "",
+  announcementEnabled: false,
+  announcementText: "",
 };
 
 export default function AdminSettingsPage() {
@@ -67,6 +71,8 @@ export default function AdminSettingsPage() {
           gstNumber: data.gst_number || initialCompanyInfoForm.gstNumber,
           websiteUrl: data.website_url || initialCompanyInfoForm.websiteUrl,
           logoUrl: data.logo_url || initialCompanyInfoForm.logoUrl,
+          announcementEnabled: data.announcement_enabled || false,
+          announcementText: data.announcement_text || "",
         });
       }
       setLoading(false);
@@ -89,6 +95,8 @@ export default function AdminSettingsPage() {
         gst_number: companyForm.gstNumber,
         website_url: companyForm.websiteUrl,
         logo_url: companyForm.logoUrl || null,
+        announcement_enabled: companyForm.announcementEnabled,
+        announcement_text: companyForm.announcementText || null,
       });
 
       if (error) {
@@ -258,6 +266,44 @@ export default function AdminSettingsPage() {
               disabled={loading || saving}
             />
           </label>
+
+          {/* Announcement Section */}
+          <div className="md:col-span-2 border-t pt-6 mt-6">
+            <h3 className="text-base font-semibold text-slate-900 mb-4">Announcement Bar Settings</h3>
+            
+            <label className="block mb-4">
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={companyForm.announcementEnabled}
+                  onChange={(e) =>
+                    setCompanyForm((prev) => ({ ...prev, announcementEnabled: e.target.checked }))
+                  }
+                  className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  disabled={loading || saving}
+                />
+                <span className="text-sm font-medium text-slate-700">Enable Announcement Bar</span>
+              </div>
+            </label>
+
+            {companyForm.announcementEnabled && (
+              <label className="block">
+                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  Announcement Message
+                </span>
+                <textarea
+                  value={companyForm.announcementText}
+                  onChange={(e) =>
+                    setCompanyForm((prev) => ({ ...prev, announcementText: e.target.value }))
+                  }
+                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  placeholder="Enter your announcement message here..."
+                  rows={2}
+                  disabled={loading || saving}
+                />
+              </label>
+            )}
+          </div>
 
           <div className="md:col-span-2">
             <button
