@@ -73,10 +73,10 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="Extranet"
-              width={160}
-              height={40}
+              width={220}
+              height={55}
               priority
-              className="h-9 w-auto max-w-[140px] object-contain object-left sm:h-10 sm:max-w-none"
+              className="h-12 w-auto max-w-[200px] object-contain object-left sm:h-14 sm:max-w-none"
             />
           </Link>
 
