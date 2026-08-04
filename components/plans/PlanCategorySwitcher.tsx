@@ -19,8 +19,8 @@ export default function PlanCategorySwitcher({
   onSelect,
 }: PlanCategorySwitcherProps) {
   return (
-    <div className="flex justify-center px-4">
-      <div className="inline-flex items-center gap-1">
+    <div className="flex justify-center bg-white px-4">
+      <div className="inline-flex items-center gap-1 rounded-full border border-[#D1D5DB] bg-[#F6F3F2]">
         {tabs.map((tab) => {
           const isActive = tab.value === selected;
 
