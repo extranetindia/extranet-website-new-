@@ -77,16 +77,16 @@ export default function CitySelector({
           id={id}
           disabled={isDisabled}
           onClick={() => !isDisabled && setIsOpen(!isOpen)}
-          className="min-h-[44px] max-w-[calc(100vw-2rem)] cursor-pointer truncate bg-transparent py-1 pr-7 text-left text-2xl font-bold text-[#d2190d] outline-none transition-all duration-200 ease-in-out hover:text-[#b8160c] focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-[#134799]/20 disabled:cursor-not-allowed disabled:text-slate-400 sm:max-w-full sm:text-3xl"
+          className="w-fit min-w-0 cursor-pointer bg-transparent py-1 pr-6 text-left text-[28px] font-bold leading-none text-[#F26522] outline-none transition-all duration-200 ease-in-out hover:text-[#d9531e] focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-[#134799]/20 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-[38px]"
           aria-label={ariaLabel}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           type="button"
         >
-          {selectedCity?.name || "Select city"}
+          <span className="whitespace-nowrap">{selectedCity?.name || "Select city"}</span>
         </button>
         <ChevronDown
-          className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[#d2190d] transition-all duration-200 ease-in-out sm:h-5 sm:w-5"
+          className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[#F26522] transition-transform duration-200 ease-out sm:h-5 sm:w-5"
           style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
           aria-hidden
         />
