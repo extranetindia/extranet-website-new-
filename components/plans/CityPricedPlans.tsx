@@ -178,7 +178,7 @@ export default function CityPricedPlans({
       </div>
 
       <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <p className="text-sm text-slate-600">Switch between billing cycles to compare current pricing and savings badges.</p>
+        {/* <p className="text-sm text-slate-600">Switch between billing cycles to compare current pricing and savings badges.</p> */}
         <BillingCycleSwitcher selectedCycle={billingCycle} onSelectCycle={setBillingCycle} />
       </div>
       {renderControls ? <div className="mb-4 flex justify-center">{renderControls}</div> : null}
