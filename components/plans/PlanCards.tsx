@@ -56,6 +56,8 @@ function PlanCard({
   const benefits = plan.features?.filter(isDisplayBenefit) ?? [];
   const hasOttApps = (plan.ottApps ?? []).length > 0;
   const pricingTone = isPopular ? "text-[#d2190d]" : "text-[#134799]";
+  const formattedSetupFee = formatFeeValue(plan.setupFee);
+  const formattedSecurityDeposit = formatFeeValue(plan.securityDeposit);
 
   return (
     <motion.div
@@ -105,21 +107,21 @@ function PlanCard({
           <span className="pb-1 text-sm font-semibold text-slate-500">/month</span>
         </div>
 
-        {(plan.setupFee || plan.securityDeposit) && (
+        {(formattedSetupFee || formattedSecurityDeposit) && (
           <>
             <div className="my-3 border-t border-slate-300" />
             <div className="space-y-2.5">
-              {plan.setupFee && (
+              {formattedSetupFee && (
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-600 sm:text-sm">One-time Setup Fee</span>
-                  <span className="font-semibold text-slate-900">{formatFeeValue(plan.setupFee)}</span>
+                  <span className="font-semibold text-slate-900">{formattedSetupFee}</span>
                 </div>
               )}
-              {plan.securityDeposit && (
+              {formattedSecurityDeposit && (
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-600 sm:text-sm">Security Deposit</span>
                   <span className="font-semibold text-slate-900">
-                    {formatFeeValue(plan.securityDeposit) === "FREE" ? "FREE" : `${plan.securityDeposit} Refundable`}
+                    {formattedSecurityDeposit === "FREE" ? "FREE" : `${formattedSecurityDeposit} Refundable`}
                   </span>
                 </div>
               )}
@@ -207,11 +209,20 @@ function isDisplayBenefit(feature: string) {
 
 function formatFeeValue(value: string | null | undefined): string | null {
   if (!value) return null;
-  const normalized = value.toLowerCase().trim();
+
+  const trimmedValue = value.toString().trim();
+  const normalized = trimmedValue.toLowerCase();
+
   if (normalized === "0" || normalized === "free" || normalized === "waived") {
     return "FREE";
   }
-  return value;
+
+  const numericValue = Number(trimmedValue.replace(/[^\d.-]/g, ""));
+  if (!Number.isNaN(numericValue)) {
+    return `₹${numericValue.toLocaleString("en-IN")}`;
+  }
+
+  return trimmedValue;
 }
 
 export default function PlanCards({
