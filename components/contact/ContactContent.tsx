@@ -87,14 +87,18 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
   const displayAddress = companySettings?.company_address || supportSettings.officeAddress;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-5">
+    <div className="grid gap-6 lg:grid-cols-5 lg:gap-8">
       <div className="lg:col-span-3">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
-          <h2 className="mb-6 text-2xl font-black text-slate-900">Send us a message</h2>
+        <div className="tele-card p-5 sm:p-8">
+          <p className="tele-eyebrow text-[#C1170C]">Request a callback</p>
+          <h2 className="mb-2 mt-2 text-2xl font-extrabold tracking-tight text-[#15366A]">Send us a message</h2>
+          <p className="mb-6 text-sm leading-relaxed text-[#5C6F89]">
+            Share your details and our team will reach out — usually within one business day.
+          </p>
 
           {success && (
             <div
-              className="mb-5 flex items-start gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800"
+              className="mb-5 flex items-start gap-3 rounded-[10px] border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800"
               role="status"
             >
               <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
@@ -107,7 +111,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
 
           {error && (
             <div
-              className="mb-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+              className="mb-5 flex items-start gap-3 rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
               role="alert"
             >
               <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
@@ -120,7 +124,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
               <div>
                 <label
                   htmlFor="contact-full-name"
-                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                  className="mb-1.5 block text-sm font-bold text-[#33475f]"
                 >
                   Full name
                 </label>
@@ -137,14 +141,14 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                       fullName: event.target.value,
                     }))
                   }
-                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                  className="w-full min-h-[44px] tele-input disabled:bg-slate-50 disabled:opacity-70"
                   placeholder="Your name"
                 />
               </div>
               <div>
                 <label
                   htmlFor="contact-phone"
-                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                  className="mb-1.5 block text-sm font-bold text-[#33475f]"
                 >
                   Phone
                 </label>
@@ -161,7 +165,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                       phone: event.target.value,
                     }))
                   }
-                  className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                  className="w-full min-h-[44px] tele-input disabled:bg-slate-50 disabled:opacity-70"
                   placeholder="+91"
                 />
               </div>
@@ -169,7 +173,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
             <div>
               <label
                 htmlFor="contact-email"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-bold text-[#33475f]"
               >
                 Email
               </label>
@@ -185,14 +189,14 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     email: event.target.value,
                   }))
                 }
-                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                className="w-full min-h-[44px] tele-input disabled:bg-slate-50 disabled:opacity-70"
                 placeholder="you@company.com"
               />
             </div>
             <div>
               <label
                 htmlFor="contact-inquiry-type"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-bold text-[#33475f]"
               >
                 Inquiry type
               </label>
@@ -208,7 +212,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     inquiryType: event.target.value,
                   }))
                 }
-                className="w-full min-h-[44px] rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                className="w-full min-h-[44px] tele-input disabled:bg-slate-50 disabled:opacity-70"
               >
                 {INQUIRY_TYPES.map((type) => (
                   <option key={type} value={type}>
@@ -220,7 +224,7 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
             <div>
               <label
                 htmlFor="contact-message"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-bold text-[#33475f]"
               >
                 Message
               </label>
@@ -236,14 +240,14 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
                     message: event.target.value,
                   }))
                 }
-                className="w-full resize-none rounded-xl border border-slate-200 px-4 py-3 transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-[#134799] focus:outline-none focus:ring-2 focus:ring-[#134799]/10 disabled:bg-slate-50"
+                className="tele-input resize-none disabled:bg-slate-50 disabled:opacity-70"
                 placeholder="Tell us about your requirements..."
               />
             </div>
             <button
               type="submit"
               disabled={submitting}
-              className="w-full min-h-[48px] rounded-xl bg-[#134799] px-8 py-3.5 font-bold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="tele-btn tele-btn-primary w-full px-8 sm:w-auto"
             >
               {submitting ? "Submitting..." : "Submit inquiry"}
             </button>
@@ -256,53 +260,59 @@ export default function ContactContent({ supportSettings }: ContactContentProps)
           { icon: Phone, label: "Phone", value: displayPhone },
           { icon: Mail, label: "Email", value: displayEmail },
           { icon: Clock, label: "Hours", value: supportSettings.supportTimings },
-        ].map((item) => (
+        ].map((item, i) => (
           <div
             key={item.label}
-            className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5"
+            className="tele-card flex gap-4 p-5"
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100">
-              <item.icon className="h-5 w-5 text-[#134799]" />
+            <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] ${
+              i % 2 === 1 ? "bg-[#C1170C]/10" : "bg-[#11418D]/10"
+            }`}>
+              <item.icon className={`h-5 w-5 ${i % 2 === 1 ? "text-[#C1170C]" : "text-[#11418D]"}`} />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wider hover:text-[#134799]">
+              <div className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#5C6F89]">
                 {item.label}
               </div>
-              <div className="font-semibold text-slate-900">{item.value}</div>
+              <div className="mt-0.5 font-bold text-[#15366A]">{item.value}</div>
             </div>
           </div>
         ))}
 
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-          <MapPin className="mb-3 h-5 w-5 text-[#134799]" />
-          <h3 className="mb-3 font-bold text-slate-900">Office locations</h3>
+        <div className="rounded-xl border border-[#DCE3EC] bg-[#F4F7FC] p-5">
+          <MapPin className="mb-3 h-5 w-5 text-[#11418D]" aria-hidden />
+          <h3 className="mb-3 font-extrabold text-[#15366A]">Office locations</h3>
           <ul className="space-y-3">
             <li>
-              <div className="text-sm font-semibold text-slate-900">Corporate Office</div>
-              <div className="text-sm text-slate-600">{displayAddress}</div>
+              <div className="text-sm font-bold text-[#15366A]">Corporate Office</div>
+              <div className="text-sm leading-relaxed text-[#5C6F89]">{displayAddress}</div>
             </li>
           </ul>
         </div>
 
-        <div className="rounded-2xl bg-gradient-to-r from-[#134799] to-[#0f3b7f] p-6 text-white">
-          <h3 className="mb-2 text-lg font-bold">Ready to connect?</h3>
-          <p className="mb-4 text-sm text-white/80">
+        <div className="relative overflow-hidden rounded-xl bg-[#15366A] p-6 text-white">
+          <div aria-hidden className="network-grid-dark absolute inset-0 opacity-50" />
+          <div className="relative">
+          <h3 className="mb-2 text-lg font-extrabold text-white">Ready to connect?</h3>
+          <p className="mb-4 text-sm leading-relaxed text-white/75">
             Browse plans or check coverage before you reach out.
           </p>
           <div className="flex flex-col gap-2">
             <Link
               href="/plans"
-              className="rounded-lg bg-white py-2.5 text-center text-sm font-semibold text-[#134799] transition-all duration-200 ease-in-out hover:bg-slate-50 hover:text-[#0f3b7f]"
+              className="tele-btn bg-white px-5 text-[#11418D] hover:bg-[#F4F7FC]"
             >
               View plans
             </Link>
             <Link
               href="/coverage"
-              className="rounded-lg border border-white/30 py-2.5 text-center text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-white/10 hover:border-white/50"
+              className="tele-btn border border-white/30 px-5 text-white hover:bg-white/10"
             >
               Check coverage
             </Link>
           </div>
+          </div>
+          <span aria-hidden className="absolute inset-x-0 bottom-0 h-[3px] bg-[#C1170C]" />
         </div>
       </div>
     </div>

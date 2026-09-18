@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 type PlanCategoryFilter = "wifi" | "wifi_ott";
 
 interface PlanCategorySwitcherProps {
@@ -9,9 +7,9 @@ interface PlanCategorySwitcherProps {
   onSelect: (category: PlanCategoryFilter) => void;
 }
 
-const tabs: Array<{ label: string; value: PlanCategoryFilter }> = [
-  { label: "WiFi Only", value: "wifi" },
-  { label: "WiFi + OTT", value: "wifi_ott" },
+const tabs: Array<{ label: string; value: PlanCategoryFilter; hint: string }> = [
+  { label: "WiFi Only", value: "wifi", hint: "Internet only" },
+  { label: "WiFi + OTT", value: "wifi_ott", hint: "With streaming bundle" },
 ];
 
 export default function PlanCategorySwitcher({
@@ -19,36 +17,33 @@ export default function PlanCategorySwitcher({
   onSelect,
 }: PlanCategorySwitcherProps) {
   return (
-    <div className="flex justify-center bg-white px-4">
-      <div className="inline-flex items-center gap-1 rounded-full border border-[#D1D5DB] bg-[#F6F3F2]">
-        {tabs.map((tab) => {
-          const isActive = tab.value === selected;
+    <div
+      role="group"
+      aria-label="Plan type"
+      className="inline-flex w-full max-w-xl flex-wrap gap-1 rounded-xl border border-[#DCE3EC] bg-[#F4F7FC] p-1 sm:w-auto"
+    >
+      {tabs.map((tab) => {
+        const isActive = tab.value === selected;
 
-          return (
-            <div key={tab.value} className="relative">
-              {isActive ? (
-                <motion.div
-                  layoutId="category-pill"
-                  transition={{ type: "spring", bounce: 0.15, duration: 0.4 }}
-                  className="absolute inset-0 rounded-full border-2 border-[#E86A33] bg-white"
-                />
-              ) : null}
-
-              <motion.button
-                onClick={() => onSelect(tab.value)}
-                type="button"
-                className={`relative z-10 min-h-[44px] rounded-full px-6 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#134799] focus-visible:ring-offset-2 sm:px-8 sm:text-base ${
-                  isActive ? "text-[#E86A33]" : "text-slate-700 hover:text-slate-900"
-                }`}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-              >
-                {tab.label}
-              </motion.button>
-            </div>
-          );
-        })}
-      </div>
+        return (
+          <button
+            onClick={() => onSelect(tab.value)}
+            type="button"
+            aria-pressed={isActive}
+            key={tab.value}
+            className={`min-h-[48px] flex-1 rounded-lg px-5 py-2 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#11418D]/40 sm:min-w-[190px] ${
+              isActive
+                ? "bg-white font-bold shadow-[0_4px_14px_rgba(21,54,106,0.14)] ring-1 ring-[#11418D]/25"
+                : "font-semibold hover:bg-white/70"
+            }`}
+          >
+            <span className={`block text-sm ${isActive ? "text-[#11418D]" : "text-[#33475f]"}`}>
+              {tab.label}
+            </span>
+            <span className="block text-xs font-medium text-[#5C6F89]">{tab.hint}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

@@ -211,19 +211,19 @@ export default function AdminTestimonialsPage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="tele-card p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">
+            <h2 className="text-lg font-semibold text-[#15366A]">
               Testimonials Management
             </h2>
-            <p className="text-sm hover:text-[#134799]">
+            <p className="text-sm hover:text-[#11418D]">
               Manage customer testimonials shown on the homepage.
             </p>
           </div>
           <div className="flex items-center gap-3">
             {!loading && (
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+              <span className="rounded-full bg-[#F4F7FC] px-3 py-1 text-xs font-semibold text-[#5C6F89]">
                 {items.length} total · {items.filter((i) => i.active).length}{" "}
                 active
               </span>
@@ -232,7 +232,7 @@ export default function AdminTestimonialsPage() {
               type="button"
               onClick={startAdd}
               disabled={loading}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#11418D] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0e3675] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-60"
             >
               <Plus size={16} />
               Add Testimonial
@@ -251,12 +251,12 @@ export default function AdminTestimonialsPage() {
             {[0, 1, 2, 3].map((item) => (
               <div
                 key={item}
-                className="h-40 rounded-xl border border-slate-200 bg-slate-50"
+                className="h-40 rounded-xl border border-[#DCE3EC] bg-[#F8F9FB]"
               />
             ))}
           </div>
         ) : items.length === 0 ? (
-          <p className="mt-5 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-10 text-center text-sm hover:text-[#134799]">
+          <p className="mt-5 rounded-xl border border-dashed border-[#DCE3EC] bg-[#F8F9FB] px-4 py-10 text-center text-sm hover:text-[#11418D]">
             No testimonials yet. Add your first customer story to show on the
             homepage.
           </p>
@@ -267,22 +267,22 @@ export default function AdminTestimonialsPage() {
                 key={item.id}
                 className={`rounded-xl border p-4 ${
                   item.active
-                    ? "border-slate-200 bg-slate-50"
-                    : "border-slate-200 bg-white opacity-75"
+                    ? "border-[#DCE3EC] bg-[#F8F9FB]"
+                    : "border-[#DCE3EC] bg-white opacity-75"
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-slate-900">{item.name}</h3>
+                      <h3 className="font-semibold text-[#15366A]">{item.name}</h3>
                       {!item.active && (
-                        <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-600">
+                        <span className="rounded-full bg-[#DCE3EC] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#5C6F89]">
                           Inactive
                         </span>
                       )}
                     </div>
                     {item.city && (
-                      <p className="text-xs hover:text-[#134799]">{item.city}</p>
+                      <p className="text-xs hover:text-[#11418D]">{item.city}</p>
                     )}
                   </div>
                   <div className="flex gap-0.5 text-amber-500">
@@ -291,11 +291,11 @@ export default function AdminTestimonialsPage() {
                     ))}
                   </div>
                 </div>
-                <p className="mt-3 line-clamp-3 text-sm text-slate-700">
+                <p className="mt-3 line-clamp-3 text-sm text-[#475569]">
                   {item.review}
                 </p>
                 {item.image_url && (
-                  <p className="mt-2 truncate text-xs text-slate-400">
+                  <p className="mt-2 truncate text-xs text-[#8ba0bb]">
                     {item.image_url}
                   </p>
                 )}
@@ -307,7 +307,7 @@ export default function AdminTestimonialsPage() {
                     className={`rounded-lg border px-2.5 py-1 text-xs font-semibold transition-all duration-200 ease-in-out ${
                       item.active
                         ? "border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
+                        : "border-[#DCE3EC] bg-white text-[#5C6F89] hover:bg-[#F4F7FC]"
                     } disabled:opacity-60`}
                   >
                     {togglingId === item.id
@@ -319,7 +319,7 @@ export default function AdminTestimonialsPage() {
                   <button
                     type="button"
                     onClick={() => startEdit(item)}
-                    className="rounded-lg border border-slate-200 bg-white p-1.5 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
+                    className="rounded-lg border border-[#DCE3EC] bg-white p-1.5 text-[#5C6F89] transition-all duration-200 ease-in-out hover:border-[#11418D]/30 hover:bg-[#F4F7FC] hover:text-[#11418D]"
                   >
                     <Pencil size={14} />
                   </button>
@@ -327,7 +327,7 @@ export default function AdminTestimonialsPage() {
                     type="button"
                     disabled={deletingId === item.id}
                     onClick={() => void handleDelete(item.id)}
-                    className="rounded-lg border border-red-200 bg-white p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#D2190D]/40 hover:bg-red-50 hover:text-[#b8160c] disabled:opacity-60"
+                    className="rounded-lg border border-red-200 bg-white p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#C1170C]/40 hover:bg-red-50 hover:text-[#a9140b] disabled:opacity-60"
                   >
                     <Trash2 size={14} />
                   </button>
@@ -339,16 +339,16 @@ export default function AdminTestimonialsPage() {
       </section>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4">
-          <div className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0E2B57]/50 p-4">
+          <div className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-xl border border-[#DCE3EC] bg-white p-5 shadow-2xl">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-base font-semibold text-slate-900">
+              <h3 className="text-base font-semibold text-[#15366A]">
                 {editingId ? "Edit Testimonial" : "Add Testimonial"}
               </h3>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-lg p-1 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799]"
+                className="rounded-lg p-1 transition-all duration-200 ease-in-out hover:bg-[#F4F7FC] hover:text-[#11418D]"
               >
                 <X size={16} />
               </button>
@@ -356,7 +356,7 @@ export default function AdminTestimonialsPage() {
 
             <div className="space-y-4">
               <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                   Name
                 </span>
                 <input
@@ -367,11 +367,11 @@ export default function AdminTestimonialsPage() {
                       name: event.target.value,
                     }))
                   }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                 />
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                   City
                 </span>
                 <input
@@ -383,11 +383,11 @@ export default function AdminTestimonialsPage() {
                     }))
                   }
                   placeholder="Optional"
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                 />
               </label>
               <div>
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                   Rating
                 </span>
                 <RatingSelector
@@ -398,7 +398,7 @@ export default function AdminTestimonialsPage() {
                 />
               </div>
               <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                   Review
                 </span>
                 <textarea
@@ -410,11 +410,11 @@ export default function AdminTestimonialsPage() {
                       review: event.target.value,
                     }))
                   }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                 />
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                   Image URL
                 </span>
                 <input
@@ -426,7 +426,7 @@ export default function AdminTestimonialsPage() {
                     }))
                   }
                   placeholder="Optional — profile photo URL"
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                 />
               </label>
               <label className="flex items-center gap-2">
@@ -439,9 +439,9 @@ export default function AdminTestimonialsPage() {
                       active: event.target.checked,
                     }))
                   }
-                  className="h-4 w-4 rounded border-slate-300 text-[#134799] focus:ring-text-[#134799]0"
+                  className="h-4 w-4 rounded border-[#DCE3EC] accent-[#11418D]"
                 />
-                <span className="text-sm font-medium text-slate-700">
+                <span className="text-sm font-medium text-[#475569]">
                   Active (visible on homepage)
                 </span>
               </label>
@@ -451,7 +451,7 @@ export default function AdminTestimonialsPage() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
+                className="rounded-xl border border-[#DCE3EC] px-4 py-2 text-sm font-medium text-[#475569] transition-all duration-200 ease-in-out hover:border-[#11418D]/30 hover:bg-[#F4F7FC] hover:text-[#11418D]"
               >
                 Cancel
               </button>
@@ -459,7 +459,7 @@ export default function AdminTestimonialsPage() {
                 type="button"
                 onClick={() => void handleSave()}
                 disabled={saving}
-                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-60"
+                className="rounded-xl bg-[#11418D] px-4 py-2 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0e3675] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-60"
               >
                 {saving ? "Saving…" : "Save Testimonial"}
               </button>

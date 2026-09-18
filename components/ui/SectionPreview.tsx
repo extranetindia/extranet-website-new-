@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import SectionHeading from "@/components/ui/SectionHeading";
 
 interface SectionPreviewProps {
   eyebrow: string;
@@ -12,6 +13,7 @@ interface SectionPreviewProps {
   linkLabel: string;
   children: React.ReactNode;
   className?: string;
+  id?: string;
 }
 
 export default function SectionPreview({
@@ -21,47 +23,27 @@ export default function SectionPreview({
   href,
   linkLabel,
   children,
-  className = "bg-slate-50",
+  className = "bg-[#F8F9FB]",
+  id,
 }: SectionPreviewProps) {
   return (
-    <section className={`relative overflow-x-clip py-12 sm:py-16 md:py-20 ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-col gap-5 sm:mb-10 md:mb-12 lg:flex-row lg:items-end lg:justify-between lg:gap-6">
-          <div className="max-w-2xl">
-            <motion.span
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-sm font-semibold text-[#D2190D] uppercase tracking-wider"
-            >
-              {eyebrow}
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.05 }}
-              className="text-2xl font-black text-slate-900 mt-2 mb-3 sm:text-3xl md:text-4xl"
-            >
-              {title}
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-slate-600"
-            >
-              {description}
-            </motion.p>
-          </div>
-          <Link
-            href={href}
-            className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[#134799] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-xl hover:shadow-blue-900/20 sm:w-auto shrink-0"
+    <section id={id} className={`relative overflow-x-clip py-10 sm:py-14 ${className}`}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 flex flex-col gap-5 sm:mb-8 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
+          <SectionHeading eyebrow={eyebrow} title={title} description={description} />
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
-            {linkLabel}
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+            <Link
+              href={href}
+              className="tele-btn tele-btn-outline inline-flex w-full px-6 sm:w-auto"
+            >
+              {linkLabel}
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </motion.div>
         </div>
         {children}
       </div>

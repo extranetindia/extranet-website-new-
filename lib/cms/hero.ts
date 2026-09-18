@@ -31,3 +31,9 @@ export const HERO_ASPECT = {
   desktop: { width: 1600, height: 600, className: "aspect-[8/3]" },
   mobile: { width: 1080, height: 720, className: "aspect-[3/2]" },
 } as const;
+
+/** How many of the most recent banners rotate in the homepage slideshow. */
+export const HERO_SLIDE_LIMIT = 5;
+
+/** Auto-rotation interval for the homepage slideshow. */
+export const HERO_AUTOPLAY_MS = 6000;

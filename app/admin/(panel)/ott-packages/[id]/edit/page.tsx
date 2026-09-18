@@ -62,10 +62,10 @@ export default function EditOttPackagePage() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="h-10 w-48 animate-pulse rounded-lg bg-slate-200" />
+        <div className="h-10 w-48 animate-pulse rounded-lg bg-[#DCE3EC]" />
         <div className="space-y-4">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="h-16 animate-pulse rounded-lg bg-slate-200" />
+            <div key={i} className="h-16 animate-pulse rounded-lg bg-[#DCE3EC]" />
           ))}
         </div>
       </div>
@@ -85,11 +85,11 @@ export default function EditOttPackagePage() {
       <div className="flex items-center gap-3">
         <Link
           href="/admin/ott-packages"
-          className="rounded-lg border border-slate-200 bg-white p-2 text-slate-600 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799]"
+          className="rounded-lg border border-[#DCE3EC] bg-white p-2 text-[#5C6F89] transition-all duration-200 ease-in-out hover:bg-[#F4F7FC] hover:text-[#11418D]"
         >
           <ArrowLeft size={20} />
         </Link>
-        <h1 className="text-2xl font-bold text-slate-900">Edit OTT Package</h1>
+        <h1 className="text-2xl font-bold text-[#15366A]">Edit OTT Package</h1>
       </div>
 
       {error && (

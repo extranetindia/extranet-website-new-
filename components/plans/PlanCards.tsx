@@ -2,29 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check, Sparkles, Star } from "lucide-react";
+import { Check, Star, Clapperboard } from "lucide-react";
 import MobileCarousel from "@/components/ui/MobileCarousel";
 import OttAppsAccordion from "@/components/OttAppsAccordion";
-import type { PlanDefinition } from "@/lib/plans";
 import type { OttPackageRow } from "@/lib/database/schema";
 import type { SupabasePlanCard } from "@/lib/plans/format-plan";
-
-const colorMap = {
-  blue: {
-    badge: "border-[#134799] bg-[rgba(19,71,153,0.1)] text-[#134799]",
-    icon: "bg-[rgba(19,71,153,0.1)] text-[#134799]",
-    card: "border-slate-200 hover:border-[#134799] hover:shadow-[0_18px_40px_rgba(19,71,153,0.1)]",
-    btn: "bg-[#134799] hover:bg-[#0f3b7f] shadow-[rgba(19,71,153,0.2)]",
-    check: "text-[#134799]",
-  },
-  red: {
-    badge: "bg-red-50 text-red-700 border-red-200",
-    icon: "bg-red-50 text-red-600",
-    card: "border-red-200 hover:border-red-300 ring-2 ring-red-100 shadow-lg shadow-red-100/40",
-    btn: "bg-[#D2190D] hover:bg-[#b8160c] shadow-red-900/20",
-    check: "text-red-600",
-  },
-};
 
 interface PlanCardsProps {
   plans: SupabasePlanCard[];
@@ -47,7 +29,6 @@ function PlanCard({
   ctaLabel: string;
   ottPackage?: OttPackageRow | null;
 }) {
-  const c = colorMap[plan.color ?? "blue"] ?? colorMap.blue;
   const isPopular = plan.popular ?? plan.tag === "Most Popular";
   const showBadge = Boolean(plan.tag || isPopular);
   const displayLabel = formatPlanLabel(plan.speed);
@@ -55,29 +36,33 @@ function PlanCard({
   const displayPrice = String(plan.price ?? "").replace(/\s*\*+$/, "");
   const benefits = plan.features?.filter(isDisplayBenefit) ?? [];
   const hasOttApps = (plan.ottApps ?? []).length > 0;
-  const pricingTone = isPopular ? "text-[#d2190d]" : "text-[#134799]";
   const formattedSetupFee = formatFeeValue(plan.setupFee);
   const formattedSecurityDeposit = formatFeeValue(plan.securityDeposit);
+  const inclGst = inclGstPrice(plan.price);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.35, delay: index * 0.08 }}
-      className={`relative flex h-full min-w-0 flex-col overflow-visible rounded-[18px] border bg-white p-4 transition-all duration-300 ease-in-out hover:-translate-y-1 sm:p-5 ${
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.32, delay: Math.min(index, 5) * 0.06 }}
+      className={`relative flex h-full min-w-0 flex-col rounded-xl border bg-white transition-all duration-200 hover:-translate-y-0.5 ${
         isPopular
-          ? "border-2 border-[#d2190d] shadow-[0_14px_34px_rgba(210,25,13,0.12)] hover:border-[#b8160c] hover:shadow-[0_18px_38px_rgba(210,25,13,0.15)]"
-          : `${c.card} shadow-[0_10px_28px_rgba(15,23,42,0.06)] hover:shadow-[0_18px_34px_rgba(15,23,42,0.1)]`
+          ? "border-2 border-[#C1170C] shadow-[0_16px_38px_rgba(193,23,12,0.13)]"
+          : "border-[#DCE3EC] border-t-4 border-t-[#11418D] shadow-[0_2px_10px_rgba(21,54,106,0.06)] hover:border-[#11418D]/40 hover:border-t-[#11418D] hover:shadow-[0_14px_30px_rgba(17,65,141,0.12)]"
       }`}
     >
       {showBadge && (
         <div
-          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] shadow-sm sm:px-4 sm:text-[11px] ${isPopular ? "bg-[#d2190d] text-white" : "border border-slate-200 bg-white text-slate-600"}`}
+          className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full px-3.5 py-1.5 text-[0.65rem] font-extrabold uppercase tracking-[0.14em] ${
+            isPopular
+              ? "bg-[#C1170C] text-white shadow-[0_4px_12px_rgba(193,23,12,0.35)]"
+              : "border border-[#DCE3EC] bg-white text-[#5C6F89]"
+          }`}
         >
           {isPopular ? (
             <span className="inline-flex items-center gap-1.5">
-              <Star className="h-3 w-3 fill-current" aria-hidden="true" />
+              <Star className="h-3 w-3 fill-current" aria-hidden />
               Most Popular
             </span>
           ) : (
@@ -85,66 +70,82 @@ function PlanCard({
           )}
         </div>
       )}
-      <div className="space-y-1 pt-3">
-        <div className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#d2190d]">{displayLabel}</div>
+
+      {/* 1 — Plan identity */}
+      <div className="px-5 pt-6 sm:px-6">
+        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#C1170C]">
+          {displayLabel}
+        </p>
         {displayTitle ? (
-          <h3 className="text-xl font-black leading-tight text-slate-900 sm:text-2xl">{displayTitle}</h3>
+          <h3 className="mt-1 text-xl font-extrabold leading-tight tracking-tight text-[#15366A]">
+            {displayTitle}
+          </h3>
         ) : null}
         {plan.tagline ? (
-          <p className="mt-2 text-sm text-slate-600">{plan.tagline}</p>
+          <p className="mt-1.5 text-[0.83rem] leading-relaxed text-[#5C6F89]">{plan.tagline}</p>
         ) : null}
       </div>
 
-      <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-inner shadow-slate-100">
-        <div className="flex items-center justify-between gap-2 text-xs uppercase tracking-[0.2em] text-slate-500">
-          <span>Plan Charges (Excl. GST)</span>
+      {/* 2 — Speed + monthly price */}
+      <div className="mx-5 mt-4 rounded-[10px] bg-[#F4F7FC] p-4 sm:mx-6">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[0.68rem] font-extrabold uppercase tracking-[0.14em] text-[#5C6F89]">
+            {plan.period === "/month" ? "Per month · excl. GST" : `Per ${plan.period.replace("/", "")} · excl. GST`}
+          </span>
           {plan.savingsBadge ? (
-            <span className="rounded-full bg-[#d2190d] px-2.5 py-1 text-[10px] font-bold text-white">{plan.savingsBadge}</span>
+            <span className="rounded-full bg-[#C1170C] px-2.5 py-1 text-[0.65rem] font-extrabold uppercase tracking-wide text-white">
+              {plan.savingsBadge}
+            </span>
           ) : null}
         </div>
-        <div className="mt-3 flex items-end gap-2">
-          <span className={`text-3xl font-black leading-none sm:text-4xl ${pricingTone}`}>₹{displayPrice}</span>
-          <span className="pb-1 text-sm font-semibold text-slate-500">/month</span>
+        <div className="mt-2 flex items-baseline gap-1.5">
+          <span className={`text-[2rem] font-extrabold leading-none tracking-tight ${isPopular ? "text-[#C1170C]" : "text-[#11418D]"}`}>
+            ₹{displayPrice}
+          </span>
+          <span className="text-sm font-bold text-[#5C6F89]">{plan.period}</span>
         </div>
+        {inclGst ? (
+          <p className="mt-1 text-xs font-medium text-[#5C6F89]">
+            ₹{inclGst} {plan.period} inclusive of 18% GST
+          </p>
+        ) : null}
 
         {(formattedSetupFee || formattedSecurityDeposit) && (
-          <>
-            <div className="my-3 border-t border-slate-300" />
-            <div className="space-y-2.5">
-              {formattedSetupFee && (
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600 sm:text-sm">One-time Setup Fee</span>
-                  <span className="font-semibold text-slate-900">{formattedSetupFee}</span>
-                </div>
-              )}
-              {formattedSecurityDeposit && (
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600 sm:text-sm">Security Deposit</span>
-                  <span className="font-semibold text-slate-900">
-                    {formattedSecurityDeposit === "FREE" ? "FREE" : `${formattedSecurityDeposit} Refundable`}
-                  </span>
-                </div>
-              )}
-            </div>
-          </>
+          <dl className="mt-3 space-y-1.5 border-t border-[#DCE3EC] pt-3">
+            {formattedSetupFee && (
+              <div className="flex items-center justify-between text-[0.8rem]">
+                <dt className="font-medium text-[#5C6F89]">One-time setup</dt>
+                <dd className="font-bold text-[#15366A]">{formattedSetupFee}</dd>
+              </div>
+            )}
+            {formattedSecurityDeposit && (
+              <div className="flex items-center justify-between text-[0.8rem]">
+                <dt className="font-medium text-[#5C6F89]">Security deposit</dt>
+                <dd className="font-bold text-[#15366A]">
+                  {formattedSecurityDeposit === "FREE" ? "Free" : `${formattedSecurityDeposit} (refundable)`}
+                </dd>
+              </div>
+            )}
+          </dl>
         )}
       </div>
 
+      {/* 3 — OTT benefits */}
       {hasOttApps ? (
-        <div className="mt-4 rounded-2xl border border-[#134799]/10 bg-blue-50/60 p-3.5">
-          <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-[#134799]">
-            <Sparkles className="h-4 w-4" /> OTT Bundle
-          </div>
-          <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mx-5 mt-3 rounded-[10px] border border-[#11418D]/15 bg-[#11418D]/[.04] p-3.5 sm:mx-6">
+          <p className="flex items-center gap-1.5 text-[0.7rem] font-extrabold uppercase tracking-[0.14em] text-[#11418D]">
+            <Clapperboard className="h-3.5 w-3.5" aria-hidden /> OTT bundle included
+          </p>
+          <div className="mt-2.5 flex flex-wrap gap-1.5">
             {plan.ottApps?.map((app) => (
-              <span key={app} className="rounded-full border border-[#134799]/20 bg-white px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">{app}</span>
+              <span key={app} className="rounded-full border border-[#11418D]/20 bg-white px-2.5 py-1 text-xs font-semibold text-[#33475f]">{app}</span>
             ))}
           </div>
         </div>
       ) : null}
 
       {plan.planType === "wifi_ott" && plan.ottPackageId && ottPackage && (
-        <div className="mt-4">
+        <div className="mx-5 mt-3 sm:mx-6">
           <OttAppsAccordion
             packageName={ottPackage.name}
             description={ottPackage.description}
@@ -153,26 +154,30 @@ function PlanCard({
         </div>
       )}
 
-      <div className="my-4 border-t border-slate-200" />
-      <ul className="flex flex-1 flex-col gap-2">
-        {benefits.map((feat) => (
-          <li key={feat} className="flex items-start gap-3 text-sm text-slate-600">
-            <Check className={`mt-0.5 h-4 w-4 shrink-0 ${isPopular ? "text-[#d2190d]" : "text-[#134799]"}`} />
-            <span className="text-sm leading-5 text-slate-600">{feat}</span>
-          </li>
-        ))}
-      </ul>
-      <Link
-        href={ctaHref}
-        className={`mt-5 min-h-[46px] w-full rounded-xl py-3 text-center text-sm font-bold text-white transition-all duration-200 ease-in-out ${
-          isPopular
-            ? "bg-[#d2190d] hover:bg-[#b8160c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d2190d] focus-visible:ring-offset-2"
-            : "bg-[#134799] hover:bg-[#0f3b7f]"
-        }`}
-      >
-        {ctaLabel}
-      </Link>
-    </motion.div>
+      {/* 4 — Key benefits */}
+      {benefits.length > 0 ? (
+        <ul className="flex flex-1 flex-col gap-2 px-5 pt-4 sm:px-6">
+          {benefits.map((feat) => (
+            <li key={feat} className="flex items-start gap-2.5 text-[0.85rem] leading-snug text-[#33475f]">
+              <Check className={`mt-0.5 h-4 w-4 shrink-0 ${isPopular ? "text-[#C1170C]" : "text-[#11418D]"}`} aria-hidden />
+              <span>{feat}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="flex-1" />
+      )}
+
+      {/* 5 — CTA */}
+      <div className="p-5 pt-4 sm:p-6 sm:pt-4">
+        <Link
+          href={ctaHref}
+          className={`tele-btn w-full ${isPopular ? "tele-btn-red" : "tele-btn-primary"}`}
+        >
+          {ctaLabel}
+        </Link>
+      </div>
+    </motion.article>
   );
 }
 
@@ -207,8 +212,15 @@ function isDisplayBenefit(feature: string) {
   );
 }
 
-function formatFeeValue(value: string | null | undefined): string | null {
+/** GST-inclusive per-period price, formatted for en-IN. Null when unparseable. */
+function inclGstPrice(value: string | null | undefined): string | null {
   if (!value) return null;
+  const numeric = Number(String(value).replace(/[^\d.]/g, ""));
+  if (!Number.isFinite(numeric) || numeric <= 0) return null;
+  return Math.round(numeric * 1.18).toLocaleString("en-IN");
+}
+
+function formatFeeValue(value: string | null | undefined): string | null {  if (!value) return null;
 
   const trimmedValue = value.toString().trim();
   const normalized = trimmedValue.toLowerCase();
@@ -234,14 +246,14 @@ export default function PlanCards({
 }: PlanCardsProps) {
   const gridClass =
     columns === 2
-      ? "hidden gap-6 overflow-visible pt-6 md:grid md:grid-cols-2 lg:gap-8"
-      : "hidden gap-8 overflow-visible pt-6 md:grid md:grid-cols-3 lg:gap-10";
+      ? "hidden gap-6 overflow-visible pt-6 md:grid md:grid-cols-2"
+      : "hidden gap-5 overflow-visible pt-6 md:grid md:grid-cols-3 xl:gap-6";
 
   return (
     <>
       <MobileCarousel
         ariaLabel="Broadband plans"
-        slideClassName="w-[80%] max-w-[320px] shrink-0 snap-start snap-always overflow-visible"
+        slideClassName="w-[82%] max-w-[320px] shrink-0 snap-start snap-always overflow-visible"
         trackPaddingTop="pt-7"
       >
         {plans.map((plan, i) => (

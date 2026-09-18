@@ -73,26 +73,30 @@ export default function CitySelector({
   if (variant === "inline") {
     return (
       <div ref={dropdownRef} className={`relative inline-flex max-w-full items-center align-baseline ${className}`}>
+        <span className="mr-1.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#11418D]/10">
+          <MapPin className="h-4 w-4 text-[#11418D]" aria-hidden />
+        </span>
         <button
           id={id}
           disabled={isDisabled}
           onClick={() => !isDisabled && setIsOpen(!isOpen)}
-          className="w-fit min-w-0 cursor-pointer bg-transparent py-1 pr-6 text-left text-[28px] font-bold leading-none text-[#F26522] outline-none transition-all duration-200 ease-in-out hover:text-[#d9531e] focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-[#134799]/20 disabled:cursor-not-allowed disabled:text-slate-400 sm:text-[38px]"
+          className="w-fit min-w-0 max-w-full cursor-pointer border-b-2 border-dashed border-[#11418D]/40 bg-transparent py-1 pr-6 text-left text-[26px] font-extrabold leading-tight tracking-tight text-[#11418D] outline-none transition-colors hover:border-[#11418D] hover:text-[#0e3675] focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-[#11418D]/25 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400 sm:text-[38px] sm:leading-none"
           aria-label={ariaLabel}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           type="button"
         >
-          <span className="whitespace-nowrap">{selectedCity?.name || "Select city"}</span>
+          {/* Long sector names wrap on small screens instead of clipping */}
+          <span className="whitespace-normal break-words sm:whitespace-nowrap">{selectedCity?.name || "Select city"}</span>
         </button>
         <ChevronDown
-          className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[#F26522] transition-transform duration-200 ease-out sm:h-5 sm:w-5"
-          style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+          className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[#C1170C] transition-transform duration-200 ease-out sm:h-5 sm:w-5"
+          style={{ transform: isOpen ? "translateY(-50%) rotate(180deg)" : "translateY(-50%) rotate(0deg)" }}
           aria-hidden
         />
         {isOpen && !isDisabled && (
           <ul
-            className="absolute left-0 top-full z-[60] mt-2 w-[min(18rem,calc(100vw-1rem))] rounded-xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10"
+            className="absolute left-0 top-full z-[60] mt-2 max-h-72 w-[min(18rem,calc(100vw-1rem))] overflow-y-auto rounded-xl border border-[#DCE3EC] bg-white py-1.5 shadow-[0_20px_44px_rgba(21,54,106,0.18)]"
             role="listbox"
             aria-label="Available cities"
           >
@@ -100,14 +104,17 @@ export default function CitySelector({
               <li key={city.id} role="option" aria-selected={value === city.id}>
                 <button
                   onClick={() => handleCitySelect(city.id)}
-                  className={`block w-full min-h-[44px] px-4 py-2.5 text-left text-sm font-semibold transition-all duration-200 ease-in-out sm:text-base ${
+                  className={`flex min-h-[44px] w-full items-center justify-between px-4 py-2.5 text-left text-sm font-semibold transition-colors sm:text-[0.95rem] ${
                     value === city.id
-                      ? "bg-[#134799]/10 text-[#134799]"
-                      : "text-slate-900 hover:bg-slate-50 hover:text-[#134799]"
+                      ? "bg-[#F4F7FC] text-[#11418D]"
+                      : "text-[#15366A] hover:bg-[#F8F9FB]"
                   }`}
                   type="button"
                 >
                   {city.name}
+                  {value === city.id ? (
+                    <span aria-hidden className="h-2 w-2 rounded-full bg-[#C1170C]" />
+                  ) : null}
                 </button>
               </li>
             ))}
@@ -122,14 +129,14 @@ export default function CitySelector({
       {label && (
         <label
           htmlFor={id}
-          className="mb-2 block text-sm font-semibold text-slate-900"
+          className="mb-2 block text-sm font-bold text-[#33475f]"
         >
           {label}
         </label>
       )}
       <div className="relative">
         <MapPin
-          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#134799]"
+          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#11418D]"
           aria-hidden
         />
         <select
@@ -137,7 +144,7 @@ export default function CitySelector({
           value={value ?? ""}
           disabled={isDisabled}
           onChange={(event) => onChange(event.target.value)}
-          className="min-h-[44px] w-full appearance-none rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-10 text-sm font-semibold text-slate-900 shadow-sm outline-none transition-all duration-200 ease-in-out hover:border-[#134799]/40 focus:border-blue-400 focus:ring-2 focus:ring-[#134799]/10 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 sm:min-w-[220px]"
+          className="min-h-[46px] w-full appearance-none rounded-[10px] border border-[#DCE3EC] bg-white py-3 pl-10 pr-10 text-[0.9375rem] font-semibold text-[#15366A] shadow-sm outline-none transition-colors hover:border-[#11418D]/40 focus:border-[#11418D] focus:ring-[3px] focus:ring-[#11418D]/15 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 sm:min-w-[220px]"
           aria-label={ariaLabel}
         >
           {selectOptions}

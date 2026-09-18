@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase/client";
 import type { PlanRow } from "@/lib/database/schema";
 import PlanCategorySwitcher from "./PlanCategorySwitcher";
 import CityPricedPlans from "./CityPricedPlans";
+import PlansFaq from "./PlansFaq";
 
 export default function PlansPageSections({
   category = "all",
@@ -28,15 +28,20 @@ export default function PlansPageSections({
   const visibleBusinessPlans = category === "home" ? [] : businessPlans;
 
   return (
-    <section className="mx-auto max-w-7xl overflow-visible px-4 py-12 sm:px-6 sm:py-16 md:py-20 lg:px-8">
+    <section className="mx-auto max-w-7xl overflow-visible px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       {visibleResidentialPlans.length > 0 && category !== "business" && (
         <div>
           {category === "home" && homePlans.length > 1 && (
-            <div className="mb-8 flex justify-center">
-              <PlanCategorySwitcher
-                selected={homePlanCategory}
-                onSelect={setHomePlanCategory}
-              />
+            <div className="mb-6 flex flex-col gap-2">
+              <span className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#5C6F89]">
+                Plan type
+              </span>
+              <div className="flex justify-start">
+                <PlanCategorySwitcher
+                  selected={homePlanCategory}
+                  onSelect={setHomePlanCategory}
+                />
+              </div>
             </div>
           )}
           <CityPricedPlans
@@ -57,6 +62,13 @@ export default function PlansPageSections({
             ctaLabel="Request Business Quote"
           />
         </div>
+      ) : null}
+
+      {category === "home" && visibleResidentialPlans.length > 0 ? (
+        <PlansFaq variant="home" />
+      ) : null}
+      {category === "business" && visibleBusinessPlans.length > 0 ? (
+        <PlansFaq variant="business" />
       ) : null}
     </section>
   );

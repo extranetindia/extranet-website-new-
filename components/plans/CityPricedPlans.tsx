@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import CitySelector from "@/components/city/CitySelector";
 import BillingCycleSwitcher, { type BillingCycleValue } from "@/components/plans/BillingCycleSwitcher";
 import PlanCards from "@/components/plans/PlanCards";
+import PlanCompareTable from "@/components/plans/PlanCompareTable";
 import type { PlanRow, OttPackageRow } from "@/lib/database/schema";
 import {
   fetchPlanPricingRowsForCity,
@@ -35,11 +36,11 @@ interface CityPricedPlansProps {
 
 function PlanCardsSkeleton() {
   return (
-    <div className="grid gap-4 md:grid-cols-3 md:gap-8">
+    <div className="grid gap-5 md:grid-cols-3">
       {[0, 1, 2].map((item) => (
         <div
           key={item}
-          className="min-h-[420px] animate-pulse rounded-2xl border border-slate-200 bg-slate-100 md:min-h-[520px]"
+          className="min-h-[420px] animate-pulse rounded-xl border border-[#DCE3EC] bg-[#F4F7FC] md:min-h-[520px]"
         />
       ))}
     </div>
@@ -154,9 +155,13 @@ export default function CityPricedPlans({
 
   return (
     <div>
-      <div className="mb-8 flex flex-wrap items-center gap-2 sm:gap-3">
-        <h2 className="text-[28px] font-bold leading-tight text-slate-900 sm:text-[38px]">
-          Best Broadband Plans in
+      <p className="tele-eyebrow flex items-center gap-2 text-[#C1170C]">
+        <span aria-hidden className="inline-block h-[2px] w-7 rounded-full bg-[#C1170C]" />
+        {planType === "business" ? "Business pricing" : "Home pricing"} · Step 1 — your city
+      </p>
+      <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+        <h2 className="text-[1.7rem] font-extrabold leading-tight tracking-tight text-[#15366A] sm:text-4xl">
+          Best broadband plans in
         </h2>
         <CitySelector
           id={variant === "home" ? "home-city-selector" : "plans-city-selector"}
@@ -168,23 +173,47 @@ export default function CityPricedPlans({
           className="shrink-0"
         />
       </div>
+      <p className="mt-2.5 max-w-2xl text-[0.95rem] leading-relaxed text-[#5C6F89]">
+        Prices and availability update automatically for your city. Choose a plan
+        type and billing cycle to compare.
+      </p>
 
-      <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        {/* <p className="text-sm text-slate-600">Switch between billing cycles to compare current pricing and savings badges.</p> */}
-        <BillingCycleSwitcher selectedCycle={billingCycle} onSelectCycle={setBillingCycle} />
+      <div className="mt-6 flex flex-col gap-3 border-y border-[#DCE3EC] py-4 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+        {renderControls ? (
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#5C6F89]">
+              Step 2 — plan type
+            </span>
+            <div className="flex">{renderControls}</div>
+          </div>
+        ) : null}
+        <div className={`flex flex-col gap-2 ${renderControls ? "lg:items-end" : ""}`}>
+          <span className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#5C6F89]">
+            {renderControls ? "Step 3 — billing cycle" : "Step 2 — billing cycle"}
+          </span>
+          <BillingCycleSwitcher selectedCycle={billingCycle} onSelectCycle={setBillingCycle} />
+        </div>
       </div>
-      {renderControls ? <div className="mb-4 flex justify-center">{renderControls}</div> : null}
-      {pricingLoading ? (
-        <PlanCardsSkeleton />
-      ) : (
-        <PlanCards
-          plans={cyclePlans}
-          ctaHref={ctaHref}
-          ctaLabel={ctaLabel}
-          columns={columns}
-          ottPackages={ottPackages}
-        />
-      )}
+      <div className="mt-6">
+        {pricingLoading ? (
+          <PlanCardsSkeleton />
+        ) : (
+          <>
+            <PlanCards
+              plans={cyclePlans}
+              ctaHref={ctaHref}
+              ctaLabel={ctaLabel}
+              columns={columns}
+              ottPackages={ottPackages}
+            />
+            <PlanCompareTable plans={cyclePlans} ctaHref={ctaHref} />
+            <p className="mt-4 text-center text-xs leading-relaxed text-[#5C6F89]">
+              All prices exclude 18% GST · Speeds are &ldquo;up to&rdquo; plan maximums on a wired connection ·
+              Unlimited data as per fair-usage policy · *T&amp;C apply
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 }

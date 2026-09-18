@@ -28,8 +28,9 @@ export default async function ContactPage() {
         badge="Contact"
         title="Talk to our team"
         description="New connections, enterprise quotes, or general questions — we respond within one business day."
+        crumbs={[{ label: "Contact" }]}
       />
-      <section className="bg-slate-50 py-12 sm:py-16 md:py-20">
+      <section className="bg-[#F8F9FB] py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ContactContent supportSettings={supportSettings} />
         </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
 import SectionPreview from "@/components/ui/SectionPreview";
 import MobileCarousel from "@/components/ui/MobileCarousel";
 import {
@@ -12,9 +12,9 @@ import {
 
 function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-0.5">
-      {Array.from({ length: rating }).map((_, i) => (
-        <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+    <div className="flex gap-0.5" aria-label={`Rated ${rating} out of 5`}>
+      {Array.from({ length: Math.max(0, Math.min(5, rating)) }).map((_, i) => (
+        <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" aria-hidden />
       ))}
     </div>
   );
@@ -29,14 +29,17 @@ function TestimonialAvatar({ name, imageUrl }: { name: string; imageUrl: string 
       <img
         src={imageUrl}
         alt=""
-        className="h-10 w-10 shrink-0 rounded-full object-cover"
+        className="h-11 w-11 shrink-0 rounded-full border border-[#DCE3EC] object-cover"
         onError={() => setImageFailed(true)}
       />
     );
   }
 
   return (
-    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#134799] text-sm font-bold text-white">
+    <div
+      aria-hidden
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#11418D] text-sm font-extrabold text-white"
+    >
       {getTestimonialInitials(name)}
     </div>
   );
@@ -50,28 +53,27 @@ function TestimonialCard({
   index: number;
 }) {
   return (
-    <motion.div
+    <motion.figure
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.08 }}
-      className="flex h-full flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10"
+      transition={{ delay: Math.min(index, 5) * 0.07 }}
+      className="tele-card tele-card-hover flex h-full flex-col p-6"
     >
-      <Quote className="h-7 w-7 shrink-0 text-blue-200" />
       <StarRating rating={testimonial.rating} />
-      <p className="flex-1 text-sm leading-relaxed text-slate-600">
+      <blockquote className="mt-3 flex-1 text-[0.92rem] leading-relaxed text-[#33475f]">
         &ldquo;{testimonial.review}&rdquo;
-      </p>
-      <div className="flex items-center gap-3 border-t border-slate-100 pt-4">
+      </blockquote>
+      <figcaption className="mt-5 flex items-center gap-3 border-t border-[#EDF1F6] pt-4">
         <TestimonialAvatar name={testimonial.name} imageUrl={testimonial.image_url} />
-        <div>
-          <div className="text-sm font-semibold text-slate-900">{testimonial.name}</div>
+        <div className="min-w-0">
+          <div className="truncate text-sm font-extrabold text-[#15366A]">{testimonial.name}</div>
           {testimonial.city && (
-            <div className="text-xs hover:text-[#134799]">{testimonial.city}</div>
+            <div className="text-xs font-medium text-[#5C6F89]">{testimonial.city}</div>
           )}
         </div>
-      </div>
-    </motion.div>
+      </figcaption>
+    </motion.figure>
   );
 }
 
@@ -88,21 +90,21 @@ export default function TestimonialsSection({
 
   return (
     <SectionPreview
-      eyebrow="Customer Stories"
+      eyebrow="Customer stories"
       title="Trusted by 1,000+ customers"
-      description="Real reviews from homes and businesses across India."
+      description="Real reviews from homes and businesses running on Extranet."
       href="/support"
       linkLabel="Customer support"
-      className="bg-slate-50"
+      className="bg-[#F4F7FC]"
     >
       {fetchError && (
-        <p className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <p className="mb-4 rounded-[10px] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
           Testimonials are temporarily unavailable. Please try again later.
         </p>
       )}
 
       {!fetchError && !hasTestimonials && (
-        <p className="rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-sm hover:text-[#134799]">
+        <p className="rounded-[10px] border border-[#DCE3EC] bg-white px-4 py-8 text-center text-sm text-[#5C6F89]">
           Customer stories will appear here soon.
         </p>
       )}

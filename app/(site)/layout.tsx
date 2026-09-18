@@ -1,6 +1,9 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AnnouncementBar from "@/components/AnnouncementBar";
+import MobileCtaBar from "@/components/MobileCtaBar";
+import SectionNav from "@/components/SectionNav";
+import BackToTop from "@/components/BackToTop";
 
 export default function SiteLayout({
   children,
@@ -11,11 +14,14 @@ export default function SiteLayout({
     <>
       <AnnouncementBar />
       <Navbar />
+      <SectionNav />
       {/* Padding accounts for fixed navbar (responsive: 56px on mobile, 64px on sm+) + dynamic announcement bar (0-48px) */}
       <main className="flex-1 overflow-x-hidden" style={{ paddingTop: "calc(var(--announcement-bar-height, 0px) + var(--navbar-height, 3.5rem))" }}>
         {children}
       </main>
       <Footer />
+      <MobileCtaBar />
+      <BackToTop />
     </>
   );
 }

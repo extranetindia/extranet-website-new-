@@ -1,9 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bell, Menu, LogOut, UserCircle2 } from "lucide-react";
 import { useAuth } from "@/lib/hooks/useAuth";
+import { supabase } from "@/lib/supabase/client";
 
 interface AdminTopbarProps {
   onOpenMobile: () => void;
@@ -13,58 +15,88 @@ const titleMap: Record<string, string> = {
   "/admin": "Dashboard",
   "/admin/hero": "Hero Banner",
   "/admin/plans": "Plans Management",
+  "/admin/ott-packages": "OTT Packages",
+  "/admin/ott-packages/new": "New OTT Package",
   "/admin/leads": "Leads",
   "/admin/coverage": "Coverage Management",
   "/admin/testimonials": "Testimonials Management",
   "/admin/support": "Support Settings",
+  "/admin/legal": "Legal Policies",
   "/admin/settings": "General Settings",
 };
+
+function resolveTitle(pathname: string) {
+  if (titleMap[pathname]) return titleMap[pathname];
+  if (pathname.startsWith("/admin/ott-packages/")) return "Edit OTT Package";
+  return "Admin";
+}
 
 export default function AdminTopbar({ onOpenMobile }: AdminTopbarProps) {
   const pathname = usePathname();
   const { signOut, loading } = useAuth();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [newLeads, setNewLeads] = useState<number | null>(null);
 
-  const pageTitle = useMemo(() => titleMap[pathname] ?? "Admin", [pathname]);
+  const pageTitle = useMemo(() => resolveTitle(pathname), [pathname]);
+
+  // Live "needs attention" signal — new leads awaiting follow-up.
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const { count } = await supabase
+        .from("leads")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "new");
+      if (mounted && typeof count === "number") setNewLeads(count);
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [pathname]);
 
   const handleLogout = async () => {
     await signOut();
   };
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-[#DCE3EC] bg-white/90 backdrop-blur">
       <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           <button
             type="button"
             onClick={onOpenMobile}
-            className="rounded-lg border border-slate-200 p-2 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799] lg:hidden"
+            className="rounded-[10px] border border-[#DCE3EC] p-2 text-[#5C6F89] transition-colors hover:border-[#11418D]/40 hover:bg-[#F4F7FC] hover:text-[#11418D] lg:hidden"
             aria-label="Open sidebar"
           >
             <Menu size={18} />
           </button>
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
-              Admin
+          <div className="min-w-0">
+            <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-[#5C6F89]">
+              Extranet Admin
             </p>
-            <h1 className="text-lg font-semibold text-slate-900">{pageTitle}</h1>
+            <h1 className="truncate text-lg font-extrabold tracking-tight text-[#15366A]">{pageTitle}</h1>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            type="button"
-            className="relative rounded-xl border border-slate-200 p-2 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
-            aria-label="Notifications"
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <Link
+            href="/admin/leads"
+            className="relative rounded-[10px] border border-[#DCE3EC] p-2 text-[#5C6F89] transition-colors hover:border-[#11418D]/40 hover:bg-[#F4F7FC] hover:text-[#11418D]"
+            aria-label={newLeads ? `${newLeads} new leads awaiting follow-up` : "View leads"}
+            title="View new leads"
           >
             <Bell size={18} />
-            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-red-500" />
-          </button>
-          <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5">
-            <UserCircle2 className="text-[#134799]" size={20} />
+            {newLeads !== null && newLeads > 0 && (
+              <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#C1170C] px-1 text-[0.65rem] font-extrabold text-white">
+                {newLeads > 99 ? "99+" : newLeads}
+              </span>
+            )}
+          </Link>
+          <div className="hidden items-center gap-2 rounded-[10px] border border-[#DCE3EC] bg-white px-2.5 py-1.5 min-[420px]:flex">
+            <UserCircle2 className="text-[#11418D]" size={20} aria-hidden />
             <div className="hidden sm:block">
-              <p className="text-xs font-medium text-slate-900">Admin User</p>
-              <p className="text-[11px] hover:text-[#134799]">extranet.in</p>
+              <p className="text-xs font-bold text-[#15366A]">Admin</p>
+              <p className="text-[11px] text-[#5C6F89]">Content manager</p>
             </div>
           </div>
           <div className="relative">
@@ -72,20 +104,24 @@ export default function AdminTopbar({ onOpenMobile }: AdminTopbarProps) {
               type="button"
               onClick={() => setShowLogoutConfirm(!showLogoutConfirm)}
               disabled={loading}
-              className="rounded-lg border border-slate-200 p-2 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799] disabled:opacity-50"
-              aria-label="Logout"
+              className="rounded-[10px] border border-[#DCE3EC] p-2 text-[#5C6F89] transition-colors hover:border-[#C1170C]/40 hover:bg-red-50 hover:text-[#C1170C] disabled:opacity-50"
+              aria-label="Sign out"
+              aria-expanded={showLogoutConfirm}
             >
               <LogOut size={18} />
             </button>
             {showLogoutConfirm && (
-              <div className="absolute right-0 top-full mt-2 w-48 rounded-lg border border-slate-200 bg-white shadow-lg">
-                <p className="p-3 text-sm text-slate-900">
-                  Are you sure you want to sign out?
+              <div className="absolute right-0 top-full z-50 mt-2 w-52 rounded-xl border border-[#DCE3EC] bg-white p-3 shadow-[0_20px_44px_rgba(21,54,106,0.18)]">
+                <p className="text-sm font-semibold text-[#15366A]">
+                  Sign out of admin?
                 </p>
-                <div className="flex gap-2 border-t border-slate-200 p-2">
+                <p className="mt-0.5 text-xs text-[#5C6F89]">
+                  You&apos;ll need your credentials to sign back in.
+                </p>
+                <div className="mt-3 flex gap-2">
                   <button
                     onClick={() => setShowLogoutConfirm(false)}
-                    className="flex-1 rounded-lg border border-slate-200 px-2 py-1.5 text-sm font-medium text-slate-900 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-50 hover:text-[#134799]"
+                    className="tele-btn tele-btn-outline min-h-[40px] flex-1 px-2 text-[0.8rem]"
                     type="button"
                   >
                     Cancel
@@ -93,10 +129,10 @@ export default function AdminTopbar({ onOpenMobile }: AdminTopbarProps) {
                   <button
                     onClick={handleLogout}
                     disabled={loading}
-                    className="flex-1 rounded-lg bg-[#D2190D] px-2 py-1.5 text-sm font-medium text-white transition-all duration-200 ease-in-out hover:bg-[#b8160c] disabled:opacity-50"
+                    className="tele-btn tele-btn-red min-h-[40px] flex-1 px-2 text-[0.8rem]"
                     type="button"
                   >
-                    {loading ? "Logging out..." : "Sign out"}
+                    {loading ? "Signing out…" : "Sign out"}
                   </button>
                 </div>
               </div>

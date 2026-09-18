@@ -5,15 +5,6 @@ import { saveSettings, getSettings } from "@/lib/database/settings";
 import type { SettingsRow } from "@/lib/database/schema";
 import { invalidateSettingsCache } from "@/lib/hooks/useCompanySettings";
 
-interface SettingsForm {
-  companyName: string;
-  logoUrl: string;
-  themeMode: "system" | "light" | "dark";
-  facebook: string;
-  twitter: string;
-  linkedin: string;
-}
-
 interface CompanyInfoForm {
   companyName: string;
   companyAddress: string;
@@ -26,15 +17,6 @@ interface CompanyInfoForm {
   announcementEnabled: boolean;
   announcementText: string;
 }
-
-const initialSettingsForm: SettingsForm = {
-  companyName: "Extranet India Private Limited",
-  logoUrl: "/logo.png",
-  themeMode: "system",
-  facebook: "",
-  twitter: "",
-  linkedin: "",
-};
 
 const initialCompanyInfoForm: CompanyInfoForm = {
   companyName: "Extranet",
@@ -50,7 +32,6 @@ const initialCompanyInfoForm: CompanyInfoForm = {
 };
 
 export default function AdminSettingsPage() {
-  const [settingsForm, setSettingsForm] = useState(initialSettingsForm);
   const [companyForm, setCompanyForm] = useState<CompanyInfoForm>(initialCompanyInfoForm);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -121,9 +102,9 @@ export default function AdminSettingsPage() {
   return (
     <div className="space-y-8">
       {/* Company Information Section */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-lg font-semibold text-slate-900">Company Information</h2>
-        <p className="mt-1 text-sm text-slate-600">
+      <section className="tele-card p-5">
+        <h2 className="text-lg font-semibold text-[#15366A]">Company Information</h2>
+        <p className="mt-1 text-sm text-[#5C6F89]">
           Update company details that will be displayed across the website and admin panel.
         </p>
 
@@ -141,7 +122,7 @@ export default function AdminSettingsPage() {
 
         <form className="mt-6 grid gap-4 md:grid-cols-2" onSubmit={handleSaveCompanyInfo}>
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-[#475569]">
               Company Name *
             </span>
             <input
@@ -150,14 +131,14 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setCompanyForm((prev) => ({ ...prev, companyName: e.target.value }))
               }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+              className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
               required
               disabled={loading || saving}
             />
           </label>
 
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-[#475569]">
               Website URL
             </span>
             <input
@@ -166,14 +147,14 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setCompanyForm((prev) => ({ ...prev, websiteUrl: e.target.value }))
               }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+              className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
               placeholder="https://example.com"
               disabled={loading || saving}
             />
           </label>
 
           <label className="block md:col-span-2">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-[#475569]">
               Company Address
             </span>
             <textarea
@@ -181,14 +162,14 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setCompanyForm((prev) => ({ ...prev, companyAddress: e.target.value }))
               }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+              className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
               rows={3}
               disabled={loading || saving}
             />
           </label>
 
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-[#475569]">
               Company Phone
             </span>
             <input
@@ -197,14 +178,14 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setCompanyForm((prev) => ({ ...prev, companyPhone: e.target.value }))
               }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+              className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
               placeholder="+91-XXXX-XXXX"
               disabled={loading || saving}
             />
           </label>
 
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-[#475569]">
               Company Email
             </span>
             <input
@@ -213,14 +194,14 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setCompanyForm((prev) => ({ ...prev, companyEmail: e.target.value }))
               }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+              className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
               placeholder="info@example.com"
               disabled={loading || saving}
             />
           </label>
 
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-[#475569]">
               Support Email
             </span>
             <input
@@ -229,14 +210,14 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setCompanyForm((prev) => ({ ...prev, supportEmail: e.target.value }))
               }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+              className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
               placeholder="support@example.com"
               disabled={loading || saving}
             />
           </label>
 
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-[#475569]">
               GST Number
             </span>
             <input
@@ -245,14 +226,14 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setCompanyForm((prev) => ({ ...prev, gstNumber: e.target.value }))
               }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+              className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
               placeholder="29XXXXXXXXXXXXXXXXX"
               disabled={loading || saving}
             />
           </label>
 
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
+            <span className="mb-1.5 block text-sm font-medium text-[#475569]">
               Logo URL (optional)
             </span>
             <input
@@ -261,7 +242,7 @@ export default function AdminSettingsPage() {
               onChange={(e) =>
                 setCompanyForm((prev) => ({ ...prev, logoUrl: e.target.value }))
               }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+              className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
               placeholder="https://example.com/logo.png"
               disabled={loading || saving}
             />
@@ -269,7 +250,7 @@ export default function AdminSettingsPage() {
 
           {/* Announcement Section */}
           <div className="md:col-span-2 border-t pt-6 mt-6">
-            <h3 className="text-base font-semibold text-slate-900 mb-4">Announcement Bar Settings</h3>
+            <h3 className="text-base font-semibold text-[#15366A] mb-4">Announcement Bar Settings</h3>
             
             <label className="block mb-4">
               <div className="flex items-center gap-3">
@@ -279,16 +260,16 @@ export default function AdminSettingsPage() {
                   onChange={(e) =>
                     setCompanyForm((prev) => ({ ...prev, announcementEnabled: e.target.checked }))
                   }
-                  className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  className="w-4 h-4 rounded border-[#DCE3EC] text-[#11418D] focus:ring-[#11418D]/30 cursor-pointer"
                   disabled={loading || saving}
                 />
-                <span className="text-sm font-medium text-slate-700">Enable Announcement Bar</span>
+                <span className="text-sm font-medium text-[#475569]">Enable Announcement Bar</span>
               </div>
             </label>
 
             {companyForm.announcementEnabled && (
               <label className="block">
-                <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                   Announcement Message
                 </span>
                 <textarea
@@ -296,7 +277,7 @@ export default function AdminSettingsPage() {
                   onChange={(e) =>
                     setCompanyForm((prev) => ({ ...prev, announcementText: e.target.value }))
                   }
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                  className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   placeholder="Enter your announcement message here..."
                   rows={2}
                   disabled={loading || saving}
@@ -309,129 +290,9 @@ export default function AdminSettingsPage() {
             <button
               type="submit"
               disabled={loading || saving}
-              className="rounded-xl bg-[#134799] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="rounded-xl bg-[#11418D] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0e3675] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? "Saving..." : "Save Company Information"}
-            </button>
-          </div>
-        </form>
-      </section>
-
-      {/* General Settings Section */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-lg font-semibold text-slate-900">General Settings</h2>
-        <p className="mt-1 text-sm text-slate-600">
-          Configure company profile, branding, and social placeholders.
-        </p>
-
-        <form
-          className="mt-6 grid gap-4 md:grid-cols-2"
-          onSubmit={(event) => event.preventDefault()}
-        >
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
-              Company Name
-            </span>
-            <input
-              value={settingsForm.companyName}
-              onChange={(event) =>
-                setSettingsForm((previous) => ({
-                  ...previous,
-                  companyName: event.target.value,
-                }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-            />
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
-              Logo URL
-            </span>
-            <input
-              value={settingsForm.logoUrl}
-              onChange={(event) =>
-                setSettingsForm((previous) => ({
-                  ...previous,
-                  logoUrl: event.target.value,
-                }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-            />
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
-              Theme Mode (placeholder)
-            </span>
-            <select
-              value={settingsForm.themeMode}
-              onChange={(event) =>
-                setSettingsForm((previous) => ({
-                  ...previous,
-                  themeMode: event.target.value as SettingsForm["themeMode"],
-                }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-            >
-              <option value="system">System</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </label>
-          <div className="hidden md:block" />
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
-              Facebook URL
-            </span>
-            <input
-              value={settingsForm.facebook}
-              onChange={(event) =>
-                setSettingsForm((previous) => ({
-                  ...previous,
-                  facebook: event.target.value,
-                }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-              placeholder="https://facebook.com/..."
-            />
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
-              Twitter URL
-            </span>
-            <input
-              value={settingsForm.twitter}
-              onChange={(event) =>
-                setSettingsForm((previous) => ({
-                  ...previous,
-                  twitter: event.target.value,
-                }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-              placeholder="https://x.com/..."
-            />
-          </label>
-          <label className="block md:col-span-2">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">
-              LinkedIn URL
-            </span>
-            <input
-              value={settingsForm.linkedin}
-              onChange={(event) =>
-                setSettingsForm((previous) => ({
-                  ...previous,
-                  linkedin: event.target.value,
-                }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-              placeholder="https://linkedin.com/company/..."
-            />
-          </label>
-          <div className="md:col-span-2">
-            <button
-              type="submit"
-              className="rounded-xl bg-[#134799] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20"
-            >
-              Save Settings
             </button>
           </div>
         </form>

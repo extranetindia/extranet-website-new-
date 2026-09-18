@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/ui/PageHero";
-import { Building2, Network, Users, Award } from "lucide-react";
+import FiberPulseMap from "@/components/home/FiberPulseMap";
+import { Building2, Network, Users, Award, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase/client";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -16,56 +18,82 @@ const stats = [
   { icon: Award, value: "99.99%", label: "Enterprise SLA" },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { data: cities } = await supabase
+    .from("cities")
+    .select("name")
+    .eq("active", true)
+    .order("name", { ascending: true });
+
   return (
     <>
-      {/* <PageHero
+      <PageHero
         badge="About Extranet"
-        title={<>India&apos;s trusted enterprise ISP</>}
+        title="India's trusted enterprise ISP"
         description="Extranet India Private Limited builds and operates carrier-grade fiber networks for homes, businesses, and institutions — with transparency, reliability, and technical excellence at the core."
-      /> */}
+        crumbs={[{ label: "About Us" }]}
+      />
 
-      <section className="bg-white pb-12 pt-24 sm:pb-16 sm:pt-28 md:py-20">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
+      <section className="bg-white py-10 sm:py-14">
+        <div className="mx-auto grid max-w-7xl items-start gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
           <div>
-            <h2 className="mb-4 text-2xl font-black text-slate-900 sm:text-3xl">Company overview</h2>
-            <p className="text-slate-600 leading-relaxed mb-4">
+            <p className="tele-eyebrow flex items-center gap-2 text-[#C1170C]">
+              <span aria-hidden className="inline-block h-[2px] w-7 rounded-full bg-[#C1170C]" />
+              Company overview
+            </p>
+            <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-[#15366A] sm:text-3xl">
+              Carrier-grade infrastructure, run by network engineers
+            </h2>
+            <p className="mt-4 leading-relaxed text-[#475569]">
               Founded with a mission to democratize enterprise-grade connectivity,
               Extranet operates metro rings, long-haul fiber, and last-mile FTTH
               across India. We peer with Tier-1 carriers and major IXPs to deliver
               low-latency, high-availability internet.
             </p>
-            <p className="text-slate-600 leading-relaxed">
+            <p className="mt-4 leading-relaxed text-[#475569]">
               From residential broadband to dedicated leased lines, every circuit
               is engineered for performance — backed by 24/7 NOC monitoring and
               TRAI-compliant service standards.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            {stats.map((s) => (
+          <div className="grid grid-cols-2 gap-4">
+            {stats.map((s, i) => (
               <div
                 key={s.label}
-                className="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10 sm:p-6"
+                className="tele-card tele-card-hover p-5 sm:p-6"
               >
-                <s.icon className="w-8 h-8 text-[#134799] mb-3" />
-                <div className="text-2xl font-black text-slate-900">{s.value}</div>
-                <div className="text-sm hover:text-[#134799] font-medium">{s.label}</div>
+                <span className={`mb-3 flex h-10 w-10 items-center justify-center rounded-[10px] ${
+                  i % 2 === 1 ? "bg-[#C1170C]/10 text-[#C1170C]" : "bg-[#11418D]/10 text-[#11418D]"
+                }`}>
+                  <s.icon className="h-5 w-5" aria-hidden />
+                </span>
+                <div className={`text-2xl font-extrabold tracking-tight ${i % 2 === 1 ? "text-[#C1170C]" : "text-[#11418D]"}`}>{s.value}</div>
+                <div className="mt-0.5 text-sm font-semibold text-[#5C6F89]">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-slate-50 py-12 sm:py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-black text-slate-900 mb-4 text-center">
-            Mission & reliability
-          </h2>
-          <p className="text-slate-600 text-center max-w-2xl mx-auto mb-12">
-            We believe every Indian deserves internet that works — predictably,
-            securely, and at the speed promised.
-          </p>
-          <div className="grid md:grid-cols-3 gap-6">
+      <section className="bg-white py-10 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <FiberPulseMap sectors={(cities ?? []).map((c) => c.name).filter(Boolean)} />
+        </div>
+      </section>
+
+      <section className="border-y border-[#DCE3EC] bg-[#F8F9FB] py-10 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="tele-eyebrow justify-center text-[#C1170C]">What we stand for</p>
+            <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-[#15366A] sm:text-3xl">
+              Mission &amp; reliability
+            </h2>
+            <p className="mt-3 leading-relaxed text-[#5C6F89]">
+              We believe every Indian deserves internet that works — predictably,
+              securely, and at the speed promised.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
             {[
               {
                 title: "Transparent service",
@@ -82,19 +110,27 @@ export default function AboutPage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="p-8 rounded-2xl bg-white border border-slate-200 border-t-4 border-t-blue-700 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:border-t-blue-700 hover:shadow-lg hover:shadow-blue-900/10"
+                className="tele-card tele-card-hover overflow-hidden p-6 sm:p-7"
               >
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed">{item.body}</p>
+                <span aria-hidden className="mb-4 block h-1 w-10 rounded-full bg-[#C1170C]" />
+                <h3 className="mb-2 text-lg font-extrabold text-[#15366A]">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-[#5C6F89]">{item.body}</p>
               </div>
             ))}
           </div>
-          <div className="mt-12 text-center">
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/plans"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#134799] px-8 py-4 font-bold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20"
+              className="tele-btn tele-btn-primary px-8"
             >
               Explore our plans
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+            <Link
+              href="/contact"
+              className="tele-btn tele-btn-outline px-8"
+            >
+              Talk to sales
             </Link>
           </div>
         </div>

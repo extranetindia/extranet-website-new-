@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Headphones, MessageCircle, ChevronDown, Phone } from "lucide-react";
+import { Headphones, MessageCircle, ChevronDown, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useCompanySettings } from "@/lib/hooks/useCompanySettings";
 
 interface SupportContentProps {
@@ -50,7 +51,7 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
     {
       icon: Headphones,
       title: "24/7 Customer Care",
-      description: "Billing, plan changes, and general inquiries.",
+      description: `Billing, plan changes, and general inquiries. ${supportSettings.supportTimings}`,
       action: `Call ${displayPhone}`,
       href: `tel:${displayPhone.replace(/\s+/g, "")}`,
     },
@@ -64,8 +65,8 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
   ];
 
   return (
-    <div className="space-y-16">
-      <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-5">
+    <div className="space-y-10 sm:space-y-12">
+      <div className="grid gap-5 sm:grid-cols-2">
         {supportCards.map((card, i) => (
           <motion.a
             key={card.title}
@@ -73,58 +74,81 @@ export default function SupportContent({ supportSettings }: SupportContentProps)
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.06 }}
-            className="block rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10 sm:p-6"
+            transition={{ delay: Math.min(i, 5) * 0.06 }}
+            className="tele-card tele-card-hover group block p-6"
           >
-            <card.icon className="w-8 h-8 text-[#134799] mb-4" />
-            <h3 className="font-bold text-slate-900 mb-2">{card.title}</h3>
-            <p className="text-slate-600 text-sm mb-4">{card.description}</p>
-            <span className="text-sm font-semibold text-[#134799]">{card.action}</span>
+            <span className={`mb-4 flex h-11 w-11 items-center justify-center rounded-[10px] ${
+              i % 2 === 1 ? "bg-[#C1170C]/10 text-[#C1170C]" : "bg-[#11418D]/10 text-[#11418D]"
+            }`}>
+              <card.icon className="h-5 w-5" aria-hidden />
+            </span>
+            <h3 className="font-extrabold text-[#15366A]">{card.title}</h3>
+            <p className="mb-3 mt-1.5 text-sm leading-relaxed text-[#5C6F89]">{card.description}</p>
+            <span className="inline-flex items-center gap-1.5 text-sm font-bold text-[#C1170C] group-hover:underline">
+              {card.action}
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </span>
           </motion.a>
         ))}
       </div>
 
-      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start gap-6">
-        <div className="w-full max-w-6xl mx-auto lg:mx-auto">
-          <div>
-            <h2 className="text-2xl font-black text-slate-900 mb-6 text-center">Frequently asked questions</h2> 
-            <div className="space-y-2">
-              {faqs.map((faq, i) => (
-                <div
-                  key={faq.q}
-                  className="w-full rounded-xl border border-slate-200 bg-white overflow-hidden"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    aria-expanded={openFaq === i}
-                    className="flex min-h-[48px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-sm font-semibold text-slate-900 transition-all duration-200 ease-in-out hover:bg-slate-50 hover:text-[#134799] sm:px-5"
+      <div className="mx-auto w-full max-w-3xl">
+        <p className="tele-eyebrow text-center text-[#C1170C]">Self-help</p>
+        <h2 className="mt-2 text-center text-2xl font-extrabold tracking-tight text-[#15366A] sm:text-[1.7rem]">
+          Frequently asked questions
+        </h2>
+        <div className="mt-6 space-y-2.5">
+          {faqs.map((faq, i) => (
+            <div
+              key={faq.q}
+              className={`overflow-hidden rounded-xl border bg-white transition-colors ${
+                openFaq === i ? "border-[#11418D]/40" : "border-[#DCE3EC]"
+              }`}
+            >
+              <button
+                type="button"
+                onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                aria-expanded={openFaq === i}
+                className="flex min-h-[52px] w-full items-center justify-between gap-4 px-4 py-4 text-left text-[0.95rem] font-bold text-[#15366A] hover:bg-[#F8F9FB] sm:px-5"
+              >
+                {faq.q}
+                <ChevronDown
+                  className={`h-5 w-5 shrink-0 text-[#C1170C] transition-transform duration-200 ${
+                    openFaq === i ? "rotate-180" : ""
+                  }`}
+                  aria-hidden
+                />
+              </button>
+              <AnimatePresence>
+                {openFaq === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className="overflow-hidden"
                   >
-                    {faq.q}
-                    <ChevronDown
-                      className={`w-5 h-5 shrink-0 text-slate-400 transition-all duration-200 ease-in-out ${
-                        openFaq === i ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  <AnimatePresence>
-                    {openFaq === i && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <p className="px-5 pb-4 text-slate-600 text-sm leading-relaxed">
-                          {faq.a}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                    <p className="border-t border-[#EDF1F6] px-4 py-4 text-sm leading-relaxed text-[#475569] sm:px-5">
+                      {faq.a}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
+          ))}
+        </div>
+
+        <div className="mt-6 flex flex-col items-stretch gap-3 rounded-xl bg-[#15366A] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <div>
+            <h3 className="font-extrabold text-white">Still need help?</h3>
+            <p className="mt-0.5 text-sm text-white/75">
+              Raise a request and our team will get back within one business day.
+            </p>
           </div>
+          <Link href="/contact" className="tele-btn tele-btn-red shrink-0 px-6">
+            Contact us
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
       </div>
     </div>

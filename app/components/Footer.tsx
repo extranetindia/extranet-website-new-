@@ -3,8 +3,9 @@ import FooterContent from "@/components/FooterContent";
 
 const footerLinks = {
   Plans: [
-    { label: "WiFi Only", href: "/plans#wifi-only" },
-    { label: "WiFi + OTT Bundle", href: "/plans#wifi-ott" },
+    { label: "Home Broadband", href: "/plans/home" },
+    { label: "Business Internet", href: "/plans/business" },
+    { label: "Compare all plans", href: "/plans" },
   ],
   Company: [
     { label: "About Us", href: "/about" },
@@ -34,7 +35,7 @@ const social = [
 
 export default function Footer() {
   return (
-    <footer className="relative bg-slate-900 text-slate-300 border-t border-slate-800">
+    <footer className="relative border-t border-[#DCE3EC] bg-white text-[#475569]">
       <FooterContent footerLinks={footerLinks} social={social} />
     </footer>
   );

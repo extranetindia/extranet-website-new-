@@ -5,23 +5,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, UserRound } from "lucide-react";
 
 const navLinks = [
-  { label: "Home", href: "https://www.extranetindia.com/" },
+  { label: "Home", href: "/" },
   {
     label: "Plans",
     href: "/plans",
     submenu: [
-      { label: "Home Plans", href: "/plans/home" },
-      { label: "Business Plans", href: "/plans/business" },
+      { label: "Home Broadband", href: "/plans/home", hint: "WiFi & OTT bundles" },
+      { label: "Business Internet", href: "/plans/business", hint: "Leased-line grade" },
     ],
   },
-  { label: "For ILL", href: "/contact" },
+  { label: "Coverage", href: "/coverage" },
   { label: "About", href: "/about" },
   { label: "Support", href: "/support" },
   { label: "Contact", href: "/contact" },
 ];
+
+const SALES_PHONE = "+91 9540901195";
+const SALES_TEL = "tel:+919540901195";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -31,8 +34,9 @@ export default function Navbar() {
   const [mobilePlansOpen, setMobilePlansOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -56,129 +60,166 @@ export default function Navbar() {
     <motion.header
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-sm shadow-blue-900/5"
-          : "bg-white/80 backdrop-blur-md border-b border-transparent"
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className={`fixed left-0 right-0 z-50 bg-white transition-shadow duration-300 ${
+        scrolled ? "shadow-[0_2px_16px_rgba(21,54,106,0.10)]" : "shadow-none"
       }`}
       style={{ top: "var(--announcement-bar-height, 0px)" }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between sm:h-16">
-          <Link
-            href="/"
-            className="relative flex h-9 items-center transition-all duration-200 ease-in-out hover:opacity-90 sm:h-10"
-          >
-            <Image
-              src="/logo.png"
-              alt="Extranet"
-              width={220}
-              height={55}
-              priority
-              className="h-12 w-auto max-w-[200px] object-contain object-left sm:h-14 sm:max-w-none"
-            />
-          </Link>
-
-          <nav className="hidden lg:flex items-center gap-0.5">
-            {navLinks.map((link) => (
-              <div key={link.label} className="relative group">
-                {link.submenu ? (
-                  <>
-                    {/* Plans dropdown trigger */}
-                    <button
-                      onClick={() => setPlansDropdownOpen(!plansDropdownOpen)}
-                      onMouseEnter={() => setPlansDropdownOpen(true)}
-                      onMouseLeave={() => setPlansDropdownOpen(false)}
-                      className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out ${
-                        isActive(link.href)
-                          ? "text-slate-600 font-medium"
-                          : "text-slate-600 font-medium"
-                      } hover:text-[#134799]`}
-                    >
-                      {link.label}
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform duration-200 ${
-                          plansDropdownOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-
-                    {/* Dropdown menu */}
-                    <AnimatePresence>
-                      {plansDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -4 }}
-                          transition={{ duration: 0.15, ease: "easeOut" }}
-                          onMouseEnter={() => setPlansDropdownOpen(true)}
-                          onMouseLeave={() => setPlansDropdownOpen(false)}
-                          className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg border border-slate-200 shadow-lg shadow-slate-900/10 py-1 z-50"
-                        >
-                          {link.submenu.map((item) => (
-                            <Link
-                              key={item.label}
-                              href={item.href}
-                              onClick={() => setPlansDropdownOpen(false)}
-                              className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-[#134799] hover:bg-slate-50 transition-all duration-150 ease-in-out first:rounded-t-md last:rounded-b-md"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </>
-                ) : (
-                  <Link
-                    href={link.href}
-                    className={`flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ease-in-out ${
-                      isActive(link.href)
-                        ? "text-slate-600 font-medium"
-                        : "text-slate-600 font-medium"
-                    } hover:text-[#134799]`}
-                  >
-                    {link.label}
-                  </Link>
-                )}
-              </div>
-            ))}
-          </nav>
-
-          <div className="hidden lg:flex items-center gap-2">
-            <a
-              href="tel:+919540901195"
-              className="hidden xl:flex items-center gap-2 text-sm text-slate-600 hover:text-[#134799] transition-all duration-200 ease-in-out mr-1"
-            >
-              <Phone className="w-4 h-4 text-[#134799]" />
-              <span className="font-medium">+91 9540901195</span>
+      {/* Trust strip */}
+      <div className="hidden border-b border-[#DCE3EC] bg-[#F4F7FC] md:block">
+        <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold tracking-wide text-[#5C6F89]">
+            Enterprise-grade fibre broadband
+            <span className="mx-2 text-[#DCE3EC]" aria-hidden>|</span>
+            <span className="font-medium">Serving homes &amp; businesses across India</span>
+          </p>
+          <div className="flex items-center gap-5 text-xs font-semibold">
+            <a href={SALES_TEL} className="flex items-center gap-1.5 text-[#11418D] hover:text-[#0e3675]">
+              <Phone className="h-3.5 w-3.5" />
+              Sales: {SALES_PHONE}
             </a>
-            <Link
-              href="https://user.extranetindia.com/Selfcare/#/login"
-              className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-[#D2190D] hover:text-white hover:border-[#D2190D] hover:shadow-md hover:shadow-red-900/15"
-            >
-              My Account
-            </Link>
-            <Link
-              href="/contact"
-              className="px-5 py-2.5 rounded-xl bg-[#134799] hover:bg-[#0f3b7f] text-white text-sm font-semibold transition-all duration-200 ease-in-out shadow-md shadow-blue-900/20 hover:shadow-lg hover:shadow-blue-900/25"
-            >
-              Get Connected
+            <Link href="https://user.extranetindia.com/Selfcare/#/login" className="flex items-center gap-1.5 text-[#475569] hover:text-[#11418D]">
+              <UserRound className="h-3.5 w-3.5" />
+              Pay Bill / My Account
             </Link>
           </div>
-
-          <button
-            type="button"
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-transparent p-2 text-slate-600 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#134799]/20 lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
       </div>
+
+      {/* Main bar */}
+      <div className="border-b border-[#DCE3EC]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-14 items-center justify-between gap-4 sm:h-[4.5rem]">
+            <Link href="/" className="flex h-10 items-center transition-opacity hover:opacity-90 sm:h-11" aria-label="Extranet India — home">
+              <Image
+                src="/logo.png"
+                alt="Extranet"
+                width={220}
+                height={55}
+                priority
+                className="h-10 w-auto max-w-[190px] object-contain object-left sm:h-12 sm:max-w-none"
+              />
+            </Link>
+
+            <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+              {navLinks.map((link) => (
+                <div key={link.label} className="relative">
+                  {link.submenu ? (
+                    <div
+                      onMouseEnter={() => setPlansDropdownOpen(true)}
+                      onMouseLeave={() => setPlansDropdownOpen(false)}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setPlansDropdownOpen(!plansDropdownOpen)}
+                        aria-expanded={plansDropdownOpen}
+                        aria-haspopup="true"
+                        className={`relative flex items-center gap-1.5 px-4 py-2.5 text-[0.9rem] font-semibold transition-colors ${
+                          isActive(link.href) ? "text-[#11418D]" : "text-[#33475f] hover:text-[#11418D]"
+                        }`}
+                      >
+                        {link.label}
+                        <ChevronDown
+                          className={`h-4 w-4 transition-transform duration-200 ${plansDropdownOpen ? "rotate-180" : ""}`}
+                        />
+                        <span
+                          aria-hidden
+                          className={`absolute inset-x-4 -bottom-[13px] h-[3px] rounded-t-full bg-[#C1170C] transition-opacity ${
+                            isActive(link.href) || plansDropdownOpen ? "opacity-100" : "opacity-0"
+                          }`}
+                        />
+                      </button>
+
+                      <AnimatePresence>
+                        {plansDropdownOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 6 }}
+                            transition={{ duration: 0.16, ease: "easeOut" }}
+                            className="absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-3"
+                          >
+                            <div className="overflow-hidden rounded-xl border border-[#DCE3EC] bg-white shadow-[0_20px_44px_rgba(21,54,106,0.16)]">
+                              <p className="border-b border-[#EDF1F6] bg-[#F4F7FC] px-5 py-2.5 text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-[#5C6F89]">
+                                Broadband plans
+                              </p>
+                              {link.submenu.map((item) => (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  onClick={() => setPlansDropdownOpen(false)}
+                                  className="block px-5 py-3.5 transition-colors hover:bg-[#F4F7FC]"
+                                >
+                                  <span className="block text-sm font-bold text-[#15366A]">{item.label}</span>
+                                  <span className="mt-0.5 block text-xs text-[#5C6F89]">{item.hint}</span>
+                                </Link>
+                              ))}
+                              <Link
+                                href="/#finder"
+                                onClick={() => setPlansDropdownOpen(false)}
+                                className="block border-t border-[#EDF1F6] px-5 py-3 transition-colors hover:bg-[#F4F7FC]"
+                              >
+                                <span className="block text-sm font-bold text-[#11418D]">Find my perfect plan</span>
+                                <span className="mt-0.5 block text-xs text-[#5C6F89]">3-question quiz, live results</span>
+                              </Link>
+                              <Link
+                                href="/plans"
+                                onClick={() => setPlansDropdownOpen(false)}
+                                className="block border-t border-[#EDF1F6] px-5 py-3 text-[0.8rem] font-bold text-[#C1170C] hover:bg-red-50/50"
+                              >
+                                Compare all plans →
+                              </Link>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                      className={`relative block px-4 py-2.5 text-[0.9rem] font-semibold transition-colors ${
+                        isActive(link.href) ? "text-[#11418D]" : "text-[#33475f] hover:text-[#11418D]"
+                      }`}
+                    >
+                      {link.label}
+                      <span
+                        aria-hidden
+                        className={`absolute inset-x-4 -bottom-[13px] h-[3px] rounded-t-full bg-[#C1170C] transition-opacity ${
+                          isActive(link.href) ? "opacity-100" : "opacity-0"
+                        }`}
+                      />
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            <div className="hidden items-center gap-2.5 lg:flex">
+              <Link
+                href="/contact"
+                className="tele-btn tele-btn-primary px-5 py-2.5"
+              >
+                Get Connected
+              </Link>
+            </div>
+
+            <button
+              type="button"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[10px] p-2 text-[#15366A] hover:bg-[#F4F7FC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#11418D]/30 lg:hidden"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Brand keyline — blue → red → blue echoes the extranet wordmark */}
+      <span aria-hidden className="block h-[2px] bg-gradient-to-r from-[#11418D] via-[#C1170C] to-[#11418D]" />
 
       <AnimatePresence>
         {mobileOpen && (
@@ -186,28 +227,24 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-slate-200 bg-white/95 shadow-[0_18px_40px_rgba(15,23,42,0.14)] backdrop-blur-xl lg:hidden"
+            transition={{ duration: 0.22, ease: "easeInOut" }}
+            className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-[#DCE3EC] bg-white shadow-[0_18px_40px_rgba(21,54,106,0.14)] lg:hidden"
           >
-            <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+            <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]" aria-label="Mobile">
               {navLinks.map((link) => (
                 <div key={link.label}>
                   {link.submenu ? (
                     <>
                       <button
+                        type="button"
                         onClick={() => setMobilePlansOpen(!mobilePlansOpen)}
-                        className={`w-full min-h-[48px] rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 ease-in-out flex items-center justify-between ${
-                          isActive(link.href)
-                            ? "bg-blue-100 text-[#134799]"
-                            : "text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
+                        aria-expanded={mobilePlansOpen}
+                        className={`flex min-h-[48px] w-full items-center justify-between rounded-[10px] px-4 py-3 text-[0.95rem] font-bold ${
+                          isActive(link.href) ? "bg-[#F4F7FC] text-[#11418D]" : "text-[#15366A] hover:bg-[#F8F9FB]"
                         }`}
                       >
                         {link.label}
-                        <ChevronDown
-                          className={`w-4 h-4 transition-transform duration-200 ${
-                            mobilePlansOpen ? "rotate-180" : ""
-                          }`}
-                        />
+                        <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${mobilePlansOpen ? "rotate-180" : ""}`} />
                       </button>
                       <AnimatePresence>
                         {mobilePlansOpen && (
@@ -215,10 +252,10 @@ export default function Navbar() {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                            transition={{ duration: 0.18, ease: "easeInOut" }}
                             className="overflow-hidden"
                           >
-                            <div className="flex flex-col gap-1 pl-4 mt-1">
+                            <div className="mt-1 flex flex-col gap-1 rounded-[10px] border border-[#DCE3EC] bg-[#F8F9FB] p-2">
                               {link.submenu.map((item) => (
                                 <Link
                                   key={item.label}
@@ -227,11 +264,33 @@ export default function Navbar() {
                                     setMobileOpen(false);
                                     setMobilePlansOpen(false);
                                   }}
-                                  className="min-h-[44px] rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-[#134799] transition-all duration-200 ease-in-out"
+                                  className="rounded-lg px-3 py-2.5 hover:bg-white"
                                 >
-                                  {item.label}
+                                  <span className="block text-sm font-bold text-[#15366A]">{item.label}</span>
+                                  <span className="block text-xs text-[#5C6F89]">{item.hint}</span>
                                 </Link>
                               ))}
+                              <Link
+                                href="/#finder"
+                                onClick={() => {
+                                  setMobileOpen(false);
+                                  setMobilePlansOpen(false);
+                                }}
+                                className="rounded-lg px-3 py-2.5 hover:bg-white"
+                              >
+                                <span className="block text-sm font-bold text-[#11418D]">Find my perfect plan</span>
+                                <span className="block text-xs text-[#5C6F89]">3-question quiz, live results</span>
+                              </Link>
+                              <Link
+                                href="/plans"
+                                onClick={() => {
+                                  setMobileOpen(false);
+                                  setMobilePlansOpen(false);
+                                }}
+                                className="rounded-lg px-3 py-2.5 text-sm font-bold text-[#C1170C]"
+                              >
+                                Compare all plans →
+                              </Link>
                             </div>
                           </motion.div>
                         )}
@@ -241,10 +300,8 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className={`min-h-[48px] rounded-xl px-4 py-3 text-[15px] font-semibold transition-all duration-200 ease-in-out block ${
-                        isActive(link.href)
-                          ? "bg-blue-100 text-[#134799]"
-                          : "text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
+                      className={`block min-h-[48px] rounded-[10px] px-4 py-3 text-[0.95rem] font-bold ${
+                        isActive(link.href) ? "bg-[#F4F7FC] text-[#11418D]" : "text-[#15366A] hover:bg-[#F8F9FB]"
                       }`}
                     >
                       {link.label}
@@ -252,25 +309,22 @@ export default function Navbar() {
                   )}
                 </div>
               ))}
-              <div className="mt-3 flex flex-col gap-2 border-t border-slate-200 pt-3">
-                <a
-                  href="tel:+919540901195"
-                  className="flex min-h-[44px] items-center gap-2 px-4 py-3 text-slate-600 transition-all duration-200 ease-in-out hover:text-[#134799]"
-                >
-                  <Phone className="w-4 h-4 text-[#134799]" />
-                  +91 95409 01195
+              <div className="mt-3 flex flex-col gap-2 border-t border-[#DCE3EC] pt-4">
+                <a href={SALES_TEL} className="flex min-h-[44px] items-center gap-2 px-4 py-2 text-sm font-bold text-[#11418D]">
+                  <Phone className="h-4 w-4" />
+                  Sales: {SALES_PHONE}
                 </a>
                 <Link
                   href="https://user.extranetindia.com/Selfcare/#/login"
                   onClick={() => setMobileOpen(false)}
-                  className="mx-0 min-h-[48px] rounded-xl border border-slate-200 bg-white py-3.5 text-center text-sm font-semibold text-slate-700 transition-all duration-200 ease-in-out hover:bg-[#D2190D] hover:text-white hover:border-[#D2190D] hover:shadow-md hover:shadow-red-900/15"
+                  className="tele-btn tele-btn-outline min-h-[48px] w-full"
                 >
-                  My Account
+                  Pay Bill / My Account
                 </Link>
                 <Link
                   href="/contact"
                   onClick={() => setMobileOpen(false)}
-                  className="mx-0 min-h-[48px] rounded-xl bg-[#134799] py-3.5 text-center text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f]"
+                  className="tele-btn tele-btn-primary min-h-[48px] w-full"
                 >
                   Get Connected
                 </Link>

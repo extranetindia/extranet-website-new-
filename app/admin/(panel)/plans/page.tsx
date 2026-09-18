@@ -522,18 +522,18 @@ export default function AdminPlansPage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="tele-card p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">Plans Management</h2>
-            <p className="text-sm hover:text-[#134799]">
+            <h2 className="text-lg font-semibold text-[#15366A]">Plans Management</h2>
+            <p className="text-sm hover:text-[#11418D]">
               Add, edit, and publish WiFi plans with OTT bundle options.
             </p>
           </div>
           <button
             type="button"
             onClick={openNew}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#11418D] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0e3675] hover:shadow-lg hover:shadow-blue-900/20"
           >
             <Plus size={16} />
             Add New Plan
@@ -542,7 +542,7 @@ export default function AdminPlansPage() {
 
         <div className="mt-5 overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-slate-200 hover:text-[#134799]">
+            <thead className="border-b border-[#DCE3EC] hover:text-[#11418D]">
               <tr>
                 <th className="px-3 py-2 font-medium">Plan</th>
                 <th className="px-3 py-2 font-medium">Plan Category</th>
@@ -555,37 +555,37 @@ export default function AdminPlansPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#134799]">
+                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#11418D]">
                     Loading plans...
                   </td>
                 </tr>
               ) : sortedPlans.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#134799]">
+                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#11418D]">
                     No plans found. Add your first plan.
                   </td>
                 </tr>
               ) : (
                 sortedPlans.map((plan) => (
-                  <tr key={plan.id} className="border-b border-slate-100">
-                    <td className="px-3 py-3 font-medium text-slate-900">{plan.name}</td>
-                    <td className="px-3 py-3 text-slate-700">
+                  <tr key={plan.id} className="border-b border-[#EDF1F6]">
+                    <td className="px-3 py-3 font-medium text-[#15366A]">{plan.name}</td>
+                    <td className="px-3 py-3 text-[#475569]">
                       {plan.planType === "business"
                         ? "Business Internet"
                         : plan.homePlanCategory === "wifi_ott"
                           ? "WiFi + OTT"
                           : "WiFi Only"}
                     </td>
-                    <td className="px-3 py-3 text-slate-700">{plan.speed}</td>
-                    <td className="px-3 py-3 text-slate-700">{plan.price}</td>
+                    <td className="px-3 py-3 text-[#475569]">{plan.speed}</td>
+                    <td className="px-3 py-3 text-[#475569]">{plan.price}</td>
                     <td className="px-3 py-3">
                       <button
                         type="button"
                         onClick={() => void togglePopular(plan)}
                         className={`rounded-full px-3 py-1 text-xs font-semibold ${
                           plan.popular
-                            ? "bg-blue-100 text-[#134799]"
-                            : "bg-slate-100 hover:text-[#134799]"
+                            ? "bg-[#11418D]/10 text-[#11418D]"
+                            : "bg-[#F4F7FC] hover:text-[#11418D]"
                         }`}
                       >
                         {plan.popular ? "Popular" : "Not Popular"}
@@ -596,14 +596,14 @@ export default function AdminPlansPage() {
                         <button
                           type="button"
                           onClick={() => openEdit(plan)}
-                          className="rounded-lg border border-slate-200 p-1.5 text-slate-600 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799]"
+                          className="rounded-lg border border-[#DCE3EC] p-1.5 text-[#5C6F89] transition-all duration-200 ease-in-out hover:border-[#11418D]/30 hover:bg-[#F4F7FC] hover:text-[#11418D]"
                         >
                           <Pencil size={14} />
                         </button>
                         <button
                           type="button"
                           onClick={() => void removePlan(plan.id)}
-                          className="rounded-lg border border-red-200 p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#D2190D]/40 hover:bg-red-50 hover:text-[#b8160c]"
+                          className="rounded-lg border border-red-200 p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#C1170C]/40 hover:bg-red-50 hover:text-[#a9140b]"
                         >
                           <Trash2 size={14} />
                         </button>
@@ -618,16 +618,16 @@ export default function AdminPlansPage() {
       </section>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4">
-          <div className="flex max-h-[min(92dvh,900px)] w-full max-w-2xl flex-col rounded-2xl border border-slate-200 bg-white shadow-2xl">
-            <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-5 py-4">
-              <h3 className="text-base font-semibold text-slate-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0E2B57]/50 p-4">
+          <div className="flex max-h-[min(92dvh,900px)] w-full max-w-2xl flex-col rounded-xl border border-[#DCE3EC] bg-white shadow-2xl">
+            <div className="flex shrink-0 items-center justify-between border-b border-[#EDF1F6] px-5 py-4">
+              <h3 className="text-base font-semibold text-[#15366A]">
                 {editingId ? "Edit Plan" : "Add New Plan"}
               </h3>
               <button
                 type="button"
                 onClick={closeModal}
-                className="rounded-lg p-1 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799]"
+                className="rounded-lg p-1 transition-all duration-200 ease-in-out hover:bg-[#F4F7FC] hover:text-[#11418D]"
               >
                 <X size={16} />
               </button>
@@ -642,7 +642,7 @@ export default function AdminPlansPage() {
 
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     Plan Name
                   </span>
                   <input
@@ -650,11 +650,11 @@ export default function AdminPlansPage() {
                     onChange={(event) =>
                       setDraft((previous) => ({ ...previous, name: event.target.value }))
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     Plan Type
                   </span>
                   <select
@@ -667,7 +667,7 @@ export default function AdminPlansPage() {
                         homePlanCategory: event.target.value === "business" ? null : previous.homePlanCategory,
                       }))
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   >
                     {PLAN_TYPE_VALUES.map((value) => (
                       <option key={value} value={value}>
@@ -678,7 +678,7 @@ export default function AdminPlansPage() {
                 </label>
                 {draft.planType === "home" && (
                   <label className="block">
-                    <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                    <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                       Home Plan Category
                     </span>
                     <select
@@ -689,7 +689,7 @@ export default function AdminPlansPage() {
                           homePlanCategory: event.target.value as HomePlanCategoryValue,
                         }))
                       }
-                      className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                      className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                     >
                       {HOME_PLAN_CATEGORY_VALUES.map((value) => (
                         <option key={value} value={value}>
@@ -700,7 +700,7 @@ export default function AdminPlansPage() {
                   </label>
                 )}
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     Speed
                   </span>
                   <input
@@ -708,11 +708,11 @@ export default function AdminPlansPage() {
                     onChange={(event) =>
                       setDraft((previous) => ({ ...previous, speed: event.target.value }))
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     Default Pricing (fallback)
                   </span>
                   <input
@@ -720,14 +720,14 @@ export default function AdminPlansPage() {
                     onChange={(event) =>
                       setDraft((previous) => ({ ...previous, price: event.target.value }))
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   />
-                  <span className="mt-1 block text-xs hover:text-[#134799]">
+                  <span className="mt-1 block text-xs hover:text-[#11418D]">
                     Used when no city-specific price is set.
                   </span>
                 </label>
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     One-time Setup Fee
                   </span>
                   <input
@@ -739,14 +739,14 @@ export default function AdminPlansPage() {
                       }))
                     }
                     placeholder="e.g., ₹1,000"
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   />
-                  <span className="mt-1 block text-xs hover:text-[#134799]">
+                  <span className="mt-1 block text-xs hover:text-[#11418D]">
                     Optional. Leave empty to hide.
                   </span>
                 </label>
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     Security Deposit
                   </span>
                   <input
@@ -758,26 +758,26 @@ export default function AdminPlansPage() {
                       }))
                     }
                     placeholder="e.g., ₹1,000"
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   />
-                  <span className="mt-1 block text-xs hover:text-[#134799]">
+                  <span className="mt-1 block text-xs hover:text-[#11418D]">
                     Optional. Will be marked as "Refundable". Leave empty to hide.
                   </span>
                 </label>
 
                 {/* Billing-Cycle Specific Pricing */}
                 <div className="md:col-span-2">
-                  <h4 className="mb-3 text-sm font-semibold text-slate-800">Billing-Cycle Specific Pricing & Fees</h4>
-                  <p className="mb-4 text-xs text-slate-600">
+                  <h4 className="mb-3 text-sm font-semibold text-[#15366A]">Billing-Cycle Specific Pricing & Fees</h4>
+                  <p className="mb-4 text-xs text-[#5C6F89]">
                     Set pricing and fees for each billing cycle. Leave empty to use default values.
                   </p>
                   
                   {/* Monthly */}
-                  <div className="mb-4 rounded-lg border border-slate-200 p-3">
-                    <h5 className="mb-3 font-medium text-slate-700">Monthly</h5>
+                  <div className="mb-4 rounded-lg border border-[#DCE3EC] p-3">
+                    <h5 className="mb-3 font-medium text-[#475569]">Monthly</h5>
                     <div className="grid gap-3 md:grid-cols-3">
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Monthly Price</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Monthly Price</span>
                         <input
                           value={draft.monthlyPrice ?? ""}
                           onChange={(event) =>
@@ -787,11 +787,11 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹500"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Setup Fee</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Setup Fee</span>
                         <input
                           value={draft.monthlySetupFee ?? ""}
                           onChange={(event) =>
@@ -801,11 +801,11 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹500"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Security Deposit</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Security Deposit</span>
                         <input
                           value={draft.monthlySecurityDeposit ?? ""}
                           onChange={(event) =>
@@ -815,18 +815,18 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹1,000"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                     </div>
                   </div>
 
                   {/* Quarterly */}
-                  <div className="mb-4 rounded-lg border border-slate-200 p-3">
-                    <h5 className="mb-3 font-medium text-slate-700">Quarterly</h5>
+                  <div className="mb-4 rounded-lg border border-[#DCE3EC] p-3">
+                    <h5 className="mb-3 font-medium text-[#475569]">Quarterly</h5>
                     <div className="grid gap-3 md:grid-cols-3">
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Quarterly Price</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Quarterly Price</span>
                         <input
                           value={draft.quarterlyPrice ?? ""}
                           onChange={(event) =>
@@ -836,11 +836,11 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹1,400"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Setup Fee</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Setup Fee</span>
                         <input
                           value={draft.quarterlySetupFee ?? ""}
                           onChange={(event) =>
@@ -850,11 +850,11 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹500"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Security Deposit</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Security Deposit</span>
                         <input
                           value={draft.quarterlySecurityDeposit ?? ""}
                           onChange={(event) =>
@@ -864,18 +864,18 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹1,000"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                     </div>
                   </div>
 
                   {/* Half-Yearly */}
-                  <div className="mb-4 rounded-lg border border-slate-200 p-3">
-                    <h5 className="mb-3 font-medium text-slate-700">Half-Yearly</h5>
+                  <div className="mb-4 rounded-lg border border-[#DCE3EC] p-3">
+                    <h5 className="mb-3 font-medium text-[#475569]">Half-Yearly</h5>
                     <div className="grid gap-3 md:grid-cols-3">
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Half-Yearly Price</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Half-Yearly Price</span>
                         <input
                           value={draft.halfYearlyPrice ?? ""}
                           onChange={(event) =>
@@ -885,11 +885,11 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹2,700"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Setup Fee</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Setup Fee</span>
                         <input
                           value={draft.halfYearlySetupFee ?? ""}
                           onChange={(event) =>
@@ -899,11 +899,11 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹500"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Security Deposit</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Security Deposit</span>
                         <input
                           value={draft.halfYearlySecurityDeposit ?? ""}
                           onChange={(event) =>
@@ -913,18 +913,18 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹1,000"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                     </div>
                   </div>
 
                   {/* Annual */}
-                  <div className="rounded-lg border border-slate-200 p-3">
-                    <h5 className="mb-3 font-medium text-slate-700">Annual</h5>
+                  <div className="rounded-lg border border-[#DCE3EC] p-3">
+                    <h5 className="mb-3 font-medium text-[#475569]">Annual</h5>
                     <div className="grid gap-3 md:grid-cols-3">
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Annual Price</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Annual Price</span>
                         <input
                           value={draft.annualPrice ?? ""}
                           onChange={(event) =>
@@ -934,11 +934,11 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹5,400"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Setup Fee</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Setup Fee</span>
                         <input
                           value={draft.annualSetupFee ?? ""}
                           onChange={(event) =>
@@ -948,11 +948,11 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹500"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                       <label className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-600">Security Deposit</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[#5C6F89]">Security Deposit</span>
                         <input
                           value={draft.annualSecurityDeposit ?? ""}
                           onChange={(event) =>
@@ -962,7 +962,7 @@ export default function AdminPlansPage() {
                             }))
                           }
                           placeholder="e.g., ₹1,000"
-                          className="w-full rounded-lg border border-slate-200 px-2.5 py-2 text-xs outline-none focus:border-blue-400"
+                          className="w-full rounded-lg border border-[#DCE3EC] px-2.5 py-2 text-xs outline-none focus:border-[#11418D]"
                         />
                       </label>
                     </div>
@@ -970,7 +970,7 @@ export default function AdminPlansPage() {
                 </div>
 
                 <label className="block md:col-span-2">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     Button Text
                   </span>
                   <input
@@ -981,7 +981,7 @@ export default function AdminPlansPage() {
                         buttonText: event.target.value,
                       }))
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   />
                 </label>
                 <label className="mt-7 flex items-center gap-2">
@@ -995,23 +995,23 @@ export default function AdminPlansPage() {
                       }))
                     }
                   />
-                  <span className="text-sm font-medium text-slate-700">
+                  <span className="text-sm font-medium text-[#475569]">
                     Mark as Popular
                   </span>
                 </label>
                 <label className="block md:col-span-2">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     Features (comma-separated)
                   </span>
                   <input
                     value={featuresInput}
                     onChange={(event) => setFeaturesInput(event.target.value)}
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   />
                 </label>
 
                 <label className="block md:col-span-2">
-                  <span className="mb-1.5 block text-sm font-medium text-slate-700">
+                  <span className="mb-1.5 block text-sm font-medium text-[#475569]">
                     OTT Package
                   </span>
                   <select
@@ -1022,7 +1022,7 @@ export default function AdminPlansPage() {
                         ottPackageId: event.target.value || null,
                       }))
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D]"
                   >
                     <option value="">None</option>
                     {ottPackages.map((pkg) => (
@@ -1044,12 +1044,12 @@ export default function AdminPlansPage() {
               </div>
             </div>
 
-            <div className="flex shrink-0 justify-end gap-2 border-t border-slate-100 px-5 py-4">
+            <div className="flex shrink-0 justify-end gap-2 border-t border-[#EDF1F6] px-5 py-4">
               <button
                 type="button"
                 onClick={closeModal}
                 disabled={saving}
-                className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-100 hover:text-[#134799] disabled:opacity-60"
+                className="rounded-xl border border-[#DCE3EC] px-4 py-2 text-sm font-medium text-[#475569] transition-all duration-200 ease-in-out hover:border-[#11418D]/30 hover:bg-[#F4F7FC] hover:text-[#11418D] disabled:opacity-60"
               >
                 Cancel
               </button>
@@ -1057,7 +1057,7 @@ export default function AdminPlansPage() {
                 type="button"
                 onClick={() => void submitPlan()}
                 disabled={saving}
-                className="rounded-xl bg-[#134799] px-4 py-2 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-60"
+                className="rounded-xl bg-[#11418D] px-4 py-2 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0e3675] hover:shadow-lg hover:shadow-blue-900/20 disabled:opacity-60"
               >
                 {saving ? "Saving..." : "Save Plan"}
               </button>

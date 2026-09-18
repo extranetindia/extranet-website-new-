@@ -2,73 +2,203 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0f172a;
-  --blue-primary: #1a3a8f;
-  --blue-bright: #2563eb;
-  --blue-light: #3b82f6;
-  --red-primary: #dc2626;
-  --red-bright: #ef4444;
+  --foreground: #173b73;
+  /* Brand identity */
+  --brand: #11418D;
+  --brand-deep: #173b73;
+  --brand-ink: #0e2b57;
+  --brand-red: #c1170c;
+  --red-hover: #a9140b;
+  --bg-tint: #f4f7fc;
+  --bg-soft: #f8f9fb;
+  --line: #dce3ec;
+  --body: #475569;
+  --muted: #5c6f89;
   /* Navbar height (responsive) */
   --navbar-height: 3.5rem; /* 56px on mobile (h-14) */
 }
 
 @media (min-width: 640px) {
   :root {
-    --navbar-height: 4rem; /* 64px on sm+ (h-16) */
+    --navbar-height: 4.5rem; /* 72px on sm+ */
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --navbar-height: 6.75rem; /* 72px bar + 36px trust strip on md+ */
   }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --color-blue-primary: var(--blue-primary);
-  --color-blue-bright: var(--blue-bright);
-  --color-blue-light: var(--blue-light);
-  --color-red-primary: var(--red-primary);
-  --color-red-bright: var(--red-bright);
+  --font-sans: var(--font-manrope);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-red: var(--brand-red);
+  --color-tint: var(--bg-tint);
+  --color-soft: var(--bg-soft);
+  --color-line: var(--line);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* Anchored sections land clear of the fixed navbar + wayfinding bar */
+section[id] {
+  scroll-margin-top: calc(var(--navbar-height, 3.5rem) + 3.5rem);
+}
+
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  color: var(--body);
+  font-family: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
+/* :where() keeps zero specificity, so any text-color / tracking utility
+   on a heading (e.g. white titles on navy bands) always wins. */
+:where(h1, h2, h3, h4) {
+  color: var(--brand-deep);
+  letter-spacing: -0.01em;
+}
+
+/* Refined thin scrollbar */
+::selection {
+  background: #c1170c;
+  color: #ffffff;
+}
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #eef2f7;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1d4ed8;
-  border-radius: 3px;
+  background: #11418D;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: #0e3675;
 }
 
+/* Subtle telecom network grid — used sparingly on tinted bands */
 .network-grid-light {
   background-image:
-    linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(rgba(17, 65, 141, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 65, 141, 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
 }
 
+.network-grid-dark {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Hairline trust divider */
 .section-divider {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(37, 99, 235, 0.25),
-    rgba(220, 38, 38, 0.25),
+    rgba(17, 65, 141, 0.28),
+    rgba(193, 23, 12, 0.22),
     transparent
   );
   height: 1px;
+}
+
+/* Enterprise card + button primitives */
+.tele-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(21, 54, 106, 0.05);
+}
+
+.tele-card-hover {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.tele-card-hover:hover {
+  border-color: rgba(17, 65, 141, 0.35);
+  box-shadow: 0 12px 28px rgba(17, 65, 141, 0.1);
+}
+
+.tele-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.tele-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, transform 0.15s ease;
+}
+.tele-btn:active {
+  transform: translateY(1px);
+}
+.tele-btn-primary {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(17, 65, 141, 0.22);
+}
+.tele-btn-primary:hover {
+  background: #0e3675;
+  box-shadow: 0 10px 22px rgba(17, 65, 141, 0.28);
+}
+.tele-btn-red {
+  background: var(--brand-red);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(193, 23, 12, 0.22);
+}
+.tele-btn-red:hover {
+  background: var(--red-hover);
+}
+.tele-btn-outline {
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--brand-deep);
+}
+.tele-btn-outline:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.tele-input {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--brand-deep);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.tele-input::placeholder {
+  color: #8ba0bb;
+}
+.tele-input:hover {
+  border-color: rgba(17, 65, 141, 0.4);
+}
+.tele-input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(17, 65, 141, 0.12);
 }
 
 @keyframes float {
@@ -77,12 +207,129 @@ body {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-12px);
+    transform: translateY(-8px);
   }
 }
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+/* ---------- Corporate motion kit ----------
+   Slow, restrained, expensive-feeling. Nothing bounces, nothing spins fast.
+   All animation is disabled under prefers-reduced-motion (plus a global
+   framer-motion MotionConfig in the root layout). */
+
+/* Cinematic load choreography */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-in {
+  animation: rise-in 0.7s ease-out both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fade-in {
+  animation: fade-in 0.9s ease-out both;
+}
+
+/* Hero banner — barely-perceptible 26s drift, like premium TV advertising */
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+.ken-burns {
+  animation: ken-burns 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Living fibre map — pulses travel the backbone via CSS motion path */
+@keyframes fiber-travel {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+.fiber-pulse {
+  animation: fiber-travel linear infinite;
+}
+
+/* Node sonar rings */
+@keyframes fiber-ring {
+  from {
+    transform: scale(0.35);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(2.3);
+    opacity: 0;
+  }
+}
+.fiber-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: fiber-ring 2.8s ease-out infinite;
+}
+
+/* Live sectors marquee */
+@keyframes tele-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.tele-marquee-track {
+  animation: tele-marquee 36s linear infinite;
+}
+.tele-marquee:hover .tele-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Live pulse dot */
+@keyframes tele-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  80%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.tele-live-dot {
+  position: relative;
+}
+.tele-live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: tele-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 .mobile-carousel > div {
@@ -92,4 +339,57 @@ body {
 
 .mobile-carousel > div::-webkit-scrollbar {
   display: none;
+}
+
+/* Outlined display type — agency-style giant wordmarks.
+   Plain CSS (not utilities) so the rest fill + hover glow always apply. */
+.text-stroke-navy {
+  -webkit-text-stroke: 1.5px rgba(21, 54, 106, 0.55);
+  color: rgba(21, 54, 106, 0.07);
+}
+.wordmark-glow {
+  transition: color 0.5s ease, filter 0.5s ease;
+}
+.wordmark-wrap:hover .wordmark-glow {
+  color: #15366a;
+  filter: drop-shadow(0 0 26px rgba(193, 23, 12, 0.35));
+}
+.text-stroke-white {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.22);
+  color: transparent;
+}
+
+/* iOS Safari auto-zooms on focus when inputs are under 16px —
+   that jarring zoom breaks the mobile flow, so hold 16px there. */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-float,
+  .tele-marquee-track,
+  .ken-burns,
+  .rise-in,
+  .fade-in,
+  .fiber-pulse,
+  .fiber-ring {
+    animation: none !important;
+  }
+  .tele-live-dot::after {
+    animation: none;
+  }
+  .fiber-pulse {
+    opacity: 0;
+  }
+  .rise-in,
+  .fade-in {
+    opacity: 1;
+  }
 }

@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { supabase } from "@/lib/supabase/client";
 import type { PlanRow } from "@/lib/database/schema";
+import PageHero from "@/components/ui/PageHero";
 import PlansPageSections from "@/components/plans/PlansPageSections";
 
 export default async function HomePlansRoutePage() {
@@ -11,15 +12,16 @@ export default async function HomePlansRoutePage() {
     .order("created_at", { ascending: false });
 
   return (
-    <section className="pt-14 sm:pt-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#134799]">Home Plans</p>
-          <h1 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Residential plans with city-aware pricing and OTT flexibility.</h1>
-          <p className="mt-4 text-slate-600">Use the city selector, billing cycle switcher, and plan filters to compare your best-fit home broadband option.</p>
-        </div>
+    <>
+      <PageHero
+        badge="Home broadband"
+        title="Fibre plans for every kind of home"
+        description="Power through work calls, 4K streaming and online classes. Pick your city to see live pricing, then compare WiFi-only and WiFi + OTT options."
+        crumbs={[{ label: "Plans", href: "/plans" }, { label: "Home Broadband" }]}
+      />
+      <div className="bg-white">
+        <PlansPageSections category="home" plans={plans as PlanRow[]} />
       </div>
-      <PlansPageSections category="home" plans={plans as PlanRow[]} />
-    </section>
+    </>
   );
 }

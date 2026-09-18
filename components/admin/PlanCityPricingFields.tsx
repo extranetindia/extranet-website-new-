@@ -26,8 +26,8 @@ export default function PlanCityPricingFields({
   return (
     <div className="md:col-span-2">
       <div className="mb-3">
-        <h4 className="text-sm font-semibold text-slate-900">City Pricing</h4>
-        <p className="mt-1 text-xs hover:text-[#134799]">
+        <h4 className="text-sm font-semibold text-[#15366A]">City Pricing</h4>
+        <p className="mt-1 text-xs hover:text-[#11418D]">
           Optional per-city billing cycle pricing overrides. Leave empty to use the default plan prices.
         </p>
       </div>
@@ -39,24 +39,24 @@ export default function PlanCityPricingFields({
       )}
 
       {loading ? (
-        <p className="text-sm hover:text-[#134799]">Loading city pricing...</p>
+        <p className="text-sm hover:text-[#11418D]">Loading city pricing...</p>
       ) : rows.length === 0 ? (
-        <p className="text-sm hover:text-[#134799]">
+        <p className="text-sm hover:text-[#11418D]">
           No cities found. Create cities in Coverage Management first.
         </p>
       ) : (
-        <div className="max-h-[360px] space-y-3 overflow-y-auto rounded-xl border border-slate-200 bg-slate-50/80 p-3 sm:max-h-[420px]">
+        <div className="max-h-[360px] space-y-3 overflow-y-auto rounded-xl border border-[#DCE3EC] bg-[#F8F9FB]/80 p-3 sm:max-h-[420px]">
           {rows.map((row) => (
             <div
               key={row.cityId}
-              className="rounded-xl border border-slate-200 bg-white p-3 sm:p-4"
+              className="rounded-xl border border-[#DCE3EC] bg-white p-3 sm:p-4"
             >
-              <p className="mb-3 text-sm font-semibold text-slate-900">
+              <p className="mb-3 text-sm font-semibold text-[#15366A]">
                 {row.cityName}
               </p>
               <div className="grid gap-3 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-1 block text-xs font-medium text-slate-600">
+                  <span className="mb-1 block text-xs font-medium text-[#5C6F89]">
                     Monthly Price
                   </span>
                   <input
@@ -67,11 +67,11 @@ export default function PlanCityPricingFields({
                     onChange={(event) =>
                       onChange(row.cityId, "monthlyPrice", event.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D] disabled:bg-[#F4F7FC] disabled:hover:text-[#11418D]"
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-1 block text-xs font-medium text-slate-600">
+                  <span className="mb-1 block text-xs font-medium text-[#5C6F89]">
                     Quarterly Price
                   </span>
                   <input
@@ -82,11 +82,11 @@ export default function PlanCityPricingFields({
                     onChange={(event) =>
                       onChange(row.cityId, "quarterlyPrice", event.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D] disabled:bg-[#F4F7FC] disabled:hover:text-[#11418D]"
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-1 block text-xs font-medium text-slate-600">
+                  <span className="mb-1 block text-xs font-medium text-[#5C6F89]">
                     Half-Yearly Price
                   </span>
                   <input
@@ -97,11 +97,11 @@ export default function PlanCityPricingFields({
                     onChange={(event) =>
                       onChange(row.cityId, "halfYearlyPrice", event.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D] disabled:bg-[#F4F7FC] disabled:hover:text-[#11418D]"
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-1 block text-xs font-medium text-slate-600">
+                  <span className="mb-1 block text-xs font-medium text-[#5C6F89]">
                     Annual Price
                   </span>
                   <input
@@ -112,7 +112,7 @@ export default function PlanCityPricingFields({
                     onChange={(event) =>
                       onChange(row.cityId, "annualPrice", event.target.value)
                     }
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-blue-400 disabled:bg-slate-100 disabled:hover:text-[#134799]"
+                    className="w-full rounded-xl border border-[#DCE3EC] px-3 py-2.5 text-sm outline-none focus:border-[#11418D] disabled:bg-[#F4F7FC] disabled:hover:text-[#11418D]"
                   />
                 </label>
 

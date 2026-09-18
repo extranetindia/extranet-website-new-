@@ -32,25 +32,26 @@ export default function LegalPage({
   children,
 }: LegalPageProps) {
   return (
-    <main className="bg-slate-50 py-12 sm:py-16 md:py-20">
+    <main className="bg-[#F8F9FB] py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <article className="mx-auto w-full max-w-[900px] rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm sm:rounded-[2rem] sm:p-8 md:p-10">
+        <article className="tele-card mx-auto w-full max-w-[900px] p-5 sm:p-8 md:p-10">
           <header className="mb-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#134799]">
+            <p className="tele-eyebrow flex items-center gap-2 text-[#C1170C]">
+              <span aria-hidden className="inline-block h-[2px] w-7 rounded-full bg-[#C1170C]" />
               Legal
             </p>
-            <h1 className="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
+            <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-[#15366A] sm:text-4xl">
               {title}
             </h1>
-            <p className="mt-5 text-base leading-8 text-slate-600">
+            <p className="mt-4 text-base leading-relaxed text-[#5C6F89]">
               {summary}
             </p>
-            <p className="mt-5 text-sm font-medium uppercase tracking-[0.2em] hover:text-[#134799]">
+            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#5C6F89]">
               Last Updated: {formatLastUpdated(lastUpdated)}
             </p>
           </header>
 
-          <div className="space-y-10 text-slate-700">{children}</div>
+          <div className="space-y-10 text-[#475569]">{children}</div>
         </article>
       </div>
     </main>

@@ -1,16 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, CheckCircle2, Building, Home } from "lucide-react";
+import { MapPin, Building, Home, ArrowRight } from "lucide-react";
 import SectionPreview from "@/components/ui/SectionPreview";
 import Link from "next/link";
-
-const cities = [
-  "Mumbai", "Delhi NCR", "Bengaluru", "Hyderabad", "Chennai",
-  "Pune", "Kolkata", "Ahmedabad", "Jaipur", "Lucknow",
-  "Nagpur", "Bhopal", "Indore", "Surat", "Vadodara",
-  "Kochi", "Visakhapatnam", "Coimbatore", "Patna", "Chandigarh",
-];
 
 const coverageTypes = [
   {
@@ -36,56 +29,53 @@ const coverageTypes = [
 export default function Coverage() {
   return (
     <SectionPreview
-      eyebrow="Network Coverage"
+      eyebrow="Network coverage"
       title="Connected across India"
       description="20,000+ km of fiber backbone with active expansion into Tier 2 and Tier 3 cities."
       href="/coverage"
-      linkLabel="Full coverage map"
+      linkLabel="Check your area"
       className="bg-white"
+      id="coverage"
     >
-      <div className="grid md:grid-cols-3 gap-6 mb-10">
+      <div className="grid gap-5 md:grid-cols-3">
         {coverageTypes.map((type, i) => (
           <motion.div
             key={type.title}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.08 }}
-            className="p-6 rounded-2xl bg-slate-50 border border-slate-200 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10"
+            transition={{ delay: Math.min(i, 5) * 0.07 }}
+            className="tele-card tele-card-hover p-6"
           >
-            <div className="w-11 h-11 rounded-xl bg-blue-100 text-[#134799] flex items-center justify-center mb-4">
-              <type.icon className="w-5 h-5" />
+            <div className={`flex h-11 w-11 items-center justify-center rounded-[10px] ${
+              i % 2 === 1 ? "bg-[#C1170C]/10 text-[#C1170C]" : "bg-[#11418D]/10 text-[#11418D]"
+            }`}>
+              <type.icon className="h-5 w-5" aria-hidden />
             </div>
-            <div className="text-2xl font-black text-slate-900 mb-1">{type.count}</div>
-            <h3 className="font-bold text-slate-900 mb-2">{type.title}</h3>
-            <p className="text-slate-600 text-sm">{type.description}</p>
+            <div className="mt-4 text-[1.7rem] font-extrabold tracking-tight text-[#11418D]">{type.count}</div>
+            <h3 className="mt-1 font-extrabold text-[#15366A]">{type.title}</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-[#5C6F89]">{type.description}</p>
           </motion.div>
         ))}
       </div>
-      {/* <div className="rounded-2xl bg-slate-50 border border-slate-200 p-6 sm:p-8">
-        <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 text-green-600" />
-          Live in these cities
-        </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 mb-6">
-          {cities.slice(0, 10).map((city) => (
-            <span
-              key={city}
-              className="flex items-center gap-2 text-sm text-slate-600"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
-              {city}
-            </span>
-          ))}
+
+      <div className="mt-6 flex flex-col items-stretch gap-3 rounded-xl border border-[#DCE3EC] bg-[#F4F7FC] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <div className="flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#11418D] text-white">
+            <MapPin className="h-5 w-5" aria-hidden />
+          </span>
+          <div>
+            <h3 className="font-extrabold text-[#15366A]">Not sure if we serve your address?</h3>
+            <p className="mt-0.5 text-sm text-[#5C6F89]">
+              Check serviceability by pincode or talk to our team for a feasibility check.
+            </p>
+          </div>
         </div>
-        <p className="text-sm hover:text-[#134799] mb-4">+ 10 more metros on the full coverage page</p>
-        <Link
-          href="/coverage"
-          className="text-sm font-semibold text-[#134799] hover:text-[#134799]"
-        >
-          Check availability by pincode →
+        <Link href="/coverage" className="tele-btn tele-btn-primary shrink-0 px-6">
+          Check availability
+          <ArrowRight className="h-4 w-4" aria-hidden />
         </Link>
-      </div> */}
+      </div>
     </SectionPreview>
   );
 }

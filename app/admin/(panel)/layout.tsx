@@ -13,7 +13,7 @@ export default function AdminPanelLayout({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-[#F8F9FB]">
       <AdminSidebar
         collapsed={collapsed}
         onToggle={() => setCollapsed((value) => !value)}
@@ -23,7 +23,7 @@ export default function AdminPanelLayout({
 
       <div className="flex min-w-0 flex-1 flex-col">
         <AdminTopbar onOpenMobile={() => setMobileOpen(true)} />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+        <main className="mx-auto w-full max-w-6xl flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );

@@ -80,16 +80,16 @@ export default function AdminLeadsPage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="tele-card p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900">Leads</h2>
-            <p className="text-sm hover:text-[#134799]">
+            <h2 className="text-lg font-semibold text-[#15366A]">Leads</h2>
+            <p className="text-sm hover:text-[#11418D]">
               Contact form submissions from the public website.
             </p>
           </div>
           {!loading && (
-            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+            <span className="rounded-full bg-[#F4F7FC] px-3 py-1 text-xs font-semibold text-[#5C6F89]">
               {leads.length} total
             </span>
           )}
@@ -103,7 +103,7 @@ export default function AdminLeadsPage() {
 
         <div className="mt-5 overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="border-b border-slate-200 hover:text-[#134799]">
+            <thead className="border-b border-[#DCE3EC] hover:text-[#11418D]">
               <tr>
                 <th className="px-3 py-2 font-medium">Name</th>
                 <th className="px-3 py-2 font-medium">Phone</th>
@@ -116,29 +116,29 @@ export default function AdminLeadsPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#134799]">
+                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#11418D]">
                     Loading leads...
                   </td>
                 </tr>
               ) : leads.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#134799]">
+                  <td colSpan={6} className="px-3 py-8 text-center hover:text-[#11418D]">
                     No leads yet. Submissions from the contact page will appear here.
                   </td>
                 </tr>
               ) : (
                 leads.map((lead) => (
-                  <tr key={lead.id} className="border-b border-slate-100">
-                    <td className="px-3 py-3 font-medium text-slate-900">
+                  <tr key={lead.id} className="border-b border-[#EDF1F6]">
+                    <td className="px-3 py-3 font-medium text-[#15366A]">
                       {lead.full_name}
                       {lead.email && (
-                        <span className="mt-0.5 block text-xs font-normal hover:text-[#134799]">
+                        <span className="mt-0.5 block text-xs font-normal hover:text-[#11418D]">
                           {lead.email}
                         </span>
                       )}
                     </td>
-                    <td className="px-3 py-3 text-slate-700">{lead.phone}</td>
-                    <td className="max-w-[180px] px-3 py-3 text-slate-700">
+                    <td className="px-3 py-3 text-[#475569]">{lead.phone}</td>
+                    <td className="max-w-[180px] px-3 py-3 text-[#475569]">
                       {lead.inquiry_type}
                     </td>
                     <td className="px-3 py-3">
@@ -151,7 +151,7 @@ export default function AdminLeadsPage() {
                             event.target.value as LeadStatus,
                           )
                         }
-                        className="min-h-[36px] rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-medium text-slate-700 outline-none transition-all duration-200 ease-in-out hover:border-[#134799]/35 focus:border-blue-400 disabled:opacity-60"
+                        className="min-h-[36px] rounded-lg border border-[#DCE3EC] bg-white px-2 py-1.5 text-xs font-medium text-[#475569] outline-none transition-all duration-200 ease-in-out hover:border-[#11418D]/35 focus:border-[#11418D] disabled:opacity-60"
                       >
                         {LEAD_STATUSES.map((status) => (
                           <option key={status} value={status}>
@@ -160,7 +160,7 @@ export default function AdminLeadsPage() {
                         ))}
                       </select>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-3 text-slate-600">
+                    <td className="whitespace-nowrap px-3 py-3 text-[#5C6F89]">
                       {formatLeadDate(lead.created_at)}
                     </td>
                     <td className="px-3 py-3">
@@ -168,7 +168,7 @@ export default function AdminLeadsPage() {
                         type="button"
                         onClick={() => void handleDelete(lead.id)}
                         disabled={deletingId === lead.id}
-                        className="rounded-lg border border-red-200 p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#D2190D]/40 hover:bg-red-50 hover:text-[#b8160c] disabled:opacity-60"
+                        className="rounded-lg border border-red-200 p-1.5 text-red-600 transition-all duration-200 ease-in-out hover:border-[#C1170C]/40 hover:bg-red-50 hover:text-[#a9140b] disabled:opacity-60"
                         aria-label={`Delete lead ${lead.full_name}`}
                       >
                         <Trash2 size={14} />

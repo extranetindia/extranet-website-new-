@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { Boxes, Image as ImageIcon, MapPin, Inbox, ArrowRight } from "lucide-react";
 import AdminStatsCard from "@/components/admin/AdminStatsCard";
 import {
   fetchDashboardData,
@@ -9,7 +10,13 @@ import {
   formatLeadStatus,
   type DashboardData,
 } from "@/lib/database/dashboard";
-import { quickActions } from "@/lib/admin/mock-data";
+
+const quickActions = [
+  { label: "Manage Plans", description: "Add, edit & price broadband plans", href: "/admin/plans", icon: Boxes },
+  { label: "Edit Hero Banner", description: "Swap the homepage artwork", href: "/admin/hero", icon: ImageIcon },
+  { label: "Manage Coverage", description: "Add sectors & service areas", href: "/admin/coverage", icon: MapPin },
+  { label: "Review Leads", description: "Follow up on new enquiries", href: "/admin/leads", icon: Inbox },
+];
 
 function StatsSkeleton() {
   return (
@@ -25,7 +32,7 @@ function TableSkeleton({ rows = 5 }: { rows?: number }) {
   return (
     <div className="animate-pulse space-y-3">
       {Array.from({ length: rows }).map((_, index) => (
-        <div key={index} className="h-10 rounded-lg bg-slate-100" />
+        <div key={index} className="h-10 rounded-lg bg-[#F4F7FC]" />
       ))}
     </div>
   );
@@ -36,8 +43,8 @@ function StatusSkeleton() {
     <div className="animate-pulse space-y-3">
       {[0, 1, 2, 3, 4].map((item) => (
         <div key={item} className="flex items-center justify-between">
-          <div className="h-4 w-20 rounded bg-slate-200" />
-          <div className="h-6 w-8 rounded bg-slate-100" />
+          <div className="h-4 w-20 rounded bg-[#DCE3EC]" />
+          <div className="h-6 w-8 rounded bg-[#F4F7FC]" />
         </div>
       ))}
     </div>
@@ -45,10 +52,10 @@ function StatusSkeleton() {
 }
 
 const statusBadgeClass: Record<string, string> = {
-  new: "bg-blue-100 text-[#134799]",
+  new: "bg-[#11418D]/10 text-[#11418D]",
   contacted: "bg-amber-100 text-amber-800",
   qualified: "bg-emerald-100 text-emerald-800",
-  closed: "bg-slate-100 text-slate-600",
+  closed: "bg-[#F4F7FC] text-[#5C6F89]",
   spam: "bg-red-100 text-red-700",
 };
 
@@ -140,17 +147,17 @@ export default function AdminDashboardPage() {
       </section>
 
       <section className="grid gap-6 lg:grid-cols-3">
-        <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:col-span-2">
+        <article className="tele-card p-5 lg:col-span-2">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-base font-semibold text-slate-900">Recent Leads</h2>
-              <p className="mt-1 text-sm hover:text-[#134799]">
+              <h2 className="text-base font-semibold text-[#15366A]">Recent Leads</h2>
+              <p className="mt-1 text-sm hover:text-[#11418D]">
                 Latest contact form submissions.
               </p>
             </div>
             <Link
               href="/admin/leads"
-              className="text-sm font-semibold text-[#134799] transition-all duration-200 ease-in-out hover:text-[#0f3b7f]"
+              className="text-sm font-semibold text-[#11418D] transition-all duration-200 ease-in-out hover:text-[#0e3675]"
             >
               View all →
             </Link>
@@ -158,7 +165,7 @@ export default function AdminDashboardPage() {
 
           <div className="mt-5 overflow-x-auto">
             <table className="min-w-full text-left text-sm">
-              <thead className="border-b border-slate-200 hover:text-[#134799]">
+              <thead className="border-b border-[#DCE3EC] hover:text-[#11418D]">
                 <tr>
                   <th className="px-3 py-2 font-medium">Name</th>
                   <th className="px-3 py-2 font-medium">Phone</th>
@@ -178,7 +185,7 @@ export default function AdminDashboardPage() {
                   <tr>
                     <td
                       colSpan={5}
-                      className="px-3 py-8 text-center hover:text-[#134799]"
+                      className="px-3 py-8 text-center hover:text-[#11418D]"
                     >
                       No leads yet. Submissions from the contact page will appear
                       here.
@@ -186,25 +193,25 @@ export default function AdminDashboardPage() {
                   </tr>
                 ) : (
                   data.recentLeads.map((lead) => (
-                    <tr key={lead.id} className="border-b border-slate-100">
-                      <td className="px-3 py-3 font-medium text-slate-900">
+                    <tr key={lead.id} className="border-b border-[#EDF1F6]">
+                      <td className="px-3 py-3 font-medium text-[#15366A]">
                         {lead.full_name}
                       </td>
-                      <td className="px-3 py-3 text-slate-700">{lead.phone}</td>
-                      <td className="max-w-[160px] truncate px-3 py-3 text-slate-700">
+                      <td className="px-3 py-3 text-[#475569]">{lead.phone}</td>
+                      <td className="max-w-[160px] truncate px-3 py-3 text-[#475569]">
                         {lead.inquiry_type}
                       </td>
                       <td className="px-3 py-3">
                         <span
                           className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
                             statusBadgeClass[lead.status] ??
-                            "bg-slate-100 text-slate-600"
+                            "bg-[#F4F7FC] text-[#5C6F89]"
                           }`}
                         >
                           {formatLeadStatus(lead.status)}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-3 text-slate-600">
+                      <td className="whitespace-nowrap px-3 py-3 text-[#5C6F89]">
                         {formatLeadDate(lead.created_at)}
                       </td>
                     </tr>
@@ -216,11 +223,11 @@ export default function AdminDashboardPage() {
         </article>
 
         <div className="space-y-6">
-          <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="text-base font-semibold text-slate-900">
+          <article className="tele-card p-5">
+            <h2 className="text-base font-semibold text-[#15366A]">
               Lead Status Summary
             </h2>
-            <p className="mt-1 text-sm hover:text-[#134799]">
+            <p className="mt-1 text-sm hover:text-[#11418D]">
               Breakdown of all leads by status.
             </p>
 
@@ -231,12 +238,12 @@ export default function AdminDashboardPage() {
                 data?.statusSummary.map((item) => (
                   <li
                     key={item.status}
-                    className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5"
+                    className="flex items-center justify-between rounded-xl border border-[#EDF1F6] bg-[#F8F9FB] px-3 py-2.5"
                   >
-                    <span className="text-sm font-medium text-slate-700">
+                    <span className="text-sm font-medium text-[#475569]">
                       {item.label}
                     </span>
-                    <span className="text-lg font-bold text-slate-900">
+                    <span className="text-lg font-bold text-[#15366A]">
                       {item.count}
                     </span>
                   </li>
@@ -245,17 +252,28 @@ export default function AdminDashboardPage() {
             </ul>
           </article>
 
-          <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="text-base font-semibold text-slate-900">Quick Actions</h2>
+          <article className="tele-card p-5">
+            <h2 className="text-base font-semibold text-[#15366A]">Quick Actions</h2>
             <ul className="mt-4 space-y-2">
               {quickActions.map((action) => (
-                <li key={action}>
-                  <button
-                    type="button"
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-left text-sm font-medium text-slate-700 transition-all duration-200 ease-in-out hover:border-[#134799]/30 hover:bg-slate-50 hover:text-[#134799]"
+                <li key={action.href}>
+                  <Link
+                    href={action.href}
+                    className="group flex items-center gap-3 rounded-xl border border-[#DCE3EC] bg-[#F8F9FB] px-3 py-2.5 transition-all duration-200 ease-in-out hover:border-[#11418D]/30 hover:bg-white hover:shadow-sm"
                   >
-                    {action}
-                  </button>
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#11418D]/10 text-[#11418D]">
+                      <action.icon size={16} aria-hidden />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold text-[#15366A] group-hover:text-[#11418D]">
+                        {action.label}
+                      </span>
+                      <span className="block truncate text-xs text-[#5C6F89]">
+                        {action.description}
+                      </span>
+                    </span>
+                    <ArrowRight size={15} className="shrink-0 text-slate-300 transition-transform group-hover:translate-x-0.5 group-hover:text-[#11418D]" aria-hidden />
+                  </Link>
                 </li>
               ))}
             </ul>

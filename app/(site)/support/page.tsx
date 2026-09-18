@@ -28,8 +28,9 @@ export default async function SupportPage() {
         badge="Customer Support"
         title={<>We&apos;re here when you need us</>}
         description="24/7 technical support, billing assistance, and TRAI-compliant complaint handling for every Extranet connection."
+        crumbs={[{ label: "Support" }]}
       />
-      <section className="bg-slate-50 py-12 sm:py-16 md:py-20">
+      <section className="bg-[#F8F9FB] py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SupportContent supportSettings={supportSettings} />
         </div>

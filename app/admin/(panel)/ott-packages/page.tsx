@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2, GripVertical, Check, X } from "lucide-react";
+import { Plus, Pencil, Trash2, GripVertical, Check, X, ChevronUp, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import {
   getOttPackages,
@@ -108,13 +108,34 @@ export default function AdminOttPackagesPage() {
     }
   };
 
+  // Button-based reorder — drag-and-drop doesn't exist on touch screens,
+  // so mobile admins get explicit move controls using the same save path.
+  const handleMove = async (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= packages.length) return;
+
+    const previous = packages;
+    const reordered = [...packages];
+    const [moved] = reordered.splice(index, 1);
+    reordered.splice(target, 0, moved);
+    setPackages(reordered);
+
+    const { error: err } = await reorderOttPackages(
+      reordered.map((p, idx) => ({ id: p.id, display_order: idx })),
+    );
+    if (err) {
+      setError(`Failed to reorder packages: ${err.message}`);
+      setPackages(previous);
+    }
+  };
+
   if (loading) {
     return (
       <div className="space-y-6">
-        <div className="h-10 w-48 animate-pulse rounded-lg bg-slate-200" />
+        <div className="h-10 w-48 animate-pulse rounded-lg bg-[#DCE3EC]" />
         <div className="space-y-3">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="h-16 animate-pulse rounded-lg bg-slate-200" />
+            <div key={i} className="h-16 animate-pulse rounded-lg bg-[#DCE3EC]" />
           ))}
         </div>
       </div>
@@ -124,10 +145,10 @@ export default function AdminOttPackagesPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">OTT Packages</h1>
+        <h1 className="text-2xl font-bold text-[#15366A]">OTT Packages</h1>
         <Link
           href="/admin/ott-packages/new"
-          className="inline-flex items-center gap-2 rounded-xl bg-[#134799] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f]"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#11418D] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0e3675]"
         >
           <Plus size={18} />
           New Package
@@ -141,11 +162,11 @@ export default function AdminOttPackagesPage() {
       )}
 
       {packages.length === 0 ? (
-        <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
-          <p className="text-slate-600">No OTT packages yet. Create one to get started.</p>
+        <div className="rounded-lg border border-[#DCE3EC] bg-white p-8 text-center">
+          <p className="text-[#5C6F89]">No OTT packages yet. Create one to get started.</p>
         </div>
       ) : (
-        <div className="space-y-2 rounded-lg border border-slate-200 bg-white">
+        <div className="space-y-2 rounded-lg border border-[#DCE3EC] bg-white">
           {packages.map((pkg, index) => (
             <div
               key={pkg.id}
@@ -154,25 +175,45 @@ export default function AdminOttPackagesPage() {
               onDragOver={(e) => handleDragOver(e, index)}
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDrop(e, index)}
-              className={`flex items-center gap-4 border-b border-slate-200 p-4 transition-all last:border-0 ${
+              className={`flex items-center gap-4 border-b border-[#DCE3EC] p-4 transition-all last:border-0 ${
                 draggingItem?.index === index ? "opacity-50" : ""
               } ${dragOverIndex === index ? "bg-blue-50" : ""}`}
             >
               <button
                 type="button"
-                className="cursor-grab p-1 text-slate-400 hover:text-slate-600 active:cursor-grabbing"
+                className="hidden cursor-grab p-1 text-[#8ba0bb] hover:text-[#5C6F89] active:cursor-grabbing sm:block"
                 aria-label="Drag to reorder"
               >
                 <GripVertical size={18} />
               </button>
+              <div className="flex flex-col sm:hidden" aria-label="Reorder package">
+                <button
+                  type="button"
+                  onClick={() => void handleMove(index, -1)}
+                  disabled={index === 0}
+                  className="rounded-md p-1 text-[#5C6F89] hover:bg-[#F4F7FC] hover:text-[#11418D] disabled:opacity-30"
+                  aria-label={`Move ${pkg.name} up`}
+                >
+                  <ChevronUp size={16} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void handleMove(index, 1)}
+                  disabled={index === packages.length - 1}
+                  className="rounded-md p-1 text-[#5C6F89] hover:bg-[#F4F7FC] hover:text-[#11418D] disabled:opacity-30"
+                  aria-label={`Move ${pkg.name} down`}
+                >
+                  <ChevronDown size={16} />
+                </button>
+              </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-slate-900">{pkg.name}</h3>
+                <h3 className="font-semibold text-[#15366A]">{pkg.name}</h3>
                 {pkg.description && (
-                  <p className="text-sm text-slate-600 truncate">{pkg.description}</p>
+                  <p className="text-sm text-[#5C6F89] truncate">{pkg.description}</p>
                 )}
                 {pkg.apps.length > 0 && (
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-xs text-[#5C6F89] mt-1">
                     {pkg.apps.length} app{pkg.apps.length !== 1 ? "s" : ""}
                   </p>
                 )}
@@ -185,7 +226,7 @@ export default function AdminOttPackagesPage() {
                   className={`rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 flex items-center gap-1 ${
                     pkg.is_active
                       ? "bg-green-100 text-green-700 hover:bg-green-200"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      : "bg-[#F4F7FC] text-[#5C6F89] hover:bg-[#DCE3EC]"
                   }`}
                   title={pkg.is_active ? "Click to deactivate" : "Click to activate"}
                 >
@@ -204,7 +245,7 @@ export default function AdminOttPackagesPage() {
 
                 <Link
                   href={`/admin/ott-packages/${pkg.id}/edit`}
-                  className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-600 transition-all duration-200 ease-in-out hover:bg-slate-100 hover:text-[#134799]"
+                  className="rounded-lg border border-[#DCE3EC] bg-white px-3 py-2 text-[#5C6F89] transition-all duration-200 ease-in-out hover:bg-[#F4F7FC] hover:text-[#11418D]"
                   title="Edit package"
                 >
                   <Pencil size={18} />

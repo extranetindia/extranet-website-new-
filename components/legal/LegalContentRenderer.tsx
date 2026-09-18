@@ -7,27 +7,27 @@ interface LegalContentRendererProps {
 
 export default function LegalContentRenderer({ content }: LegalContentRendererProps) {
   return (
-    <article className="space-y-6 text-slate-700">
+    <article className="space-y-6 text-[#475569]">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children, ...props }) => (
-            <h1 className="mt-8 text-3xl font-semibold tracking-tight text-slate-900" {...props}>
+            <h1 className="mt-8 text-3xl font-extrabold tracking-tight text-[#15366A]" {...props}>
               {children}
             </h1>
           ),
           h2: ({ children, ...props }) => (
-            <h2 className="mt-8 text-2xl font-semibold tracking-tight text-slate-900" {...props}>
+            <h2 className="mt-8 text-2xl font-extrabold tracking-tight text-[#15366A]" {...props}>
               {children}
             </h2>
           ),
           h3: ({ children, ...props }) => (
-            <h3 className="mt-6 text-xl font-semibold tracking-tight text-slate-900" {...props}>
+            <h3 className="mt-6 text-xl font-extrabold tracking-tight text-[#15366A]" {...props}>
               {children}
             </h3>
           ),
           p: ({ children, ...props }) => (
-            <p className="mt-4 leading-8 text-slate-700" {...props}>
+            <p className="mt-4 leading-8 text-[#475569]" {...props}>
               {children}
             </p>
           ),
@@ -42,12 +42,12 @@ export default function LegalContentRenderer({ content }: LegalContentRendererPr
             </ol>
           ),
           li: ({ children, ...props }) => (
-            <li className="leading-7 text-slate-700" {...props}>
+            <li className="leading-7 text-[#475569]" {...props}>
               {children}
             </li>
           ),
           strong: ({ children, ...props }) => (
-            <strong className="font-semibold text-slate-900" {...props}>
+            <strong className="font-bold text-[#15366A]" {...props}>
               {children}
             </strong>
           ),

@@ -7,6 +7,7 @@ import {
   Clock,
   Server,
   HeadphonesIcon,
+  ArrowRight,
 } from "lucide-react";
 import SectionPreview from "@/components/ui/SectionPreview";
 import MobileCarousel from "@/components/ui/MobileCarousel";
@@ -17,28 +18,24 @@ const features = [
     title: "Enterprise DDoS Protection",
     description:
       "Real-time scrubbing centers protect against volumetric and application-layer attacks.",
-    accent: "red",
   },
   {
     icon: Clock,
     title: "99.99% Uptime SLA",
     description:
       "Redundant routes, automatic failover, and proactive monitoring.",
-    accent: "red",
   },
   {
     icon: Server,
     title: "Dedicated IP & BGP",
     description:
       "Static IPs, PTR records, and BGP for enterprises with their own AS.",
-    accent: "blue",
   },
   {
     icon: HeadphonesIcon,
     title: "24/7 Assistance",
     description:
       "Certified engineers in our Network Operations Center, always on call.",
-    accent: "red",
   },
 ];
 
@@ -54,20 +51,16 @@ function FeatureCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
-      className="group h-full rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 ease-in-out hover:border-[#134799]/30 hover:shadow-lg hover:shadow-blue-900/10"
+      transition={{ delay: Math.min(index, 5) * 0.06 }}
+      className="tele-card tele-card-hover group h-full p-6"
     >
-      <div
-        className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${
-          feat.accent === "blue"
-            ? "bg-blue-100 text-[#134799]"
-            : "bg-red-50 text-red-600"
-        }`}
-      >
-        <feat.icon className="h-5 w-5" />
+      <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-[10px] ${
+        index % 2 === 1 ? "bg-[#C1170C]/10 text-[#C1170C]" : "bg-[#11418D]/10 text-[#11418D]"
+      }`}>
+        <feat.icon className="h-5 w-5" aria-hidden />
       </div>
-      <h3 className="mb-2 text-base font-bold text-slate-900">{feat.title}</h3>
-      <p className="text-sm leading-relaxed text-slate-600">{feat.description}</p>
+      <h3 className="mb-1.5 text-[1rem] font-extrabold text-[#15366A]">{feat.title}</h3>
+      <p className="text-sm leading-relaxed text-[#5C6F89]">{feat.description}</p>
     </motion.div>
   );
 }
@@ -76,11 +69,12 @@ export default function Features() {
   return (
     <SectionPreview
       eyebrow="Why Extranet"
-      title="Why Extranet"
-      description="Enterprise technology for homes and businesses across India — reliability, security, and speed in one network."
+      title="A network engineered for uptime"
+      description="Enterprise technology for homes and businesses across India — reliability, security, and speed on one network."
       href="/about"
-      linkLabel="Learn about us"
-      className="bg-slate-50"
+      linkLabel="About our network"
+      className="bg-[#F4F7FC]"
+      id="why-extranet"
     >
       <MobileCarousel
         ariaLabel="Why Extranet features"
@@ -101,20 +95,35 @@ export default function Features() {
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mt-8 flex flex-col items-stretch justify-between gap-5 rounded-2xl bg-gradient-to-r from-[#134799] to-[#0f3b7f] p-6 text-white sm:mt-12 sm:flex-row sm:items-center sm:gap-6 sm:p-8"
+        className="relative mt-6 overflow-hidden rounded-xl bg-[#15366A] p-6 sm:mt-8 sm:p-8"
       >
-        <div>
-          <h3 className="mb-1 text-lg font-bold sm:text-xl">
-            Ready for real internet speed?
-          </h3>
-          <p className="text-sm text-white/80">Join 50,000+ customers on Extranet.</p>
+        <div aria-hidden className="network-grid-dark absolute inset-0 opacity-50" />
+        <div aria-hidden className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#C1170C]/20 blur-[100px]" />
+        <div aria-hidden className="absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-[#11418D]/50 blur-[100px]" />
+        <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+          <div>
+            <p className="tele-eyebrow text-white/60">Get connected</p>
+            <h3 className="mt-2 text-xl font-extrabold text-white sm:text-2xl">
+              Ready for internet that keeps up with you?
+            </h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-white/75">
+              Check availability in your area or compare plans for your city.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+            <Link href="/plans" className="tele-btn tele-btn-red px-7">
+              See all plans
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+            <Link
+              href="/coverage"
+              className="tele-btn border border-white/25 px-7 text-white hover:bg-white/10"
+            >
+              Check coverage
+            </Link>
+          </div>
         </div>
-        <Link
-          href="/plans"
-          className="min-h-[44px] shrink-0 rounded-xl bg-white px-7 py-3.5 text-center text-sm font-bold text-[#134799] transition-all duration-200 ease-in-out hover:bg-slate-50 hover:text-[#0f3b7f] hover:shadow-lg hover:shadow-blue-950/20"
-        >
-          See all plans
-        </Link>
+        <span aria-hidden className="absolute inset-x-0 bottom-0 h-[3px] bg-[#C1170C]" />
       </motion.div>
     </SectionPreview>
   );

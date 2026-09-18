@@ -13,20 +13,20 @@ export default function AdminStatsCard({
 }: AdminStatsCardProps) {
   if (loading) {
     return (
-      <article className="animate-pulse rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="h-4 w-24 rounded bg-slate-200" />
-        <div className="mt-3 h-9 w-16 rounded bg-slate-200" />
-        <div className="mt-3 h-3 w-32 rounded bg-slate-100" />
+      <article className="animate-pulse tele-card p-5">
+        <div className="h-4 w-24 rounded bg-[#DCE3EC]" />
+        <div className="mt-3 h-9 w-16 rounded bg-[#DCE3EC]" />
+        <div className="mt-3 h-3 w-32 rounded bg-[#F4F7FC]" />
       </article>
     );
   }
 
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-sm font-medium hover:text-[#134799]">{label}</p>
-      <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900">{value}</p>
+    <article className="tele-card p-5">
+      <p className="text-sm font-medium hover:text-[#11418D]">{label}</p>
+      <p className="mt-2 text-3xl font-bold tracking-tight text-[#15366A]">{value}</p>
       {subtitle && (
-        <p className="mt-2 text-xs font-medium text-[#134799]">{subtitle}</p>
+        <p className="mt-2 text-xs font-medium text-[#11418D]">{subtitle}</p>
       )}
     </article>
   );

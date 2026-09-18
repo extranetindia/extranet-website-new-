@@ -99,32 +99,32 @@ export default function AdminLegalPage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="tele-card p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-slate-900">Legal Policies</h1>
-            <p className="mt-1 text-sm hover:text-[#134799]">
+            <h1 className="text-2xl font-semibold text-[#15366A]">Legal Policies</h1>
+            <p className="mt-1 text-sm hover:text-[#11418D]">
               Edit your published Terms, Privacy, Refund, Acceptable Use, and Cancellation content from one place.
             </p>
           </div>
         </div>
 
         {error && (
-          <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {error}
           </div>
         )}
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
-          <aside className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-900">
+          <aside className="rounded-xl border border-[#DCE3EC] bg-[#F8F9FB] p-4">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-[#15366A]">
               Policy Pages
             </h2>
             <div className="mt-4 space-y-2">
               {loading ? (
                 <div className="space-y-2">
                   {Array.from({ length: 5 }).map((_, index) => (
-                    <div key={index} className="h-10 rounded-xl bg-slate-200" />
+                    <div key={index} className="h-10 rounded-xl bg-[#DCE3EC]" />
                   ))}
                 </div>
               ) : (
@@ -135,10 +135,10 @@ export default function AdminLegalPage() {
                       key={page.slug}
                       type="button"
                       onClick={() => setActiveSlug(page.slug)}
-                      className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-medium transition-all duration-200 ease-in-out ${
+                      className={`w-full rounded-xl px-4 py-3 text-left text-sm font-medium transition-all duration-200 ease-in-out ${
                         active
-                          ? "bg-[#134799] text-white"
-                          : "bg-white text-slate-700 hover:bg-slate-100 hover:text-[#134799]"
+                          ? "bg-[#11418D] text-white"
+                          : "bg-white text-[#475569] hover:bg-[#F4F7FC] hover:text-[#11418D]"
                       }`}
                     >
                       {PAGE_LABELS[page.slug] ?? page.title}
@@ -149,15 +149,15 @@ export default function AdminLegalPage() {
             </div>
           </aside>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="tele-card p-6">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900">Edit policy</h2>
-                <p className="mt-1 text-sm hover:text-[#134799]">
+                <h2 className="text-lg font-semibold text-[#15366A]">Edit policy</h2>
+                <p className="mt-1 text-sm hover:text-[#11418D]">
                   Update the page title and content for the selected legal policy.
                 </p>
               </div>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
+              <span className="rounded-full bg-[#F4F7FC] px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#5C6F89]">
                 {activePage?.slug ?? "Loading..."}
               </span>
             </div>
@@ -165,43 +165,47 @@ export default function AdminLegalPage() {
             <form className="mt-6 space-y-5" onSubmit={handleSave}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-2 block text-sm font-medium text-slate-700">Page Slug</span>
+                  <span className="mb-2 block text-sm font-medium text-[#475569]">Page Slug</span>
                   <input
                     value={form.slug}
                     disabled
-                    className="w-full rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-700 outline-none"
+                    className="w-full rounded-xl border border-[#DCE3EC] bg-[#F4F7FC] px-4 py-3 text-sm text-[#475569] outline-none"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block text-sm font-medium text-slate-700">Last Updated</span>
+                  <span className="mb-2 block text-sm font-medium text-[#475569]">Last Updated</span>
                   <input
-                    value={new Date(form.last_updated).toLocaleString()}
+                    value={
+                      form.last_updated
+                        ? new Date(form.last_updated).toLocaleString()
+                        : "Not saved yet"
+                    }
                     disabled
-                    className="w-full rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-700 outline-none"
+                    className="w-full rounded-xl border border-[#DCE3EC] bg-[#F4F7FC] px-4 py-3 text-sm text-[#475569] outline-none"
                   />
                 </label>
               </div>
 
               <label className="block">
-                <span className="mb-2 block text-sm font-medium text-slate-700">Page Title</span>
+                <span className="mb-2 block text-sm font-medium text-[#475569]">Page Title</span>
                 <input
                   value={form.title}
                   onChange={(event) => updateField("title", event.target.value)}
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none focus:border-blue-400"
+                  className="w-full rounded-xl border border-[#DCE3EC] px-4 py-3 text-sm text-[#15366A] outline-none focus:border-[#11418D]"
                 />
               </label>
 
               <label className="block">
                 <div className="mb-2 flex items-center justify-between gap-2">
-                  <span className="block text-sm font-medium text-slate-700">Page Content</span>
-                  <span className="text-xs hover:text-[#134799]">Use headings, paragraphs, and lists.</span>
+                  <span className="block text-sm font-medium text-[#475569]">Page Content</span>
+                  <span className="text-xs hover:text-[#11418D]">Use headings, paragraphs, and lists.</span>
                 </div>
                 <textarea
                   rows={18}
                   value={form.content}
                   onChange={(event) => updateField("content", event.target.value)}
-                  className="w-full rounded-3xl border border-slate-200 px-4 py-4 text-sm text-slate-900 outline-none focus:border-blue-400"
+                  className="w-full rounded-2xl border border-[#DCE3EC] px-4 py-4 text-sm text-[#15366A] outline-none focus:border-[#11418D]"
                 />
               </label>
 
@@ -213,7 +217,7 @@ export default function AdminLegalPage() {
                 <button
                   type="submit"
                   disabled={saving || loading}
-                  className="inline-flex items-center justify-center rounded-xl bg-[#134799] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0f3b7f] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex items-center justify-center rounded-xl bg-[#11418D] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 ease-in-out hover:bg-[#0e3675] hover:shadow-lg hover:shadow-blue-900/20 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {saving ? "Saving..." : "Save Policy"}
                 </button>

@@ -9,6 +9,7 @@ import CityPricedPlans from "./CityPricedPlans";
 
 export default function HomePlansPreview() {
   const [plans, setPlans] = useState<PlanRow[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<HomePlanCategoryValue>("wifi");
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function HomePlansPreview() {
 
       if (isMounted) {
         setPlans((data as PlanRow[]) ?? []);
+        setLoaded(true);
       }
     }
 
@@ -41,10 +43,28 @@ export default function HomePlansPreview() {
     [plans, selectedCategory],
   );
 
+  // Skeleton reserves the section height so content popping in
+  // doesn't shove the page (CLS) on mobile networks.
+  if (!loaded) {
+    return (
+      <section aria-label="Loading broadband plans" className="overflow-hidden border-y border-[#DCE3EC] bg-[#F8F9FB] py-10 sm:py-14">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+          <div className="h-7 w-64 animate-pulse rounded-md bg-[#DCE3EC]" />
+          <div className="mt-3 h-10 w-40 animate-pulse rounded-md bg-[#DCE3EC]" />
+          <div className="mt-6 grid gap-5 md:grid-cols-3">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="min-h-[380px] animate-pulse rounded-xl border border-[#DCE3EC] bg-white" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (!plans.length) return null;
 
   return (
-    <section className="overflow-hidden bg-white py-12 sm:py-16 md:py-20">
+    <section id="plans" className="overflow-hidden border-y border-[#DCE3EC] bg-[#F8F9FB] py-10 sm:py-14">
       <div className="mx-auto max-w-[1200px] overflow-visible px-4 sm:px-6 lg:px-8">
         <CityPricedPlans
           basePlans={filteredPlans}
