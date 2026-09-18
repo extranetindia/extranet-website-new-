@@ -34,7 +34,7 @@ export default function SectionNav() {
       className={`fixed inset-x-0 z-40 border-b border-[#DCE3EC] bg-white/95 backdrop-blur transition-transform duration-300 ${
         visible ? "translate-y-0" : "pointer-events-none -translate-y-full"
       }`}
-      style={{ top: "var(--navbar-height, 3.5rem)" }}
+      style={{ top: "calc(var(--navbar-height, 3.5rem) + var(--announcement-bar-height, 0px) + 2px)" }}
     >
       <nav
         aria-label="On this page"

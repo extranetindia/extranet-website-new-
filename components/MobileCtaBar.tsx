@@ -15,8 +15,9 @@ export default function MobileCtaBar() {
 
   return (
     <>
-      {/* In-flow spacer so the fixed bar never covers footer content */}
-      <div aria-hidden className="h-[68px] lg:hidden" />
+      {/* In-flow spacer matching the fixed bar (72px) + home-indicator zone,
+          so the bar never covers footer content on notched phones */}
+      <div aria-hidden className="h-[calc(72px+env(safe-area-inset-bottom))] lg:hidden" />
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#DCE3EC] bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_28px_rgba(21,54,106,0.12)] backdrop-blur lg:hidden">
         <div className="grid grid-cols-2 gap-2.5 p-3">
           <a href={tel} className="tele-btn tele-btn-outline min-h-[48px]">

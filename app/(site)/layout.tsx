@@ -15,8 +15,8 @@ export default function SiteLayout({
       <AnnouncementBar />
       <Navbar />
       <SectionNav />
-      {/* Padding accounts for fixed navbar (responsive: 56px on mobile, 64px on sm+) + dynamic announcement bar (0-48px) */}
-      <main className="flex-1 overflow-x-hidden" style={{ paddingTop: "calc(var(--announcement-bar-height, 0px) + var(--navbar-height, 3.5rem))" }}>
+      {/* Fixed chrome stack: announcement (0/40px) + navbar (56/72/108px) + 2px brand keyline */}
+      <main className="flex-1 overflow-x-hidden" style={{ paddingTop: "calc(var(--announcement-bar-height, 0px) + var(--navbar-height, 3.5rem) + 2px)" }}>
         {children}
       </main>
       <Footer />

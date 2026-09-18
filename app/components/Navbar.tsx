@@ -228,7 +228,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22, ease: "easeInOut" }}
-            className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-[#DCE3EC] bg-white shadow-[0_18px_40px_rgba(21,54,106,0.14)] lg:hidden"
+            className="max-h-[calc(100dvh-var(--announcement-bar-height,0px)-4rem)] overflow-y-auto border-b border-[#DCE3EC] bg-white shadow-[0_18px_40px_rgba(21,54,106,0.14)] lg:hidden"
           >
             <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]" aria-label="Mobile">
               {navLinks.map((link) => (
